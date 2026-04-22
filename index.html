@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Energx — Slimme energie, lokale kracht</title>
+<meta name="description" content="Energx regelt jouw laadpaal, warmtepomp of thuisbatterij — snel geïnstalleerd door gecertificeerde lokale installateurs. Vraag gratis een offerte aan.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-900: #0B3320;
+    --green-800: #0F4A2A;
+    --green-700: #155E34;
+    --green-600: #1A7A42;
+    --green-500: #22A058;
+    --green-400: #2DBD6E;
+    --green-300: #5FD496;
+    --green-100: #D4F2E2;
+    --green-50:  #EDF9F3;
+    --night:     #090F0C;
+    --night-2:   #0E1A12;
+    --night-3:   #162019;
+    --white:     #FAFCFB;
+    --gray-100:  #F0F4F1;
+    --gray-200:  #DCE5DE;
+    --gray-400:  #8FA896;
+    --gray-600:  #4A6152;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'Outfit', sans-serif;
+    --max: 1200px;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--night);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 2rem;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(250,252,251,0.85);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--gray-200);
+    transition: background 0.3s;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo-icon {
+    width: 34px;
+    height: 34px;
+  }
+
+  .nav-logo-text {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--green-800);
+    letter-spacing: -0.3px;
+  }
+
+  .nav-logo-text span { color: var(--green-400); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--gray-600);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--green-800); }
+
+  .nav-cta {
+    background: var(--green-800);
+    color: var(--white) !important;
+    padding: 9px 20px;
+    border-radius: 100px;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--green-600) !important; color: var(--white) !important; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--night);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 0 6vw;
+    padding-top: 68px;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 700px;
+    height: 700px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45,189,110,0.18) 0%, transparent 70%);
+    top: -100px;
+    right: -100px;
+    pointer-events: none;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(26,122,66,0.12) 0%, transparent 70%);
+    bottom: 0;
+    left: 20%;
+    pointer-events: none;
+  }
+
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(45,189,110,0.12);
+    border: 1px solid rgba(45,189,110,0.25);
+    color: var(--green-300);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.03em;
+  }
+
+  .hero-label::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--green-400);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(42px, 5vw, 68px);
+    color: var(--white);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--green-400);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--green-400);
+    color: var(--night);
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover { background: var(--green-300); transform: translateY(-1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: rgba(255,255,255,0.7);
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 400;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .stat-item { display: flex; flex-direction: column; gap: 2px; }
+  .stat-num { font-family: var(--font-display); font-size: 28px; color: var(--white); }
+  .stat-num span { color: var(--green-400); }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 300; }
+
+  /* Hero right — visual */
+  .hero-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 520px;
+  }
+
+  .hero-card-main {
+    background: var(--night-3);
+    border: 1px solid rgba(45,189,110,0.2);
+    border-radius: 24px;
+    padding: 28px;
+    width: 320px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+  }
+
+  .hc-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--green-400);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+
+  .hc-value {
+    font-family: var(--font-display);
+    font-size: 40px;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+
+  .hc-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    margin-bottom: 20px;
+  }
+
+  .hc-bar-wrap {
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    height: 6px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .hc-bar {
+    height: 100%;
+    width: 73%;
+    background: linear-gradient(90deg, var(--green-600), var(--green-400));
+    border-radius: 100px;
+    animation: grow 2s ease-out forwards;
+  }
+
+  @keyframes grow { from { width: 0; } to { width: 73%; } }
+
+  .hc-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+  }
+
+  .hc-row strong { color: var(--white); font-weight: 500; }
+
+  .hero-card-sm {
+    background: var(--night-3);
+    border: 1px solid rgba(45,189,110,0.15);
+    border-radius: 16px;
+    padding: 16px 20px;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-card-sm.c1 { top: 60px; right: 0; width: 190px; }
+  .hero-card-sm.c2 { bottom: 80px; left: 0; width: 210px; }
+
+  .hcsm-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: rgba(45,189,110,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hcsm-text { display: flex; flex-direction: column; gap: 2px; }
+  .hcsm-title { font-size: 13px; font-weight: 500; color: var(--white); }
+  .hcsm-sub { font-size: 11px; color: var(--green-400); }
+
+  /* ── SECTION BASE ── */
+  section { padding: 100px 6vw; }
+  .container { max-width: var(--max); margin: 0 auto; }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-600);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 50px);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    color: var(--night);
+    margin-bottom: 1rem;
+  }
+
+  .section-sub {
+    font-size: 18px;
+    color: var(--gray-600);
+    font-weight: 300;
+    max-width: 560px;
+    line-height: 1.7;
+  }
+
+  /* ── DIENSTEN ── */
+  .diensten { background: var(--gray-100); }
+
+  .diensten-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 3rem;
+  }
+
+  .dienst-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 36px 32px;
+    border: 1px solid var(--gray-200);
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .dienst-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green-600), var(--green-400));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .dienst-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(15,74,42,0.08); }
+  .dienst-card:hover::after { transform: scaleX(1); }
+
+  .dienst-icon {
+    width: 52px;
+    height: 52px;
+    background: var(--green-50);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+
+  .dienst-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--night);
+    margin-bottom: 10px;
+  }
+
+  .dienst-text {
+    font-size: 15px;
+    color: var(--gray-600);
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .dienst-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--green-600);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+  }
+
+  .dienst-link:hover { gap: 10px; }
+
+  /* ── HOE WE WERKEN ── */
+  .hoe-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    margin-top: 0;
+  }
+
+  .hoe-steps { display: flex; flex-direction: column; gap: 0; }
+
+  .step {
+    display: flex;
+    gap: 20px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--gray-200);
+    position: relative;
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: var(--font-display);
+    font-size: 13px;
+    color: var(--green-400);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid var(--green-400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .step-body { flex: 1; }
+  .step-title { font-size: 17px; font-weight: 600; color: var(--night); margin-bottom: 6px; }
+  .step-text { font-size: 14px; color: var(--gray-600); line-height: 1.7; font-weight: 300; }
+
+  .hoe-visual {
+    background: var(--night);
+    border-radius: 24px;
+    padding: 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hoe-visual::before {
+    content: '';
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45,189,110,0.15) 0%, transparent 70%);
+    top: -80px;
+    right: -80px;
+    pointer-events: none;
+  }
+
+  .lokaal-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--white);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .lokaal-title em { color: var(--green-400); font-style: italic; }
+
+  .lokaal-text {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 28px;
+  }
+
+  .lokaal-items { display: flex; flex-direction: column; gap: 12px; }
+
+  .lokaal-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+  }
+
+  .lokaal-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: rgba(45,189,110,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ── REVIEWS ── */
+  .reviews { background: var(--green-50); }
+
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 3rem;
+  }
+
+  .review-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 28px;
+    border: 1px solid var(--gray-200);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .review-stars { display: flex; gap: 3px; }
+
+  .star {
+    width: 16px;
+    height: 16px;
+    background: #F9C846;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+
+  .review-text {
+    font-size: 15px;
+    color: var(--gray-600);
+    line-height: 1.7;
+    font-weight: 300;
+    font-style: italic;
+    flex: 1;
+  }
+
+  .review-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--gray-200);
+  }
+
+  .review-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--green-100);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--green-800);
+  }
+
+  .review-name { font-size: 14px; font-weight: 600; color: var(--night); }
+  .review-loc { font-size: 12px; color: var(--gray-400); }
+
+  /* ── OFFERTE ── */
+  .offerte { background: var(--night); }
+  .offerte .section-title { color: var(--white); }
+  .offerte .section-sub { color: rgba(255,255,255,0.45); }
+  .offerte .section-tag { color: var(--green-400); }
+
+  .offerte-header { text-align: center; max-width: 560px; margin: 0 auto 3rem; }
+  .offerte-header .section-sub { margin: 0 auto; }
+
+  .offerte-keuze {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .keuze-card {
+    background: var(--night-3);
+    border: 1px solid rgba(45,189,110,0.15);
+    border-radius: 20px;
+    padding: 36px 28px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .keuze-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--green-600), var(--green-400));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .keuze-card:hover {
+    border-color: rgba(45,189,110,0.45);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+
+  .keuze-card:hover::after { transform: scaleX(1); }
+
+  .keuze-icon {
+    width: 52px;
+    height: 52px;
+    background: rgba(45,189,110,0.12);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .keuze-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--white);
+  }
+
+  .keuze-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.7;
+    font-weight: 300;
+    flex: 1;
+  }
+
+  .keuze-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--green-400);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+  }
+
+  .keuze-card:hover .keuze-link { gap: 10px; }
+
+  .keuze-soon {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green-400);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(45,189,110,0.12);
+    border: 1px solid rgba(45,189,110,0.2);
+    padding: 3px 10px;
+    border-radius: 100px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060D09;
+    padding: 60px 6vw 32px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .footer-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 28px;
+  }
+
+  .footer-brand { display: flex; flex-direction: column; gap: 14px; }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .footer-logo-text {
+    font-family: var(--font-display);
+    font-size: 20px;
+    color: var(--white);
+  }
+
+  .footer-logo-text span { color: var(--green-400); }
+
+  .footer-tagline {
+    font-size: 14px;
+    color: rgba(255,255,255,0.35);
+    line-height: 1.6;
+    font-weight: 300;
+    max-width: 260px;
+  }
+
+  .footer-col-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 14px;
+    letter-spacing: 0.03em;
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+  .footer-col a {
+    font-size: 14px;
+    color: rgba(255,255,255,0.35);
+    text-decoration: none;
+    font-weight: 300;
+    transition: color 0.2s;
+  }
+
+  .footer-col a:hover { color: var(--green-400); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    font-weight: 300;
+  }
+
+  .footer-green { color: var(--green-600); }
+
+  /* ── ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  .fade-up:nth-child(2) { transition-delay: 0.1s; }
+  .fade-up:nth-child(3) { transition-delay: 0.2s; }
+  .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; padding: 100px 5vw 60px; }
+    .hero-visual { display: none; }
+    .diensten-grid { grid-template-columns: 1fr; }
+    .hoe-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .offerte-keuze { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <svg class="nav-logo-icon" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="34" height="34" rx="9" fill="#0F4A2A"/>
+      <path d="M17 6L26 12V22L17 28L8 22V12L17 6Z" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+      <path d="M17 11V23M12 14L22 20M12 20L22 14" stroke="#2DBD6E" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="17" cy="17" r="2.5" fill="#2DBD6E"/>
+    </svg>
+    <span class="nav-logo-text">Energ<span>x</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#offerte">Thuisbatterij</a></li>
+    <li><a href="energx-laadpaal.html">Laadpaal</a></li>
+    <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="#offerte" class="nav-cta">Offerte aanvragen</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-label">Duurzame energie voor thuis & bedrijf</div>
+    <h1 class="hero-title">
+      Slimme energie,<br>
+      <em>lokale kracht.</em>
+    </h1>
+    <p class="hero-sub">
+      Van thuisbatterij tot warmtepomp — wij regelen alles. Vul het formulier in en ontvang binnen minuten een persoonlijke offerte.
+    </p>
+    <div class="hero-actions">
+      <a href="#offerte" class="btn-primary">Gratis offerte aanvragen →</a>
+      <a href="#hoe-we-werken" class="btn-ghost">Hoe werkt het?</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">500<span>+</span></span>
+        <span class="stat-label">Installaties gedaan</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">48<span>u</span></span>
+        <span class="stat-label">Gemiddelde doorlooptijd</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">4.9<span>★</span></span>
+        <span class="stat-label">Klantbeoordeling</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-card-main">
+      <div class="hc-label">Jouw jaarlijkse besparing</div>
+      <div class="hc-value">€ 1.840</div>
+      <div class="hc-sub">Gebaseerd op gemiddeld verbruik</div>
+      <div class="hc-bar-wrap"><div class="hc-bar"></div></div>
+      <div class="hc-row"><span>Opwekking zonnepanelen</span><strong>4.200 kWh</strong></div>
+      <div class="hc-row"><span>Opgeslagen in batterij</span><strong>1.800 kWh</strong></div>
+      <div class="hc-row"><span>Teruggeleverd net</span><strong>1.100 kWh</strong></div>
+    </div>
+    <div class="hero-card-sm c1">
+      <div class="hcsm-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M10 2L17 6V14L10 18L3 14V6L10 2Z" stroke="#2DBD6E" stroke-width="1.3" fill="none"/>
+          <circle cx="10" cy="10" r="2" fill="#2DBD6E"/>
+        </svg>
+      </div>
+      <div class="hcsm-text">
+        <span class="hcsm-title">Thuisbatterij</span>
+        <span class="hcsm-sub">Opgeladen · 94%</span>
+      </div>
+    </div>
+    <div class="hero-card-sm c2">
+      <div class="hcsm-icon">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <rect x="4" y="6" width="12" height="9" rx="2" stroke="#2DBD6E" stroke-width="1.3" fill="none"/>
+          <path d="M8 6V4M12 6V4M7 14V17M13 14V17" stroke="#2DBD6E" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="hcsm-text">
+        <span class="hcsm-title">Laadpaal actief</span>
+        <span class="hcsm-sub">11 kW · Auto 68%</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIENSTEN -->
+<section class="diensten" id="diensten">
+  <div class="container">
+    <span class="section-tag">Wat we aanbieden</span>
+    <h2 class="section-title">Alles voor jouw<br>duurzame thuis</h2>
+    <p class="section-sub">Wij ontzorgen je volledig, van advies tot installatie — uitgevoerd door lokale specialisten bij jou in de buurt.</p>
+
+    <div class="diensten-grid">
+      <div class="dienst-card fade-up">
+        <div class="dienst-icon">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <path d="M13 3L22 8V18L13 23L4 18V8L13 3Z" stroke="#1A7A42" stroke-width="1.5" fill="none"/>
+            <path d="M13 8V18M9 11L17 15M9 15L17 11" stroke="#1A7A42" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="13" cy="13" r="2" fill="#1A7A42"/>
+          </svg>
+        </div>
+        <div class="dienst-title">Thuisbatterij</div>
+        <p class="dienst-text">Sla je zelf opgewekte stroom op en gebruik die wanneer jij het nodig hebt. Nooit meer energie teruggeven voor een fooi — maximaal rendement op je eigen panelen.</p>
+        <a href="energx-laadpaal.html" class="dienst-link">Offerte aanvragen <span>→</span></a>
+      </div>
+
+      <div class="dienst-card fade-up">
+        <div class="dienst-icon">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <rect x="5" y="8" width="16" height="12" rx="2.5" stroke="#1A7A42" stroke-width="1.5" fill="none"/>
+            <path d="M10 8V5.5M16 8V5.5M9 20V22.5M17 20V22.5" stroke="#1A7A42" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M10 14h2l1-3 1.5 6L16 14h1" stroke="#1A7A42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="dienst-title">Laadpaal</div>
+        <p class="dienst-text">Laad je elektrische auto thuis op met de snelheid die jij nodig hebt. Slim laden op basis van het stroomtarief of je eigen zonnepanelen — volledig automatisch.</p>
+        <a href="energx-laadpaal.html" class="dienst-link">Offerte aanvragen <span>→</span></a>
+      </div>
+
+      <div class="dienst-card fade-up">
+        <div class="dienst-icon">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <path d="M13 4C9.5 4 7 7 7 10.5C7 14 9 16 13 20C17 16 19 14 19 10.5C19 7 16.5 4 13 4Z" stroke="#1A7A42" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+            <path d="M10 10.5C10 8.8 11.3 7.5 13 7.5" stroke="#1A7A42" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="dienst-title">Warmtepomp</div>
+        <p class="dienst-text">Verwarm je huis efficiënt en zonder gas. Een moderne warmtepomp levert drie tot vijf keer zoveel energie als hij verbruikt — goed voor je portemonnee én het klimaat.</p>
+        <a href="#offerte" class="dienst-link">Offerte aanvragen <span>→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOE WE WERKEN -->
+<section id="hoe-we-werken">
+  <div class="container">
+    <div class="hoe-grid">
+      <div>
+        <span class="section-tag">Hoe we werken</span>
+        <h2 class="section-title">Van aanvraag tot<br>installatie in 4 stappen</h2>
+        <div class="hoe-steps">
+          <div class="step fade-up">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Vul het formulier in</div>
+              <p class="step-text">Vertel ons wat je nodig hebt — dat duurt minder dan 2 minuten. Je hoeft geen technische kennis te hebben.</p>
+            </div>
+          </div>
+          <div class="step fade-up">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Ontvang je offerte</div>
+              <p class="step-text">Binnen enkele minuten ontvang je een duidelijke, transparante offerte — zonder kleine lettertjes.</p>
+            </div>
+          </div>
+          <div class="step fade-up">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Lokale installateur plant in</div>
+              <p class="step-text">Zodra je akkoord gaat, koppelen we je aan een gecertificeerde installateur uit jouw regio. Snel, betrouwbaar en zonder gedoe.</p>
+            </div>
+          </div>
+          <div class="step fade-up">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Klaar — bespaar meteen</div>
+              <p class="step-text">De installateur regelt alles, inclusief afmelding bij de netbeheerder. Jij hoeft niks te doen.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hoe-visual fade-up">
+        <div class="lokaal-title">Waarom <em>lokale</em><br>installateurs?</div>
+        <p class="lokaal-text">
+          Grote landelijke bedrijven sturen je een monteur die 's ochtends al drie andere klanten heeft gehad. Wij geloven in vakmanschap uit de buurt — iemand die jouw straat kent, snel ter plaatse is en na afloop ook gewoon bereikbaar blijft.
+        </p>
+        <div class="lokaal-items">
+          <div class="lokaal-item">
+            <div class="lokaal-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            Snelle beschikbaarheid — geen weken wachten
+          </div>
+          <div class="lokaal-item">
+            <div class="lokaal-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            Gecertificeerd en verzekerd vakmanschap
+          </div>
+          <div class="lokaal-item">
+            <div class="lokaal-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            Persoonlijk contact, ook ná de installatie
+          </div>
+          <div class="lokaal-item">
+            <div class="lokaal-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            Kennis van lokale regelgeving en subsidies
+          </div>
+          <div class="lokaal-item">
+            <div class="lokaal-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            Bijdrage aan de lokale economie
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews" id="reviews">
+  <div class="container">
+    <span class="section-tag">Klantbeoordelingen</span>
+    <h2 class="section-title">Wat onze klanten zeggen</h2>
+    <p class="section-sub">Meer dan 500 tevreden klanten gingen je voor. Lees hun ervaringen.</p>
+
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <div class="review-stars">
+          <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+        </div>
+        <p class="review-text">"Binnen 10 minuten had ik een duidelijke offerte in mijn inbox. De installateur was twee dagen later al bij ons — netjes, snel en goed uitgelegd. Echt aanrader."</p>
+        <div class="review-author">
+          <div class="review-avatar">MV</div>
+          <div>
+            <div class="review-name">Martijn van der Berg</div>
+            <div class="review-loc">Utrecht · Thuisbatterij</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-up">
+        <div class="review-stars">
+          <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+        </div>
+        <p class="review-text">"We twijfelden lang over een warmtepomp. Energx heeft alles helder uitgelegd en de lokale installateur kende precies de subsidies die wij konden aanvragen. Hebben zo een paar duizend euro bespaard."</p>
+        <div class="review-author">
+          <div class="review-avatar">SH</div>
+          <div>
+            <div class="review-name">Sandra Hoogenbosch</div>
+            <div class="review-loc">Amersfoort · Warmtepomp</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card fade-up">
+        <div class="review-stars">
+          <div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div>
+        </div>
+        <p class="review-text">"Laadpaal geïnstalleerd voor mijn Tesla. Het contact met de installateur was prettig en professioneel. De offerte was scherp en er kwamen geen verborgen kosten bij. Top service."</p>
+        <div class="review-author">
+          <div class="review-avatar">RK</div>
+          <div>
+            <div class="review-name">Roel Koopmans</div>
+            <div class="review-loc">Eindhoven · Laadpaal</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFERTE -->
+<section class="offerte" id="offerte">
+  <div class="container">
+    <div class="offerte-header">
+      <span class="section-tag">Gratis & vrijblijvend</span>
+      <h2 class="section-title">Waarvoor wil je<br>een offerte?</h2>
+      <p class="section-sub">Kies je product en vul in 2 minuten het formulier in — geen verplichtingen, geen verborgen kosten.</p>
+    </div>
+
+    <div class="offerte-keuze">
+      <a href="energx-laadpaal.html" class="keuze-card fade-up">
+        <div class="keuze-icon">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <rect x="5" y="8" width="16" height="12" rx="2.5" stroke="#2DBD6E" stroke-width="1.5" fill="none"/>
+            <path d="M10 8V5.5M16 8V5.5M9 20V22.5M17 20V22.5" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M10 14h2l1-3 1.5 6L16 14h1" stroke="#2DBD6E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="keuze-title">Laadpaal</div>
+        <p class="keuze-text">Laad je elektrische auto thuis op — slim en snel, afgestemd op je situatie.</p>
+        <span class="keuze-link">Offerte aanvragen <span>→</span></span>
+      </a>
+
+      <a href="#" class="keuze-card fade-up">
+        <div class="keuze-icon">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <path d="M13 3L22 8V18L13 23L4 18V8L13 3Z" stroke="#2DBD6E" stroke-width="1.5" fill="none"/>
+            <path d="M13 8V18M9 11L17 15M9 15L17 11" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round"/>
+            <circle cx="13" cy="13" r="2" fill="#2DBD6E"/>
+          </svg>
+        </div>
+        <div class="keuze-title">Thuisbatterij</div>
+        <p class="keuze-text">Sla je zonne-energie op en gebruik die wanneer jij het nodig hebt.</p>
+        <span class="keuze-soon">Binnenkort beschikbaar</span>
+      </a>
+
+      <a href="energx-warmtepomp.html" class="keuze-card fade-up">
+        <div class="keuze-icon">
+          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+            <path d="M13 4C9.5 4 7 7 7 10.5C7 14 9 16 13 20C17 16 19 14 19 10.5C19 7 16.5 4 13 4Z" stroke="#2DBD6E" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+            <path d="M10 10.5C10 8.8 11.3 7.5 13 7.5" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="keuze-title">Warmtepomp</div>
+        <p class="keuze-text">Verwarm je huis efficiënt zonder gas — goed voor je portemonnee én het klimaat.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="7" fill="#1A7A42"/>
+            <path d="M14 5L21 9.5V18.5L14 23L7 18.5V9.5L14 5Z" stroke="#2DBD6E" stroke-width="1.2" fill="none"/>
+            <circle cx="14" cy="14" r="2" fill="#2DBD6E"/>
+          </svg>
+          <span class="footer-logo-text">Energ<span>x</span></span>
+        </a>
+        <p class="footer-tagline">Slimme energie, lokale kracht. Wij verbinden je met de beste installateurs in jouw regio.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Diensten</div>
+        <ul>
+          <li><a href="#offerte">Thuisbatterij</a></li>
+          <li><a href="energx-laadpaal.html">Laadpaal</a></li>
+          <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Bedrijf</div>
+        <ul>
+          <li><a href="#">Over ons</a></li>
+          <li><a href="#hoe-we-werken">Hoe we werken</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#">Installateurs worden?</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <ul>
+          <li><a href="mailto:info@energx.nl">info@energx.nl</a></li>
+          <li><a href="#">Privacybeleid</a></li>
+          <li><a href="#">Algemene voorwaarden</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Energx.nl — Alle rechten voorbehouden</span>
+      <span class="footer-green">Duurzaam gebouwd ♻</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

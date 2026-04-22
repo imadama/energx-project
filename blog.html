@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog — Energx</title>
+<meta name="description" content="Tips en uitleg over laadpalen, warmtepompen en subsidies. Lees alles over slim energie gebruiken thuis — van de experts van Energx.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-900: #0B3320;
+    --green-800: #0F4A2A;
+    --green-700: #155E34;
+    --green-600: #1A7A42;
+    --green-500: #22A058;
+    --green-400: #2DBD6E;
+    --green-300: #5FD496;
+    --green-100: #D4F2E2;
+    --green-50:  #EDF9F3;
+    --night:     #090F0C;
+    --night-2:   #0E1A12;
+    --night-3:   #162019;
+    --white:     #FAFCFB;
+    --gray-100:  #F0F4F1;
+    --gray-200:  #DCE5DE;
+    --gray-400:  #8FA896;
+    --gray-600:  #4A6152;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'Outfit', sans-serif;
+    --max: 1200px;
+    --radius: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--white); color: var(--night); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0 2rem; height: 68px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(250,252,251,0.85); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-icon { width: 34px; height: 34px; }
+  .nav-logo-text { font-family: var(--font-display); font-size: 22px; color: var(--green-800); letter-spacing: -0.3px; }
+  .nav-logo-text span { color: var(--green-400); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: 15px; font-weight: 400; color: var(--gray-600); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green-800); }
+  .nav-links a.active { color: var(--green-800); font-weight: 500; }
+  .nav-cta { background: var(--green-800); color: var(--white) !important; padding: 9px 20px; border-radius: 100px; font-weight: 500 !important; transition: background 0.2s !important; }
+  .nav-cta:hover { background: var(--green-600) !important; }
+
+  /* HERO */
+  .hero {
+    background: var(--night);
+    padding: 140px 6vw 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45,189,110,0.12) 0%, transparent 70%);
+    top: -100px; left: 50%; transform: translateX(-50%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--green-400); margin-bottom: 16px;
+  }
+  .hero-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); color: var(--white); line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 1rem; }
+  .hero-sub { font-size: 18px; color: rgba(255,255,255,0.5); font-weight: 300; max-width: 520px; margin: 0 auto; }
+
+  /* BLOG GRID */
+  .blog-section { padding: 80px 6vw; }
+  .container { max-width: var(--max); margin: 0 auto; }
+
+  .blog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 3rem;
+  }
+
+  .blog-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 20px;
+    overflow: hidden;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .blog-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(15,74,42,0.08); }
+
+  .blog-card-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+    background: var(--green-50);
+  }
+
+  .blog-card-img-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, var(--green-50) 0%, var(--green-100) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .blog-card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+  .blog-cat {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--green-600);
+    background: var(--green-50);
+    border: 1px solid var(--green-100);
+    padding: 3px 10px; border-radius: 100px;
+    display: inline-block; width: fit-content;
+  }
+
+  .blog-title { font-family: var(--font-display); font-size: 20px; color: var(--night); line-height: 1.2; }
+  .blog-excerpt { font-size: 14px; color: var(--gray-600); line-height: 1.7; font-weight: 300; flex: 1; }
+
+  .blog-meta {
+    display: flex; gap: 12px; align-items: center;
+    font-size: 12px; color: var(--gray-400); font-weight: 300;
+    padding-top: 12px; border-top: 1px solid var(--gray-200);
+    margin-top: auto;
+  }
+  .blog-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gray-400); }
+
+  .blog-read-more { font-size: 13px; font-weight: 600; color: var(--green-600); display: inline-flex; align-items: center; gap: 5px; transition: gap 0.2s; }
+  .blog-card:hover .blog-read-more { gap: 9px; }
+
+  /* FOOTER */
+  footer { background: #060D09; padding: 40px 6vw; text-align: center; font-size: 13px; color: rgba(255,255,255,0.25); font-weight: 300; }
+  footer a { color: var(--green-600); text-decoration: none; }
+
+  @media (max-width: 900px) {
+    .blog-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <svg class="nav-logo-icon" viewBox="0 0 34 34" fill="none">
+      <rect width="34" height="34" rx="9" fill="#0F4A2A"/>
+      <path d="M17 6L26 12V22L17 28L8 22V12L17 6Z" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+      <path d="M17 11V23M12 14L22 20M12 20L22 14" stroke="#2DBD6E" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="17" cy="17" r="2.5" fill="#2DBD6E"/>
+    </svg>
+    <span class="nav-logo-text">Energ<span>x</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#offerte">Thuisbatterij</a></li>
+    <li><a href="energx-laadpaal.html">Laadpaal</a></li>
+    <li><a href="index.html#offerte">Warmtepomp</a></li>
+    <li><a href="blog.html" class="active">Blog</a></li>
+    <li><a href="index.html#offerte" class="nav-cta">Offerte aanvragen</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-tag">Kennisbank</div>
+  <h1 class="hero-title">Alles over<br>duurzame energie</h1>
+  <p class="hero-sub">Tips, uitleg en verhalen over laadpalen, thuisbatterijen, warmtepompen en subsidies.</p>
+</div>
+
+<section class="blog-section">
+  <div class="container">
+    <div class="blog-grid">
+
+      <a href="blog/isde-subsidie-warmtepomp.html" class="blog-card">
+        <div class="blog-card-img-placeholder">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <path d="M24 8C17 8 12 14 12 20C12 27 16 31 24 39C32 31 36 27 36 20C36 14 31 8 24 8Z" stroke="#22A058" stroke-width="2" fill="none"/>
+            <path d="M19 20C19 17.2 21.2 15 24 15" stroke="#22A058" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-cat">Subsidies</span>
+          <div class="blog-title">ISDE-subsidie 2025: hoeveel krijg je terug voor een warmtepomp?</div>
+          <p class="blog-excerpt">De ISDE-subsidie maakt een warmtepomp een stuk betaalbaarder. We leggen uit hoeveel je precies terugkrijgt, wat de voorwaarden zijn en hoe je de aanvraag doet.</p>
+          <div class="blog-meta">
+            <span>18 april 2025</span>
+            <span class="blog-meta-dot"></span>
+            <span>5 min lezen</span>
+          </div>
+          <span class="blog-read-more">Lees artikel <span>→</span></span>
+        </div>
+      </a>
+
+      <a href="blog/ratio-vs-zaptec.html" class="blog-card">
+        <div class="blog-card-img-placeholder">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <rect x="8" y="14" width="32" height="22" rx="4" stroke="#22A058" stroke-width="2" fill="none"/>
+            <path d="M19 14V10M29 14V10M17 36V41M31 36V41" stroke="#22A058" stroke-width="2" stroke-linecap="round"/>
+            <path d="M19 26h4l2-5 3 10L31 26h2" stroke="#22A058" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-cat">Laadpalen</span>
+          <div class="blog-title">Ratio of Zaptec — welke laadpaal past bij jouw situatie?</div>
+          <p class="blog-excerpt">Beide merken zijn top, maar voor wie is welke laadpaal nu écht de beste keuze? We vergelijken prijs, functies en voor wie elk merk het meest geschikt is.</p>
+          <div class="blog-meta">
+            <span>12 april 2025</span>
+            <span class="blog-meta-dot"></span>
+            <span>4 min lezen</span>
+          </div>
+          <span class="blog-read-more">Lees artikel <span>→</span></span>
+        </div>
+      </a>
+
+      <a href="blog/laadpaal-installatie-dag.html" class="blog-card">
+        <div class="blog-card-img-placeholder">
+          <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+            <path d="M24 6L38 14V34L24 42L10 34V14L24 6Z" stroke="#22A058" stroke-width="2" fill="none"/>
+            <circle cx="24" cy="24" r="4" fill="#22A058"/>
+            <path d="M24 14V20M24 28V34M14 24H20M28 24H34" stroke="#22A058" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="blog-card-body">
+          <span class="blog-cat">Installatie</span>
+          <div class="blog-title">Een dag in het leven van een Energx installateur</div>
+          <p class="blog-excerpt">Hoe ziet een installatiedag er eigenlijk uit? Van eerste contact tot de auto die oplaadt — een kijkje achter de schermen bij een lokale Energx installateur.</p>
+          <div class="blog-meta">
+            <span>5 april 2025</span>
+            <span class="blog-meta-dot"></span>
+            <span>3 min lezen</span>
+          </div>
+          <span class="blog-read-more">Lees artikel <span>→</span></span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 Energx.nl — <a href="index.html">Home</a> · <a href="mailto:info@energx.nl">info@energx.nl</a></p>
+</footer>
+
+</body>
+</html>

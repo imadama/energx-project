@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laadpaal installatie — Energx</title>
+<meta name="description" content="Thuis een laadpaal laten installeren? Energx plaatst Ratio en Zaptec laadpalen via lokale installateurs. Slim laden, vaste prijs, binnen 1 werkdag offerte.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-900: #0B3320;
+    --green-800: #0F4A2A;
+    --green-700: #155E34;
+    --green-600: #1A7A42;
+    --green-500: #22A058;
+    --green-400: #2DBD6E;
+    --green-300: #5FD496;
+    --green-100: #D4F2E2;
+    --green-50:  #EDF9F3;
+    --night:     #090F0C;
+    --night-2:   #0E1A12;
+    --night-3:   #162019;
+    --white:     #FAFCFB;
+    --gray-100:  #F0F4F1;
+    --gray-200:  #DCE5DE;
+    --gray-400:  #8FA896;
+    --gray-600:  #4A6152;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'Outfit', sans-serif;
+    --max: 1200px;
+    --radius: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--night);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 2rem;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(250,252,251,0.9);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-icon { width: 34px; height: 34px; }
+  .nav-logo-text { font-family: var(--font-display); font-size: 22px; color: var(--green-800); letter-spacing: -0.3px; }
+  .nav-logo-text span { color: var(--green-400); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--gray-600);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--green-800); }
+
+  .nav-back {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 14px; color: var(--gray-600);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-back:hover { color: var(--green-800); }
+
+  .nav-cta {
+    background: var(--green-800);
+    color: var(--white);
+    padding: 9px 20px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--green-600); }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--night);
+    padding: 140px 6vw 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(45,189,110,0.14) 0%, transparent 70%);
+    top: -150px; right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+  }
+
+  .hero-breadcrumb {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .hero-breadcrumb a { color: var(--green-400); text-decoration: none; }
+  .hero-breadcrumb span { color: rgba(255,255,255,0.2); }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--green-400);
+    color: var(--night);
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .btn-primary:hover { background: var(--green-300); transform: translateY(-1px); }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(45,189,110,0.12);
+    border: 1px solid rgba(45,189,110,0.25);
+    color: var(--green-300);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green-400);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.5; transform:scale(0.8); }
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 4.5vw, 60px);
+    color: var(--white);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-title em { font-style: italic; color: var(--green-400); }
+
+  .hero-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    max-width: 460px;
+  }
+
+  .hero-merken {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .merk-label { font-size: 12px; color: rgba(255,255,255,0.3); margin-right: 4px; }
+
+  .merk-badge {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 0.03em;
+  }
+
+  /* Hero right — installatie visual cards */
+  .hero-right { display: flex; flex-direction: column; gap: 14px; }
+
+  .install-card {
+    background: var(--night-3);
+    border: 1px solid rgba(45,189,110,0.15);
+    border-radius: 18px;
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: border-color 0.2s;
+  }
+
+  .install-card:hover { border-color: rgba(45,189,110,0.35); }
+
+  .ic-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(45,189,110,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .ic-body { flex: 1; }
+  .ic-title { font-size: 15px; font-weight: 500; color: var(--white); margin-bottom: 2px; }
+  .ic-sub { font-size: 13px; color: rgba(255,255,255,0.4); font-weight: 300; }
+  .ic-tag {
+    font-size: 11px; font-weight: 600;
+    color: var(--green-400);
+    background: rgba(45,189,110,0.1);
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 90px 6vw; }
+  .container { max-width: var(--max); margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-600);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.5vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    color: var(--night);
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: 17px;
+    color: var(--gray-600);
+    font-weight: 300;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ── MERKEN ── */
+  .merken { background: var(--night); }
+  .merken .section-tag { color: var(--green-400); }
+  .merken .section-title { color: var(--white); }
+  .merken .section-sub { color: rgba(255,255,255,0.45); }
+
+  .merken-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 3rem;
+  }
+
+  .merk-card {
+    background: var(--night-3);
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.07);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .merk-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px rgba(0,0,0,0.3); }
+
+  .merk-foto {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+  }
+
+  .merk-body { padding: 32px; }
+
+  .merk-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+
+  .merk-name {
+    font-family: var(--font-display);
+    font-size: 30px;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+
+  .merk-type {
+    font-size: 11px;
+    color: var(--green-400);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(45,189,110,0.12);
+    border: 1px solid rgba(45,189,110,0.2);
+    padding: 4px 12px;
+    border-radius: 100px;
+    white-space: nowrap;
+    margin-top: 6px;
+  }
+
+  .merk-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .merk-voor {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .merk-specs { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+
+  .merk-spec {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+  }
+
+  .spec-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green-400);
+    flex-shrink: 0;
+  }
+
+  /* Foto placeholder */
+  .foto-placeholder {
+    background: var(--green-50);
+    border: 2px dashed var(--green-200, #97C459);
+    border-radius: 16px;
+    padding: 2rem;
+    text-align: center;
+    color: var(--green-600);
+    font-size: 14px;
+    margin-top: 3rem;
+    font-weight: 300;
+  }
+
+  .foto-placeholder-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+  }
+
+  .foto-grid {
+    display: flex;
+    gap: 16px;
+    margin-top: 3rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-bottom: 8px;
+  }
+
+  .foto-grid::-webkit-scrollbar { display: none; }
+
+  .foto-item {
+    flex: 0 0 calc((100% - 32px) / 3);
+    aspect-ratio: 4/3;
+    border-radius: 14px;
+    overflow: hidden;
+    scroll-snap-align: start;
+  }
+
+  .foto-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ── FORMULIER ── */
+  .formulier { background: var(--night); }
+  .formulier .section-title { color: var(--white); }
+  .formulier .section-sub { color: rgba(255,255,255,0.45); }
+  .formulier .section-tag { color: var(--green-400); }
+
+  .form-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 5rem;
+    margin-top: 3rem;
+    align-items: start;
+  }
+
+  /* Steps indicator */
+  .form-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: sticky;
+    top: 90px;
+  }
+
+  .form-step-item {
+    display: flex;
+    gap: 16px;
+    padding: 0 0 28px 0;
+    position: relative;
+    cursor: pointer;
+  }
+
+  .form-step-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 30px;
+    bottom: 0;
+    width: 1px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .form-step-item.active::before { background: rgba(45,189,110,0.2); }
+
+  .step-circle {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.3);
+    flex-shrink: 0;
+    transition: all 0.3s;
+    background: transparent;
+  }
+
+  .form-step-item.active .step-circle {
+    border-color: var(--green-400);
+    color: var(--green-400);
+    background: rgba(45,189,110,0.1);
+  }
+
+  .form-step-item.done .step-circle {
+    border-color: var(--green-600);
+    background: var(--green-600);
+    color: var(--white);
+  }
+
+  .step-info { padding-top: 3px; }
+  .step-name { font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.35); transition: color 0.2s; }
+  .form-step-item.active .step-name { color: var(--white); }
+  .form-step-item.done .step-name { color: var(--green-400); }
+  .step-desc { font-size: 12px; color: rgba(255,255,255,0.2); font-weight: 300; margin-top: 2px; }
+
+  /* Form card */
+  .form-card {
+    background: var(--night-3);
+    border: 1px solid rgba(45,189,110,0.12);
+    border-radius: 24px;
+    padding: 36px;
+  }
+
+  .form-section { display: none; }
+  .form-section.active { display: block; }
+
+  .form-section-title {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: var(--white);
+    margin-bottom: 6px;
+  }
+
+  .form-section-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+
+  /* Choice cards */
+  .choice-group {
+    margin-bottom: 24px;
+  }
+
+  .choice-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 10px;
+    display: block;
+    letter-spacing: 0.03em;
+  }
+
+  .choice-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .choice-cards.horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .choice-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    user-select: none;
+  }
+
+  .choice-card:hover {
+    border-color: rgba(45,189,110,0.3);
+    color: rgba(255,255,255,0.85);
+  }
+
+  .choice-card.selected {
+    border-color: var(--green-400);
+    background: rgba(45,189,110,0.1);
+    color: var(--white);
+  }
+
+  .choice-card .cc-icon {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .choice-card.selected .cc-icon {
+    border-color: var(--green-400);
+    background: var(--green-400);
+  }
+
+  .choice-card.selected .cc-icon::after {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--night);
+  }
+
+  .choice-card .cc-body { flex: 1; }
+  .choice-card .cc-title { font-size: 14px; font-weight: 500; color: inherit; }
+  .choice-card .cc-sub { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 3px; font-weight: 300; }
+  .choice-card.selected .cc-sub { color: rgba(255,255,255,0.6); }
+  .choice-card .cc-desc { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 2px; font-weight: 300; }
+  .choice-card.selected .cc-desc { color: rgba(255,255,255,0.5); }
+
+  /* Conditional field */
+  .cond-field {
+    display: none;
+    margin-top: 16px;
+    padding: 16px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .cond-field.visible { display: block; }
+
+  /* Form inputs */
+  .form-group { margin-bottom: 16px; }
+
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 7px;
+    letter-spacing: 0.04em;
+  }
+
+  .form-input, .form-select {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .form-input::placeholder { color: rgba(255,255,255,0.2); }
+  .form-input:focus, .form-select:focus { border-color: var(--green-400); }
+  .form-select option { background: var(--night); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .cond-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 300;
+  }
+
+  /* Nav buttons */
+  .form-nav {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    align-items: center;
+  }
+
+  .btn-next {
+    background: var(--green-400);
+    color: var(--night);
+    padding: 13px 28px;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    flex: 1;
+  }
+
+  .btn-next:hover { background: var(--green-300); transform: translateY(-1px); }
+
+  .btn-back {
+    background: transparent;
+    color: rgba(255,255,255,0.4);
+    padding: 13px 20px;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 400;
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .btn-back:hover { color: var(--white); border-color: rgba(255,255,255,0.25); }
+
+  .form-submit {
+    width: 100%;
+    padding: 15px;
+    background: var(--green-400);
+    color: var(--night);
+    border: none;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s, transform 0.15s;
+  }
+
+  .form-submit:hover { background: var(--green-300); transform: translateY(-1px); }
+
+  .form-privacy {
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+    text-align: center;
+    margin-top: 12px;
+    font-weight: 300;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    margin-bottom: 28px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green-700), var(--green-400));
+    border-radius: 100px;
+    transition: width 0.4s ease;
+  }
+
+  /* Success state */
+  .form-success {
+    display: none;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .form-success.visible { display: block; }
+
+  .success-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: rgba(45,189,110,0.15);
+    border: 2px solid var(--green-400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .success-title {
+    font-family: var(--font-display);
+    font-size: 26px;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+
+  .success-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ── FADE ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060D09;
+    padding: 32px 6vw;
+    text-align: center;
+    font-size: 13px;
+    color: rgba(255,255,255,0.25);
+    font-weight: 300;
+  }
+
+  footer a { color: var(--green-600); text-decoration: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .merken-grid { grid-template-columns: 1fr; }
+    .merk-foto { aspect-ratio: 4/3; }
+    .foto-item { flex: 0 0 80vw; }
+    .form-layout { grid-template-columns: 1fr; gap: 2rem; }
+    .form-steps { position: static; flex-direction: row; overflow-x: auto; gap: 8px; }
+    .form-step-item { flex-direction: column; align-items: center; text-align: center; padding: 0; gap: 6px; min-width: 80px; }
+    .form-step-item::before { display: none; }
+    .step-desc { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <svg class="nav-logo-icon" viewBox="0 0 34 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="34" height="34" rx="9" fill="#0F4A2A"/>
+      <path d="M17 6L26 12V22L17 28L8 22V12L17 6Z" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+      <path d="M17 11V23M12 14L22 20M12 20L22 14" stroke="#2DBD6E" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="17" cy="17" r="2.5" fill="#2DBD6E"/>
+    </svg>
+    <span class="nav-logo-text">Energ<span>x</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#offerte">Thuisbatterij</a></li>
+    <li><a href="energx-laadpaal.html">Laadpaal</a></li>
+    <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="#offerte" class="nav-cta">Offerte aanvragen</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        Laadpaal
+      </div>
+      <div class="hero-tag">Thuis laden</div>
+      <h1 class="hero-title">
+        Laad slimmer,<br>
+        <em>bespaar meer.</em>
+      </h1>
+      <p class="hero-sub">
+        Een eigen laadpaal installeren? Wij regelen het — van advies en offerte tot een gecertificeerde lokale installateur bij jou thuis. Snel, eerlijk geprijsd en zonder gedoe.
+      </p>
+      <div style="margin-bottom: 2rem;">
+        <a href="#offerte" class="btn-primary">Offerte aanvragen →</a>
+      </div>
+      <div class="hero-merken">
+        <span class="merk-label">Wij leveren:</span>
+        <div class="merk-badge">Ratio</div>
+        <div class="merk-badge">Zaptec</div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="install-card">
+        <div class="ic-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <path d="M11 3L19 7.5V14.5L11 19L3 14.5V7.5L11 3Z" stroke="#2DBD6E" stroke-width="1.3" fill="none"/>
+            <path d="M8 10h2l1-2.5 1.5 5L14 10h1" stroke="#2DBD6E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="ic-body">
+          <div class="ic-title">Ratio — Slim laden</div>
+          <div class="ic-sub">Tot 22 kW · App-gestuurd · Laadpas ready</div>
+        </div>
+        <div class="ic-tag">Populair</div>
+      </div>
+
+      <div class="install-card">
+        <div class="ic-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <rect x="5" y="4" width="12" height="14" rx="3" stroke="#2DBD6E" stroke-width="1.3" fill="none"/>
+            <path d="M9 4V2M13 4V2M9 18V20M13 18V20" stroke="#2DBD6E" stroke-width="1.3" stroke-linecap="round"/>
+            <circle cx="11" cy="11" r="2" fill="#2DBD6E" opacity="0.6"/>
+          </svg>
+        </div>
+        <div class="ic-body">
+          <div class="ic-title">Zaptec — Premium</div>
+          <div class="ic-sub">Tot 22 kW · V2G ready · Scandinavisch design</div>
+        </div>
+        <div class="ic-tag">Premium</div>
+      </div>
+
+      <div class="install-card">
+        <div class="ic-icon">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="7" stroke="#2DBD6E" stroke-width="1.3" fill="none"/>
+            <path d="M11 7v4l3 2" stroke="#2DBD6E" stroke-width="1.3" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="ic-body">
+          <div class="ic-title">Offerte binnen minuten</div>
+          <div class="ic-sub">Vul het formulier in — wij rekenen het voor je uit</div>
+        </div>
+        <div class="ic-tag">Gratis</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MERKEN -->
+<section class="merken">
+  <div class="container">
+    <span class="section-tag">Onze merken</span>
+    <h2 class="section-title">Ratio of Zaptec —<br>wij adviseren wat bij jou past</h2>
+    <p class="section-sub">We werken bewust met twee topmerken zodat we altijd de beste match kunnen maken voor jouw situatie en wensen.</p>
+
+    <div class="merken-grid">
+      <div class="merk-card fade-up">
+        <img class="merk-foto" src="/images/ratio-installatie-1.jpg" alt="Ratio laadpaal installatie">
+        <div class="merk-body">
+          <div class="merk-header">
+            <div class="merk-name">Ratio</div>
+            <div class="merk-type">Slim & betaalbaar</div>
+          </div>
+          <p class="merk-desc">De go-to keuze voor thuis laden. Slim, betrouwbaar en volledig uitgerust — zonder onnodige opties. Je laadt op zonnestroom, regelt alles via de app en betaalt een eerlijke prijs.</p>
+          <div class="merk-voor">Ideaal als je...</div>
+          <div class="merk-specs">
+            <div class="merk-spec"><div class="spec-dot"></div>Een betaalbare maar complete laadpaal wil</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Wil laden op zonnestroom</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Zakelijk wil verrekenen via laadpas</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Eenvoudig en snel wil installeren</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Tot 22 kW laadvermogen nodig hebt</div>
+          </div>
+          <a href="#offerte" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">Offerte aanvragen →</a>
+        </div>
+      </div>
+
+      <div class="merk-card fade-up">
+        <img class="merk-foto" src="/images/zaptec-installatie-2.jpg" alt="Zaptec laadpaal installatie">
+        <div class="merk-body">
+          <div class="merk-header">
+            <div class="merk-name">Zaptec</div>
+            <div class="merk-type">Premium & V2G ready</div>
+          </div>
+          <p class="merk-desc">Noors vakmanschap, strak design en toekomstbestendig. Zaptec is de keuze als je het maximale uit je installatie wil halen — inclusief teruglevering naar het net via V2G.</p>
+          <div class="merk-voor">Ideaal als je...</div>
+          <div class="merk-specs">
+            <div class="merk-spec"><div class="spec-dot"></div>Het beste design en premium kwaliteit wil</div>
+            <div class="merk-spec"><div class="spec-dot"></div>V2G wil — auto als thuisbatterij gebruiken</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Maximale flexibiliteit en toekomstbestendigheid wil</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Laden op zonnestroom & laadpas-ondersteuning</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Tot 22 kW laadvermogen nodig hebt</div>
+          </div>
+          <a href="#offerte" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">Offerte aanvragen →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Foto sectie -->
+    <div style="margin-top: 3.5rem;">
+      <h3 style="font-family: var(--font-display); font-size: 26px; color: var(--night); margin-bottom: 0.5rem;">Uitgevoerde installaties</h3>
+      <p style="font-size: 15px; color: var(--gray-600); font-weight: 300; margin-bottom: 1.5rem;">Een greep uit onze recente projecten bij klanten in de regio.</p>
+      <div class="foto-grid" id="fotoCarousel">
+        <div class="foto-item">
+          <img src="/images/ratio-installatie-1.jpg" alt="Ratio laadpaal aan gevel">
+        </div>
+        <div class="foto-item">
+          <img src="/images/ratio-installatie-2.jpg" alt="Ratio laadpaal op paal">
+        </div>
+        <div class="foto-item">
+          <img src="/images/zaptec-installatie-1.jpg" alt="Zaptec laadpaal aan gevel">
+        </div>
+        <div class="foto-item">
+          <img src="/images/zaptec-installatie-2.jpg" alt="Zaptec laadpaal aan gevel geel metselwerk">
+        </div>
+        <div class="foto-item">
+          <img src="/images/zaptec-installatie-3.jpg" alt="Zaptec laadpaal op staander oprit">
+        </div>
+        <div class="foto-item">
+          <img src="/images/zaptec-installatie-4.jpg" alt="Zaptec laadpaal aan gevel met kabel">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFERTE FORMULIER -->
+<section class="formulier" id="offerte">
+  <div class="container">
+    <span class="section-tag">Vrijblijvend & gratis</span>
+    <h2 class="section-title">Bereken jouw<br>laadpaal offerte</h2>
+    <p class="section-sub">Beantwoord een paar vragen over jouw situatie — binnen minuten ontvang je een offerte op maat.</p>
+
+    <div class="form-layout">
+
+      <!-- Stappen sidebar -->
+      <div class="form-steps" id="formSteps">
+        <div class="form-step-item active" data-step="1">
+          <div class="step-circle">1</div>
+          <div class="step-info">
+            <div class="step-name">Laadpunt wensen</div>
+            <div class="step-desc">Functies & mogelijkheden</div>
+          </div>
+        </div>
+        <div class="form-step-item" data-step="2">
+          <div class="step-circle">2</div>
+          <div class="step-info">
+            <div class="step-name">Installatie situatie</div>
+            <div class="step-desc">Locatie & bekabeling</div>
+          </div>
+        </div>
+        <div class="form-step-item" data-step="3">
+          <div class="step-circle">3</div>
+          <div class="step-info">
+            <div class="step-name">Jouw gegevens</div>
+            <div class="step-desc">Contact & locatie</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form card -->
+      <div class="form-card">
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill" style="width: 33%"></div>
+        </div>
+
+        <!-- STAP 1: Laadpunt wensen -->
+        <div class="form-section active" id="step1">
+          <div class="form-section-title">Wat wil jij van je laadpunt?</div>
+          <div class="form-section-sub">Selecteer wat op jou van toepassing is. Meerdere keuzes zijn mogelijk.</div>
+
+          <div class="choice-group">
+            <span class="choice-label">Heb je een voorkeursmerk?</span>
+            <div class="choice-cards horizontal" id="qMerk">
+              <div class="choice-card" data-value="Ratio" onclick="selectMerk(this, 'Ratio')">
+                <div class="cc-body">
+                  <div class="cc-title">Ratio</div>
+                  <div class="cc-sub">Slim & betaalbaar</div>
+                </div>
+              </div>
+              <div class="choice-card" data-value="Zaptec" onclick="selectMerk(this, 'Zaptec')">
+                <div class="cc-body">
+                  <div class="cc-title">Zaptec</div>
+                  <div class="cc-sub">Premium &amp; V2G ready</div>
+                </div>
+              </div>
+              <div class="choice-card" data-value="" onclick="selectMerk(this, '')">
+                <div class="cc-body">
+                  <div class="cc-title">Geen voorkeur</div>
+                  <div class="cc-sub">Jullie adviseren mij</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="choice-group">
+            <span class="choice-label">Wil je geld kunnen verdienen met je laadpaal?</span>
+            <div class="choice-cards horizontal" id="q1">
+              <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q1', false)">
+                <div class="cc-icon"></div>
+                <div class="cc-body">
+                  <div class="cc-title">Ja, interessant</div>
+                </div>
+              </div>
+              <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q1', false)">
+                <div class="cc-icon"></div>
+                <div class="cc-body">
+                  <div class="cc-title">Niet nodig</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="choice-group">
+            <span class="choice-label">Wil je laden op zonnestroom?</span>
+            <div class="choice-cards horizontal" id="q2">
+              <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q2', false)">
+                <div class="cc-icon"></div>
+                <div class="cc-body">
+                  <div class="cc-title">Ja, ik heb zonnepanelen</div>
+                </div>
+              </div>
+              <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q2', false)">
+                <div class="cc-icon"></div>
+                <div class="cc-body">
+                  <div class="cc-title">Niet nodig</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="choice-group">
+            <span class="choice-label">Wil je een V2G-ready laadpaal? (auto als thuisbatterij)</span>
+            <div class="choice-cards horizontal" id="q3">
+              <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q3', false)">
+                <div class="cc-icon"></div>
+                <div class="cc-body">
+                  <div class="cc-title">Ja, toekomstbestendig</div>
+                </div>
+              </div>
+              <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q3', false)">
+                <div class="cc-icon"></div>
+                <div class="cc-body">
+                  <div class="cc-title">Niet nodig</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="choice-group">
+            <span class="choice-label">Wil je kunnen verrekenen met een laadpas? (bijv. zakelijk)</span>
+            <div class="choice-cards horizontal" id="q4">
+              <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q4', false)">
+                <div class="cc-icon"></div>
+                <div class="cc-body">
+                  <div class="cc-title">Ja, handig</div>
+                </div>
+              </div>
+              <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q4', false)">
+                <div class="cc-icon"></div>
+                <div class="cc-body">
+                  <div class="cc-title">Niet nodig</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button class="btn-next" onclick="nextStep(2)">Volgende stap →</button>
+          </div>
+        </div>
+
+        <!-- STAP 2: Installatie situatie -->
+        <div class="form-section" id="step2">
+          <div class="form-section-title">Hoe ziet jouw situatie eruit?</div>
+          <div class="form-section-sub">Dit bepaalt de installatiekosten. Kies de situatie die het best bij jou past.</div>
+
+          <div class="choice-group">
+            <span class="choice-label">Welke installatiesituatie heb jij?</span>
+            <div class="choice-cards" id="qSituatie">
+              <div class="choice-card" data-value="direct" onclick="selectSituatie(this, 'direct')">
+                <div class="cc-icon"></div>
+                <div class="cc-body">
+                  <div class="cc-title">Direct achter de meterkast</div>
+                  <div class="cc-desc">Laadpaal komt vlak naast de meterkast — geen lange kabelroute nodig</div>
+                </div>
+              </div>
+              <div class="choice-card" data-value="kruip-gevel" onclick="selectSituatie(this, 'kruip-gevel')">
+                <div class="cc-icon"></div>
+                <div class="cc-body">
+                  <div class="cc-title">Kruipruimte & direct tegen de gevel</div>
+                  <div class="cc-desc">Kabel loopt via de kruipruimte naar de buitenmuur</div>
+                </div>
+              </div>
+              <div class="choice-card" data-value="kruip-graaf" onclick="selectSituatie(this, 'kruip-graaf')">
+                <div class="cc-icon"></div>
+                <div class="cc-body">
+                  <div class="cc-title">Kruipruimte met graaf- en straatwerk</div>
+                  <div class="cc-desc">Kabel moet worden ingegraven naar de laadpaal op de oprit/parkeerplaats</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Situatie: direct -->
+          <div class="cond-field" id="condDirect">
+            <div class="form-group">
+              <span class="cond-label">Is er ruimte in de meterkast voor een aardlekautomaat?</span>
+              <div class="choice-cards horizontal" id="qAardlekDirect">
+                <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'qAardlekDirect', false)">
+                  <div class="cc-icon"></div>
+                  <div class="cc-body"><div class="cc-title">Ja, er is ruimte</div></div>
+                </div>
+                <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'qAardlekDirect', false)">
+                  <div class="cc-icon"></div>
+                  <div class="cc-body"><div class="cc-title">Nee / weet ik niet</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Situatie: kruip-gevel -->
+          <div class="cond-field" id="condKruipGevel">
+            <div class="form-group">
+              <span class="cond-label">Is er ruimte in de meterkast voor een aardlekautomaat?</span>
+              <div class="choice-cards horizontal" id="qAardlekGevel">
+                <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'qAardlekGevel', false)">
+                  <div class="cc-icon"></div>
+                  <div class="cc-body"><div class="cc-title">Ja, er is ruimte</div></div>
+                </div>
+                <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'qAardlekGevel', false)">
+                  <div class="cc-icon"></div>
+                  <div class="cc-body"><div class="cc-title">Nee / weet ik niet</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-top: 12px;">
+              <span class="cond-label">Hoeveel meter afstand (ongeveer) van meterkast naar de plek van de laadpaal?</span>
+              <select class="form-select" id="afstandGevel">
+                <option value="">Kies een afstand</option>
+                <option>0 – 5 meter</option>
+                <option>5 – 10 meter</option>
+                <option>10 – 15 meter</option>
+                <option>15 – 20 meter</option>
+                <option>Meer dan 20 meter</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Situatie: kruip-graaf -->
+          <div class="cond-field" id="condKruipGraaf">
+            <div class="form-group">
+              <span class="cond-label">Is er ruimte in de meterkast voor een aardlekautomaat?</span>
+              <div class="choice-cards horizontal" id="qAardlekGraaf">
+                <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'qAardlekGraaf', false)">
+                  <div class="cc-icon"></div>
+                  <div class="cc-body"><div class="cc-title">Ja, er is ruimte</div></div>
+                </div>
+                <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'qAardlekGraaf', false)">
+                  <div class="cc-icon"></div>
+                  <div class="cc-body"><div class="cc-title">Nee / weet ik niet</div></div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group" style="margin-top: 12px;">
+              <span class="cond-label">Hoeveel meter afstand van meterkast naar laadpaal?</span>
+              <select class="form-select" id="afstandGraaf">
+                <option value="">Kies een afstand</option>
+                <option>0 – 5 meter</option>
+                <option>5 – 10 meter</option>
+                <option>10 – 15 meter</option>
+                <option>15 – 20 meter</option>
+                <option>Meer dan 20 meter</option>
+              </select>
+            </div>
+            <div class="form-group" style="margin-top: 12px;">
+              <span class="cond-label">Hoeveel meter graaf- en straatwerk is er nodig?</span>
+              <select class="form-select" id="meterGraaf">
+                <option value="">Kies een hoeveelheid</option>
+                <option>0 – 3 meter</option>
+                <option>3 – 6 meter</option>
+                <option>6 – 10 meter</option>
+                <option>Meer dan 10 meter</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button class="btn-back" onclick="nextStep(1)">← Terug</button>
+            <button class="btn-next" onclick="nextStep(3)">Volgende stap →</button>
+          </div>
+        </div>
+
+        <!-- STAP 3: Contactgegevens -->
+        <div class="form-section" id="step3">
+          <div class="form-section-title">Bijna klaar — jouw gegevens</div>
+          <div class="form-section-sub">We sturen je offerte direct naar je e-mailadres.</div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Voornaam</label>
+              <input type="text" class="form-input" placeholder="Jan">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Achternaam</label>
+              <input type="text" class="form-input" placeholder="de Vries">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">E-mailadres</label>
+            <input type="email" class="form-input" placeholder="jan@email.nl">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Telefoonnummer</label>
+            <input type="tel" class="form-input" placeholder="06 12345678">
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Postcode</label>
+              <input type="text" class="form-input" placeholder="1234 AB">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Huisnummer</label>
+              <input type="text" class="form-input" placeholder="12">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Voorkeursmerk (optioneel)</label>
+            <select class="form-select" id="merkSelect">
+              <option value="">Geen voorkeur — adviseer mij</option>
+              <option value="Ratio">Ratio</option>
+              <option value="Zaptec">Zaptec</option>
+            </select>
+          </div>
+
+          <div class="form-nav" style="flex-direction: column; gap: 10px;">
+            <button class="btn-back" onclick="nextStep(2)" style="align-self: flex-start; padding: 10px 18px; font-size: 14px;">← Terug</button>
+            <button class="form-submit" onclick="submitForm()">Stuur mijn offerte aanvraag →</button>
+          </div>
+          <p class="form-privacy">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
+        </div>
+
+        <!-- SUCCESS -->
+        <div class="form-success" id="formSuccess">
+          <div class="success-icon">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <path d="M6 14l5.5 5.5L22 8" stroke="#2DBD6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="success-title">Aanvraag ontvangen!</div>
+          <p class="success-sub">Je offerte is onderweg naar je mailbox.<br>Binnen enkele minuten ontvang je een persoonlijk voorstel.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <a href="index.html">Energx.nl</a> — Slimme energie, lokale kracht · <a href="#">Privacybeleid</a></p>
+</footer>
+
+<script>
+  // Auto-scroll carousel
+  const carousel = document.getElementById('fotoCarousel');
+  if (carousel) {
+    let paused = false;
+    carousel.addEventListener('mouseenter', () => paused = true);
+    carousel.addEventListener('mouseleave', () => paused = false);
+
+    setInterval(() => {
+      if (paused) return;
+      const itemWidth = carousel.querySelector('.foto-item').offsetWidth + 16;
+      const maxScroll = carousel.scrollWidth - carousel.clientWidth;
+      if (carousel.scrollLeft >= maxScroll - 1) {
+        carousel.scrollTo({ left: 0, behavior: 'smooth' });
+      } else {
+        carousel.scrollBy({ left: itemWidth, behavior: 'smooth' });
+      }
+    }, 3000);
+  }
+
+  function selectMerk(el, value) {
+    document.querySelectorAll('#qMerk .choice-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const select = document.getElementById('merkSelect');
+    Array.from(select.options).forEach(opt => { opt.selected = opt.value === value; });
+  }
+
+  let currentStep = 1;
+
+  function nextStep(step) {
+    document.getElementById('step' + currentStep).classList.remove('active');
+    document.querySelectorAll('.form-step-item').forEach(el => {
+      const s = parseInt(el.dataset.step);
+      el.classList.remove('active', 'done');
+      if (s < step) el.classList.add('done');
+      if (s === step) el.classList.add('active');
+    });
+    document.getElementById('step' + step).classList.add('active');
+    currentStep = step;
+    const pct = step === 1 ? 33 : step === 2 ? 66 : 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function selectChoice(el, groupId, multi) {
+    const group = document.getElementById(groupId);
+    if (!multi) {
+      group.querySelectorAll('.choice-card').forEach(c => c.classList.remove('selected'));
+    }
+    el.classList.toggle('selected');
+  }
+
+  function selectSituatie(el, type) {
+    document.getElementById('qSituatie').querySelectorAll('.choice-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('condDirect').classList.remove('visible');
+    document.getElementById('condKruipGevel').classList.remove('visible');
+    document.getElementById('condKruipGraaf').classList.remove('visible');
+    if (type === 'direct') document.getElementById('condDirect').classList.add('visible');
+    if (type === 'kruip-gevel') document.getElementById('condKruipGevel').classList.add('visible');
+    if (type === 'kruip-graaf') document.getElementById('condKruipGraaf').classList.add('visible');
+  }
+
+  function submitForm() {
+    document.getElementById('step3').classList.remove('active');
+    document.getElementById('formSuccess').classList.add('visible');
+    document.querySelectorAll('.form-step-item').forEach(el => el.classList.add('done'));
+    document.getElementById('progressFill').style.width = '100%';
+  }
+
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

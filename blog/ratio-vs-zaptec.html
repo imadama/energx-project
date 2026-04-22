@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ratio of Zaptec — welke laadpaal past bij jou? — Energx Blog</title>
+<meta name="description" content="Ratio of Zaptec thuis laten installeren? We vergelijken beide laadpalen op prijs, functies en gebruiksgemak — zodat jij de juiste keuze maakt.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green-800: #0F4A2A; --green-600: #1A7A42; --green-500: #22A058;
+    --green-400: #2DBD6E; --green-100: #D4F2E2; --green-50: #EDF9F3;
+    --night: #090F0C; --white: #FAFCFB;
+    --gray-100: #F0F4F1; --gray-200: #DCE5DE; --gray-400: #8FA896; --gray-600: #4A6152;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'Outfit', sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--white); color: var(--night); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 0 2rem; height: 68px; display: flex; align-items: center; justify-content: space-between; background: rgba(250,252,251,0.9); backdrop-filter: blur(16px); border-bottom: 1px solid var(--gray-200); }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-icon { width: 34px; height: 34px; }
+  .nav-logo-text { font-family: var(--font-display); font-size: 22px; color: var(--green-800); letter-spacing: -0.3px; }
+  .nav-logo-text span { color: var(--green-400); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: 15px; color: var(--gray-600); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green-800); }
+  .nav-cta { background: var(--green-800); color: var(--white) !important; padding: 9px 20px; border-radius: 100px; font-weight: 500 !important; }
+  .nav-cta:hover { background: var(--green-600) !important; }
+
+  .article-wrap { max-width: 760px; margin: 0 auto; padding: 120px 2rem 80px; }
+  .breadcrumb { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--gray-400); margin-bottom: 2rem; }
+  .breadcrumb a { color: var(--green-600); text-decoration: none; }
+  .article-cat { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-600); background: var(--green-50); border: 1px solid var(--green-100); padding: 4px 12px; border-radius: 100px; display: inline-block; margin-bottom: 1.5rem; }
+  .article-title { font-family: var(--font-display); font-size: clamp(32px, 5vw, 52px); line-height: 1.1; letter-spacing: -0.5px; color: var(--night); margin-bottom: 1rem; }
+  .article-meta { display: flex; gap: 14px; font-size: 13px; color: var(--gray-400); font-weight: 300; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--gray-200); }
+  .article-meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--gray-400); margin-top: 8px; }
+  .article-lead { font-size: 19px; color: var(--gray-600); line-height: 1.7; font-weight: 300; margin-bottom: 2rem; }
+  .article-body h2 { font-family: var(--font-display); font-size: 26px; color: var(--night); margin: 2.5rem 0 1rem; line-height: 1.2; }
+  .article-body p { font-size: 16px; color: var(--gray-600); line-height: 1.8; font-weight: 300; margin-bottom: 1.25rem; }
+  .article-body ul { padding-left: 1.25rem; margin-bottom: 1.25rem; }
+  .article-body ul li { font-size: 16px; color: var(--gray-600); line-height: 1.8; font-weight: 300; margin-bottom: 0.4rem; }
+  .article-body strong { color: var(--night); font-weight: 600; }
+
+  .tip-box { background: var(--green-50); border: 1px solid var(--green-100); border-left: 4px solid var(--green-400); border-radius: 12px; padding: 20px 24px; margin: 2rem 0; }
+  .tip-box-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--green-600); margin-bottom: 8px; }
+  .tip-box p { font-size: 15px; color: var(--gray-600); line-height: 1.7; font-weight: 300; margin: 0; }
+
+  /* Vergelijktabel */
+  .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 2rem 0; }
+  .compare-card { border-radius: 16px; padding: 28px; border: 1px solid var(--gray-200); }
+  .compare-card.ratio { background: var(--green-50); border-color: var(--green-100); }
+  .compare-card.zaptec { background: var(--night); border-color: rgba(255,255,255,0.1); }
+  .compare-brand { font-family: var(--font-display); font-size: 24px; margin-bottom: 6px; }
+  .compare-card.ratio .compare-brand { color: var(--green-800); }
+  .compare-card.zaptec .compare-brand { color: var(--white); }
+  .compare-type { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 16px; }
+  .compare-card.ratio .compare-type { color: var(--green-600); }
+  .compare-card.zaptec .compare-type { color: var(--green-400); }
+  .compare-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .compare-list li { font-size: 14px; font-weight: 300; display: flex; gap: 8px; align-items: flex-start; }
+  .compare-card.ratio .compare-list li { color: var(--gray-600); }
+  .compare-card.zaptec .compare-list li { color: rgba(255,255,255,0.65); }
+  .compare-check { color: var(--green-500); font-weight: 600; flex-shrink: 0; }
+
+  .article-cta { background: var(--night); border-radius: 20px; padding: 40px; margin-top: 3rem; text-align: center; }
+  .article-cta h3 { font-family: var(--font-display); font-size: 26px; color: var(--white); margin-bottom: 12px; }
+  .article-cta p { font-size: 15px; color: rgba(255,255,255,0.5); font-weight: 300; margin-bottom: 24px; }
+  .btn-primary { display: inline-block; background: var(--green-400); color: var(--night); padding: 14px 28px; border-radius: 100px; font-size: 15px; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+  .btn-primary:hover { background: #5FD496; }
+  .back-link { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; color: var(--green-600); text-decoration: none; margin-top: 2.5rem; font-weight: 500; }
+
+  footer { background: #060D09; padding: 40px 6vw; text-align: center; font-size: 13px; color: rgba(255,255,255,0.25); font-weight: 300; }
+  footer a { color: var(--green-600); text-decoration: none; }
+
+  @media (max-width: 700px) { .nav-links { display: none; } .article-wrap { padding: 100px 1.25rem 60px; } .compare-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">
+    <svg class="nav-logo-icon" viewBox="0 0 34 34" fill="none">
+      <rect width="34" height="34" rx="9" fill="#0F4A2A"/>
+      <path d="M17 6L26 12V22L17 28L8 22V12L17 6Z" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+      <path d="M17 11V23M12 14L22 20M12 20L22 14" stroke="#2DBD6E" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="17" cy="17" r="2.5" fill="#2DBD6E"/>
+    </svg>
+    <span class="nav-logo-text">Energ<span>x</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#offerte">Thuisbatterij</a></li>
+    <li><a href="../energx-laadpaal.html">Laadpaal</a></li>
+    <li><a href="../index.html#offerte">Warmtepomp</a></li>
+    <li><a href="../blog.html">Blog</a></li>
+    <li><a href="../energx-laadpaal.html#offerte" class="nav-cta">Offerte aanvragen</a></li>
+  </ul>
+</nav>
+
+<article class="article-wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a>
+    <span>/</span>
+    <a href="../blog.html">Blog</a>
+    <span>/</span>
+    Ratio vs Zaptec
+  </div>
+
+  <span class="article-cat">Laadpalen</span>
+  <h1 class="article-title">Ratio of Zaptec — welke laadpaal past bij jouw situatie?</h1>
+
+  <div class="article-meta">
+    <span>12 april 2025</span>
+    <span class="article-meta-dot"></span>
+    <span>4 min lezen</span>
+    <span class="article-meta-dot"></span>
+    <span>Door Energx redactie</span>
+  </div>
+
+  <p class="article-lead">We werken bij Energx met twee merken: Ratio en Zaptec. Beide zijn uitstekende laadpalen, maar ze zijn gemaakt voor verschillende situaties. In dit artikel helpen we je kiezen.</p>
+
+  <div class="article-body">
+
+    <h2>De twee merken op een rij</h2>
+    <p>Ratio en Zaptec zijn allebei kwalitatief hoogwaardige laadpalen die we met vertrouwen installeren. Het verschil zit in de doelgroep en functies.</p>
+
+    <div class="compare-grid">
+      <div class="compare-card ratio">
+        <div class="compare-brand">Ratio</div>
+        <div class="compare-type">Slim &amp; betaalbaar</div>
+        <ul class="compare-list">
+          <li><span class="compare-check">✓</span> Tot 22 kW laadvermogen</li>
+          <li><span class="compare-check">✓</span> Laden op zonnestroom</li>
+          <li><span class="compare-check">✓</span> App-besturing</li>
+          <li><span class="compare-check">✓</span> Laadpas-ondersteuning</li>
+          <li><span class="compare-check">✓</span> Compact en strak design</li>
+          <li><span class="compare-check">✓</span> Scherpe prijs-kwaliteitsverhouding</li>
+        </ul>
+      </div>
+      <div class="compare-card zaptec">
+        <div class="compare-brand">Zaptec</div>
+        <div class="compare-type">Premium &amp; V2G ready</div>
+        <ul class="compare-list">
+          <li><span class="compare-check">✓</span> Tot 22 kW laadvermogen</li>
+          <li><span class="compare-check">✓</span> V2G — auto als thuisbatterij</li>
+          <li><span class="compare-check">✓</span> Laden op zonnestroom</li>
+          <li><span class="compare-check">✓</span> App-besturing &amp; laadpas</li>
+          <li><span class="compare-check">✓</span> Scandinavisch premium design</li>
+          <li><span class="compare-check">✓</span> Maximale toekomstbestendigheid</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Kies Ratio als...</h2>
+    <p>De Ratio laadpaal is de beste keuze als je op zoek bent naar een <strong>betrouwbare, volledige laadpaal tegen een eerlijke prijs</strong>. Je krijgt alle functies die je thuis nodig hebt — slim laden, zonnestroom, app-bediening — zonder te betalen voor functies die je misschien nooit gebruikt.</p>
+    <ul>
+      <li>Je wil slim en betaalbaar laden</li>
+      <li>Je hebt zonnepanelen en wil daarop laden</li>
+      <li>Je wil je laadkosten zakelijk kunnen verrekenen</li>
+      <li>Je hebt geen behoefte aan V2G of weet nog niet of dat relevant is</li>
+    </ul>
+
+    <h2>Kies Zaptec als...</h2>
+    <p>De Zaptec is de keuze als je <strong>het maximale uit je installatie wil halen</strong> en toekomstbestendig wil investeren. Zaptec is het enige merk in ons assortiment dat volledig V2G-ready is — dat betekent dat je auto straks energie kan terugleveren aan je huis of het net.</p>
+    <ul>
+      <li>Je wil een premium laadpaal die er strak uitziet</li>
+      <li>Je bent geïnteresseerd in V2G (nu of in de toekomst)</li>
+      <li>Je wil de meest toekomstbestendige optie kiezen</li>
+      <li>Je hebt een elektrische auto die V2G ondersteunt (bijv. bepaalde Hyundai/Kia modellen)</li>
+    </ul>
+
+    <div class="tip-box">
+      <div class="tip-box-label">Weet je het nog niet?</div>
+      <p>Geen probleem — dat is precies waarom wij adviseren. Bij het aanvragen van je offerte kun je aangeven dat je de keuze aan ons overlaat. Onze installateur kijkt dan naar jouw situatie en geeft een eerlijk advies.</p>
+    </div>
+
+    <h2>Wat kost het verschil?</h2>
+    <p>De Zaptec is in aanschaf duurder dan de Ratio, maar die meerprijs verdien je terug als V2G voor jou relevant wordt. Op dit moment ondersteunt nog niet elke elektrische auto V2G — maar dat verandert snel. Als je nu een nieuwe auto koopt of over een paar jaar wil upgraden, is Zaptec de veilige keuze.</p>
+    <p>Wil je exact weten wat het verschil in prijs is voor jouw situatie? Vraag een offerte aan — dan krijg je beide opties naast elkaar.</p>
+
+  </div>
+
+  <div class="article-cta">
+    <h3>Welke laadpaal past bij jou?</h3>
+    <p>Vraag een offerte aan en onze installateur adviseert je eerlijk over de beste keuze voor jouw situatie.</p>
+    <a href="../energx-laadpaal.html#offerte" class="btn-primary">Offerte aanvragen →</a>
+  </div>
+
+  <a href="../blog.html" class="back-link">← Terug naar alle artikelen</a>
+</article>
+
+<footer>
+  <p>© 2025 Energx.nl — <a href="../index.html">Home</a> · <a href="mailto:info@energx.nl">info@energx.nl</a></p>
+</footer>
+
+</body>
+</html>
