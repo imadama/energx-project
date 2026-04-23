@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offerte Zaptec Go 2 — Energx</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-800: #0F4A2A;
+      --green-600: #1a6e3f;
+      --green-400: #2DBD6E;
+      --night: #090F0C;
+      --sidebar-bg: #0d1f14;
+      --sidebar-width: 280px;
+      --topbar-height: 60px;
+      --font-display: 'DM Serif Display', serif;
+      --font-body: 'Outfit', sans-serif;
+    }
+
+    html, body { height: 100%; font-family: var(--font-body); background: #eef0f3; color: #1a1a1a; }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--topbar-height);
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; z-index: 100;
+      box-shadow: 0 1px 6px rgba(0,0,0,.07);
+    }
+
+    .topbar-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--green-800);
+    }
+    .topbar-brand span { font-weight: 700; font-size: 1.05rem; }
+
+    .topbar-actions { display: flex; align-items: center; gap: 6px; }
+
+    .btn-icon {
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+      padding: 6px 10px; border: none; background: none; cursor: pointer;
+      color: #666; font-size: .68rem; font-family: var(--font-body);
+      border-radius: 8px; transition: background .15s;
+    }
+    .btn-icon:hover { background: #f3f4f6; }
+    .btn-icon svg { width: 18px; height: 18px; }
+
+    .btn-accept {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 16px;
+      background: var(--green-400); color: #fff;
+      border: none; border-radius: 8px;
+      font-family: var(--font-body); font-weight: 600; font-size: .875rem;
+      cursor: pointer; transition: background .15s;
+    }
+    .btn-accept:hover { background: #25a560; }
+    .btn-accept.accepted { background: #1a6e3f; cursor: default; }
+
+    .btn-nav {
+      display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px;
+      border: 1px solid #e5e7eb; background: #fff;
+      border-radius: 8px; cursor: pointer; color: #555;
+      transition: background .15s;
+    }
+    .btn-nav:hover { background: #f3f4f6; }
+    .btn-nav:disabled { opacity: .35; cursor: default; }
+    .btn-nav svg { width: 15px; height: 15px; }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      position: fixed; top: var(--topbar-height); left: 0; bottom: 0;
+      width: var(--sidebar-width);
+      background: var(--sidebar-bg);
+      overflow-y: auto; z-index: 90;
+      display: flex; flex-direction: column;
+    }
+
+    .sidebar-header {
+      padding: 20px 16px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .sidebar-logo {
+      display: flex; align-items: center; gap: 9px; margin-bottom: 14px;
+    }
+    .sidebar-logo-text { font-size: .85rem; font-weight: 600; color: #fff; }
+
+    .proposal-title { font-size: .84rem; font-weight: 600; color: #fff; line-height: 1.4; }
+    .proposal-date { font-size: .73rem; color: rgba(255,255,255,.4); margin-top: 4px; }
+
+    .sidebar-nav { padding: 6px 0; flex: 1; }
+
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 16px; cursor: pointer;
+      color: rgba(255,255,255,.55); font-size: .84rem;
+      transition: all .15s;
+      border-left: 3px solid transparent;
+    }
+    .nav-item:hover { color: rgba(255,255,255,.85); background: rgba(255,255,255,.04); }
+    .nav-item.active {
+      color: #fff;
+      background: rgba(45,189,110,.1);
+      border-left-color: var(--green-400);
+    }
+    .nav-item svg { width: 13px; height: 13px; flex-shrink: 0; opacity: .6; }
+
+    .sidebar-bijlagen {
+      padding: 14px 16px;
+      border-top: 1px solid rgba(255,255,255,.07);
+    }
+    .bijlagen-label {
+      font-size: .67rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .09em;
+      color: rgba(255,255,255,.3); margin-bottom: 8px;
+    }
+    .bijlage-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 0; color: rgba(255,255,255,.5);
+      font-size: .8rem; cursor: pointer; transition: color .15s;
+    }
+    .bijlage-item:hover { color: rgba(255,255,255,.85); }
+    .bijlage-item svg { width: 13px; height: 13px; }
+
+    /* ── MAIN ── */
+    .main {
+      margin-left: var(--sidebar-width);
+      margin-top: var(--topbar-height);
+      min-height: calc(100vh - var(--topbar-height));
+      display: flex; align-items: flex-start; justify-content: center;
+      padding: 48px 40px 80px;
+    }
+
+    .section { display: none; width: 100%; max-width: 820px; }
+    .section.active { display: block; }
+
+    .page-card {
+      background: #fff;
+      border-radius: 3px;
+      box-shadow: 0 2px 24px rgba(0,0,0,.09);
+      overflow: hidden;
+    }
+
+    /* ── VOORBLAD ── */
+    .cover-hero {
+      width: 100%; height: 420px;
+      object-fit: cover; display: block;
+      background: linear-gradient(135deg, var(--green-800) 0%, #1a5c35 50%, var(--night) 100%);
+    }
+
+    .cover-hero-placeholder {
+      width: 100%; height: 420px;
+      background: linear-gradient(135deg, var(--green-800) 0%, #1a5c35 45%, var(--night) 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 8px;
+      position: relative; overflow: hidden;
+    }
+    .cover-hero-placeholder::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(45,189,110,.15) 0%, transparent 70%);
+    }
+    .cover-hero-title {
+      font-family: var(--font-display);
+      font-size: 3.5rem; color: #fff;
+      position: relative; z-index: 1;
+    }
+    .cover-hero-sub {
+      font-size: .9rem; color: rgba(255,255,255,.55);
+      position: relative; z-index: 1;
+    }
+
+    .cover-body { padding: 36px 48px 40px; }
+
+    .cover-meta {
+      display: flex; gap: 40px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid #f0f0f0;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .cover-meta-block {}
+    .meta-label {
+      font-size: .7rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .08em;
+      color: #aaa; margin-bottom: 5px;
+    }
+    .meta-value { font-size: .95rem; font-weight: 600; color: #1a1a1a; }
+    .meta-value small { display: block; font-weight: 400; color: #777; font-size: .85rem; margin-top: 2px; }
+
+    .cover-subject {}
+    .cover-subject .meta-label { margin-bottom: 5px; }
+    .cover-subject .meta-value { font-size: 1.05rem; }
+
+    /* ── CONTENT SECTIONS ── */
+    .section-content { padding: 48px; }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 2rem; color: var(--green-800);
+      margin-bottom: 28px; padding-bottom: 16px;
+      border-bottom: 2px solid var(--green-400);
+    }
+
+    /* Introductie */
+    .intro-text p {
+      color: #4a4a4a; line-height: 1.85; margin-bottom: 16px; font-size: .93rem;
+    }
+    .intro-signature { margin-top: 36px; padding-top: 20px; border-top: 1px solid #f0f0f0; }
+    .signature-name { font-weight: 600; color: #1a1a1a; font-size: .93rem; }
+    .signature-role { font-size: .82rem; color: #999; margin-top: 2px; }
+
+    /* Prijzen */
+    .price-table { width: 100%; border-collapse: collapse; }
+    .price-table th {
+      text-align: left; padding: 10px 14px;
+      font-size: .7rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: .07em;
+      color: #999; border-bottom: 2px solid #e8e8e8;
+    }
+    .price-table th:last-child,
+    .price-table td:last-child { text-align: right; }
+    .price-table td {
+      padding: 14px 14px; font-size: .88rem; color: #333;
+      border-bottom: 1px solid #f2f2f2; vertical-align: top;
+    }
+    .price-table tbody tr:hover td { background: #fafafa; }
+    .item-name { font-weight: 500; color: #1a1a1a; }
+    .item-desc { font-size: .78rem; color: #999; margin-top: 3px; }
+
+    .price-totals {
+      display: flex; flex-direction: column; align-items: flex-end;
+      gap: 7px; margin-top: 24px; padding-top: 4px;
+    }
+    .total-row {
+      display: flex; gap: 48px; font-size: .88rem; color: #666;
+    }
+    .total-row .lbl { min-width: 110px; text-align: right; }
+    .total-row .val { min-width: 90px; text-align: right; font-variant-numeric: tabular-nums; }
+    .total-row.grand {
+      font-size: 1.05rem; font-weight: 700; color: var(--green-800);
+      padding-top: 12px; border-top: 2px solid #e8e8e8; margin-top: 4px;
+    }
+
+    /* Product */
+    .product-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+
+    .product-img {
+      width: 100%; border-radius: 10px;
+      object-fit: cover; aspect-ratio: 1;
+      display: block; background: #f5f5f5;
+    }
+
+    .spec-list { margin-top: 20px; }
+    .spec-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 9px 0; border-bottom: 1px solid #f2f2f2;
+      font-size: .85rem;
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-key { color: #888; }
+    .spec-val { font-weight: 500; color: #1a1a1a; text-align: right; }
+
+    .product-info p {
+      color: #555; line-height: 1.75; font-size: .9rem; margin-bottom: 14px;
+    }
+
+    /* Werkwijze */
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+      display: flex; gap: 20px;
+      padding: 20px 0; border-bottom: 1px solid #f2f2f2;
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--green-400); color: #fff;
+      font-weight: 700; font-size: .82rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .step-title { font-weight: 600; color: #1a1a1a; margin-bottom: 5px; font-size: .9rem; }
+    .step-desc { font-size: .85rem; color: #666; line-height: 1.65; }
+
+    /* Acceptatie */
+    .accept-page { padding: 64px 48px; text-align: center; }
+    .accept-icon {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: rgba(45,189,110,.1); color: var(--green-400);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px;
+    }
+    .accept-icon svg { width: 28px; height: 28px; }
+    .accept-title {
+      font-family: var(--font-display);
+      font-size: 1.9rem; color: var(--green-800); margin-bottom: 12px;
+    }
+    .accept-desc {
+      color: #666; font-size: .93rem; line-height: 1.75;
+      max-width: 460px; margin: 0 auto 32px;
+    }
+    .btn-accept-big {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 26px;
+      background: var(--green-400); color: #fff;
+      border: none; border-radius: 10px;
+      font-family: var(--font-body); font-weight: 600; font-size: .95rem;
+      cursor: pointer; transition: background .15s;
+    }
+    .btn-accept-big:hover { background: #25a560; }
+    .btn-accept-big svg { width: 18px; height: 18px; }
+    .sign-placeholder {
+      margin: 32px auto 0;
+      max-width: 400px;
+      padding: 24px;
+      border: 2px dashed #e0e0e0;
+      border-radius: 12px;
+      font-size: .85rem; color: #bbb;
+    }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.45);
+      z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity .2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: #fff; border-radius: 16px;
+      padding: 40px; max-width: 420px; width: 90%;
+      text-align: center;
+      transform: scale(.96); transition: transform .2s;
+    }
+    .modal-overlay.open .modal { transform: scale(1); }
+
+    .modal-icon {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: rgba(45,189,110,.1); color: var(--green-400);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 14px;
+    }
+    .modal-icon svg { width: 26px; height: 26px; }
+    .modal h2 {
+      font-family: var(--font-display);
+      font-size: 1.45rem; color: var(--green-800); margin-bottom: 8px;
+    }
+    .modal p { color: #666; font-size: .88rem; line-height: 1.6; margin-bottom: 20px; }
+
+    .modal-input {
+      width: 100%; padding: 10px 14px;
+      border: 1.5px solid #e5e7eb; border-radius: 8px;
+      font-family: var(--font-body); font-size: .9rem;
+      margin-bottom: 10px; outline: none;
+      transition: border-color .15s;
+    }
+    .modal-input:focus { border-color: var(--green-400); }
+
+    .modal-btns { display: flex; gap: 10px; margin-top: 6px; }
+    .modal-cancel {
+      flex: 1; padding: 10px;
+      border: 1.5px solid #e5e7eb; background: #fff;
+      border-radius: 8px; font-family: var(--font-body);
+      font-size: .875rem; cursor: pointer; color: #666;
+    }
+    .modal-confirm {
+      flex: 2; padding: 10px;
+      background: var(--green-400); color: #fff;
+      border: none; border-radius: 8px;
+      font-family: var(--font-body); font-weight: 600;
+      font-size: .875rem; cursor: pointer; transition: background .15s;
+    }
+    .modal-confirm:hover { background: #25a560; }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <a class="topbar-brand" href="index.html">
+      <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+        <circle cx="16" cy="16" r="16" fill="#0F4A2A"/>
+        <path d="M16 5l2.5 8.5H27l-7 5 2.5 8.5L16 22l-6.5 5 2.5-8.5-7-5h8.5L16 5z" fill="#2DBD6E"/>
+      </svg>
+      <span>Energx</span>
+    </a>
+    <div class="topbar-actions">
+      <button class="btn-icon" title="Stel een vraag">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+        </svg>
+        vraag
+      </button>
+      <button class="btn-icon" onclick="window.print()" title="Afdrukken">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="6 9 6 2 18 2 18 9"/>
+          <path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/>
+          <rect x="6" y="14" width="12" height="8"/>
+        </svg>
+        print
+      </button>
+      <button class="btn-accept" id="topbar-accept" onclick="openModal()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+        offerte goedkeuren
+      </button>
+      <button class="btn-nav" id="btn-prev" onclick="navigate(-1)" disabled title="Vorige">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="15 18 9 12 15 6"/>
+        </svg>
+      </button>
+      <button class="btn-nav" id="btn-next" onclick="navigate(1)" title="Volgende">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
+          <circle cx="16" cy="16" r="16" fill="rgba(255,255,255,.12)"/>
+          <path d="M16 5l2.5 8.5H27l-7 5 2.5 8.5L16 22l-6.5 5 2.5-8.5-7-5h8.5L16 5z" fill="#2DBD6E"/>
+        </svg>
+        <span class="sidebar-logo-text">Energx.nl</span>
+      </div>
+      <div class="proposal-title">Zaptec Go 2 — Dennis Evers</div>
+      <div class="proposal-date">15 apr. 2026 (16:04)</div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-item active" data-index="0" onclick="goTo(0)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        Voorblad
+      </div>
+      <div class="nav-item" data-index="1" onclick="goTo(1)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        Introductie
+      </div>
+      <div class="nav-item" data-index="2" onclick="goTo(2)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        Prijzen
+      </div>
+      <div class="nav-item" data-index="3" onclick="goTo(3)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        Zaptec Go 2
+      </div>
+      <div class="nav-item" data-index="4" onclick="goTo(4)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        Werkwijze
+      </div>
+      <div class="nav-item" data-index="5" onclick="goTo(5)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+        Acceptatie
+      </div>
+    </nav>
+
+    <div class="sidebar-bijlagen">
+      <div class="bijlagen-label">Bijlagen</div>
+      <div class="bijlage-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/>
+        </svg>
+        Algemene voorwaarden
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- 0: VOORBLAD -->
+    <section class="section active" id="s-0">
+      <div class="page-card">
+        <img src="images/zaptec-installatie-1.jpg" class="cover-hero" alt="Zaptec laadpaal installatie"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+        <div class="cover-hero-placeholder" style="display:none">
+          <div class="cover-hero-title">Energx</div>
+          <div class="cover-hero-sub">www.energx.nl</div>
+        </div>
+        <div class="cover-body">
+          <div class="cover-meta">
+            <div class="cover-meta-block">
+              <div class="meta-label">Offerte voor</div>
+              <div class="meta-value">Dennis Evers <small>Teststraat 1, Amsterdam</small></div>
+            </div>
+            <div class="cover-meta-block">
+              <div class="meta-label">Offerte nr.</div>
+              <div class="meta-value">ENX-2026-0042</div>
+            </div>
+            <div class="cover-meta-block">
+              <div class="meta-label">Datum</div>
+              <div class="meta-value">15 april 2026</div>
+            </div>
+            <div class="cover-meta-block">
+              <div class="meta-label">Geldig tot</div>
+              <div class="meta-value">15 mei 2026</div>
+            </div>
+          </div>
+          <div class="cover-subject">
+            <div class="meta-label">Betreft</div>
+            <div class="meta-value">Levering en installatie Zaptec Go 2 thuislader (11 kW)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1: INTRODUCTIE -->
+    <section class="section" id="s-1">
+      <div class="page-card">
+        <div class="section-content">
+          <h2 class="section-title">Introductie</h2>
+          <div class="intro-text">
+            <p>Beste Dennis,</p>
+            <p>Hartelijk dank voor je interesse in Energx. Wij zijn blij je een offerte te mogen aanbieden voor de levering en installatie van een Zaptec Go 2 thuislader.</p>
+            <p>Bij Energx werken we uitsluitend samen met gecertificeerde lokale installateurs in jouw regio. Zo ben je verzekerd van snel en vakkundig werk, met persoonlijk contact voor, tijdens en na de installatie.</p>
+            <p>De Zaptec Go 2 is een slimme 11 kW lader, ideaal voor thuisgebruik. Dankzij dynamisch laden past hij het laadvermogen automatisch aan op je thuisverbruik — zo voorkom je zekeringen die eruit springen en laad je je auto altijd zo snel mogelijk.</p>
+            <p>In deze offerte vind je een overzicht van de kosten, productinformatie en onze werkwijze. Heb je vragen? Neem gerust contact op via <strong>info@energx.nl</strong> of bel <strong>085 – 060 0000</strong>.</p>
+            <p>Met vriendelijke groet,</p>
+          </div>
+          <div class="intro-signature">
+            <div class="signature-name">Tom van der Berg</div>
+            <div class="signature-role">Installatie-adviseur — Energx</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2: PRIJZEN -->
+    <section class="section" id="s-2">
+      <div class="page-card">
+        <div class="section-content">
+          <h2 class="section-title">Prijzen</h2>
+          <table class="price-table">
+            <thead>
+              <tr>
+                <th style="width:48%">Omschrijving</th>
+                <th>Aantal</th>
+                <th>Eenheidsprijs</th>
+                <th>Totaal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <div class="item-name">Zaptec Go 2 — 11 kW</div>
+                  <div class="item-desc">Inclusief 5m Type 2-laadkabel, Zaptec App en dynamisch laden</div>
+                </td>
+                <td>1</td>
+                <td>€ 599,00</td>
+                <td>€ 599,00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="item-name">Installatie door gecertificeerde elektricien</div>
+                  <div class="item-desc">Aardlekautomaat, bekabeling tot 10m, inbedrijfstelling</div>
+                </td>
+                <td>1</td>
+                <td>€ 250,00</td>
+                <td>€ 250,00</td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="item-name">Extra kabellengte (boven 10m, p/m)</div>
+                  <div class="item-desc">Niet van toepassing op dit project</div>
+                </td>
+                <td>0</td>
+                <td>€ 15,00</td>
+                <td>€ 0,00</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="price-totals">
+            <div class="total-row">
+              <span class="lbl">Subtotaal</span>
+              <span class="val">€ 849,00</span>
+            </div>
+            <div class="total-row">
+              <span class="lbl">BTW (21%)</span>
+              <span class="val">€ 178,29</span>
+            </div>
+            <div class="total-row grand">
+              <span class="lbl">Totaal incl. BTW</span>
+              <span class="val">€ 1.027,29</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3: PRODUCT -->
+    <section class="section" id="s-3">
+      <div class="page-card">
+        <div class="section-content">
+          <h2 class="section-title">Zaptec Go 2</h2>
+          <div class="product-layout">
+            <div>
+              <img src="images/zaptec-installatie-2.jpg" class="product-img" alt="Zaptec Go 2"
+                   onerror="this.style.background='#f0f0f0'; this.style.height='260px'">
+              <div class="spec-list">
+                <div class="spec-row"><span class="spec-key">Vermogen</span><span class="spec-val">11 kW (3-fase)</span></div>
+                <div class="spec-row"><span class="spec-key">Aansluiting</span><span class="spec-val">Type 2</span></div>
+                <div class="spec-row"><span class="spec-key">Kabel</span><span class="spec-val">5m vast</span></div>
+                <div class="spec-row"><span class="spec-key">Connectiviteit</span><span class="spec-val">WiFi + app</span></div>
+                <div class="spec-row"><span class="spec-key">Dynamisch laden</span><span class="spec-val">Ja</span></div>
+                <div class="spec-row"><span class="spec-key">V2G ready</span><span class="spec-val">Nee</span></div>
+                <div class="spec-row"><span class="spec-key">IP-klasse</span><span class="spec-val">IP54</span></div>
+                <div class="spec-row"><span class="spec-key">Garantie</span><span class="spec-val">3 jaar</span></div>
+              </div>
+            </div>
+            <div class="product-info">
+              <p>De Zaptec Go 2 is Noorwegens bestverkochte thuislader — bekend om zijn strakke Scandinavische design en slimme technologie.</p>
+              <p><strong>Dynamisch laden</strong> bewaakt continu het stroomverbruik in huis. Dreigt de groepenkast te overbelasten? Dan verlaagt de lader automatisch het laadvermogen, zodat de hoofdzekering nooit springt.</p>
+              <p>Via de <strong>Zaptec App</strong> stel je laadschema's in, volg je je verbruik en koppel je zonnepanelen voor slim groen laden.</p>
+              <p>De lader is geschikt voor buiten (IP54) en wordt geleverd met een vaste 5m Type 2-kabel. Installatie door onze lokale gecertificeerde elektricien is inbegrepen.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4: WERKWIJZE -->
+    <section class="section" id="s-4">
+      <div class="page-card">
+        <div class="section-content">
+          <h2 class="section-title">Werkwijze</h2>
+          <div class="steps">
+            <div class="step">
+              <div class="step-num">1</div>
+              <div>
+                <div class="step-title">Offerte akkoord</div>
+                <div class="step-desc">Je keurt deze offerte online goed. Daarna nemen we contact op om een installatiedatum in te plannen die voor jou uitkomt.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">2</div>
+              <div>
+                <div class="step-title">Voorbereiding</div>
+                <div class="step-desc">We controleren op afstand (of via foto's) de situatie bij de meterkast en de gewenste locatie van de lader. Zo weet de installateur precies wat er nodig is vóór aankomst.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">3</div>
+              <div>
+                <div class="step-title">Installatie</div>
+                <div class="step-desc">Een gecertificeerde elektricien uit jouw regio installeert de Zaptec Go 2. Gemiddelde installatietijd: 2–3 uur. Na afloop wordt de lader getest en inbedrijf gesteld.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">4</div>
+              <div>
+                <div class="step-title">App-koppeling & ingebruikname</div>
+                <div class="step-desc">We helpen je de Zaptec App in te stellen zodat je direct je laadgedrag kunt monitoren, laadschema's instellen en eventueel koppelen aan je thuisbatterij of zonnepanelen.</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-num">5</div>
+              <div>
+                <div class="step-title">Nazorg</div>
+                <div class="step-desc">Na installatie kun je altijd terecht bij onze lokale installateur of via info@energx.nl. We staan voor je klaar ook lang na de installatie.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5: ACCEPTATIE -->
+    <section class="section" id="s-5">
+      <div class="page-card">
+        <div class="accept-page">
+          <div class="accept-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <h2 class="accept-title">Offerte goedkeuren</h2>
+          <p class="accept-desc">Ben je akkoord met deze offerte? Klik op de knop hieronder om de offerte digitaal te accepteren. Je ontvangt direct een bevestiging per e-mail.</p>
+          <button class="btn-accept-big" onclick="openModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            Offerte goedkeuren
+          </button>
+          <div class="sign-placeholder" id="sign-placeholder">
+            Digitale handtekening verschijnt hier na goedkeuring
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal" onclick="handleOverlayClick(event)">
+    <div class="modal">
+      <div class="modal-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      <h2>Offerte goedkeuren</h2>
+      <p>Je staat op het punt deze offerte digitaal te accepteren. Vul je naam en e-mailadres in ter bevestiging.</p>
+      <input class="modal-input" type="text" id="modal-name" placeholder="Je volledige naam">
+      <input class="modal-input" type="email" id="modal-email" placeholder="Je e-mailadres">
+      <div class="modal-btns">
+        <button class="modal-cancel" onclick="closeModal()">Annuleren</button>
+        <button class="modal-confirm" onclick="acceptQuote()">Bevestigen & ondertekenen</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const sections = document.querySelectorAll('.section');
+    const navItems = document.querySelectorAll('.nav-item');
+    let current = 0;
+
+    function goTo(index) {
+      sections[current].classList.remove('active');
+      navItems[current].classList.remove('active');
+      current = index;
+      sections[current].classList.add('active');
+      navItems[current].classList.add('active');
+      document.getElementById('btn-prev').disabled = current === 0;
+      document.getElementById('btn-next').disabled = current === sections.length - 1;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function navigate(dir) {
+      const next = current + dir;
+      if (next >= 0 && next < sections.length) goTo(next);
+    }
+
+    function openModal() {
+      document.getElementById('modal').classList.add('open');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('open');
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === e.currentTarget) closeModal();
+    }
+
+    function acceptQuote() {
+      const name = document.getElementById('modal-name').value.trim();
+      const email = document.getElementById('modal-email').value.trim();
+      if (!name || !email) {
+        alert('Vul je naam en e-mailadres in.');
+        return;
+      }
+      closeModal();
+      const date = new Date().toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
+      document.getElementById('sign-placeholder').innerHTML =
+        `<strong style="color:var(--green-400)">✓ Geaccepteerd door ${name}</strong><br>
+         <span style="color:#999; font-size:.82rem">${date} · ${email}</span>`;
+
+      const btn = document.getElementById('topbar-accept');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><polyline points="20 6 9 17 4 12"/></svg> Geaccepteerd';
+      btn.classList.add('accepted');
+    }
+  </script>
+</body>
+</html>
