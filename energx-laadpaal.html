@@ -768,8 +768,9 @@
 
   .verg-grid {
     display: grid;
-    grid-template-columns: 1.15fr 1fr 1fr;
+    grid-template-columns: 1fr 1.2fr 1fr;
     gap: 8px;
+    align-items: start;
   }
 
   .verg-card {
@@ -778,11 +779,15 @@
     border-radius: 14px;
     padding: 16px 14px;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
 
   .verg-card.aanbevolen {
     background: linear-gradient(145deg, rgba(45,189,110,0.1), rgba(45,189,110,0.03));
     border-color: rgba(45,189,110,0.35);
+    margin-top: -10px;
+    padding: 22px 16px;
   }
 
   .verg-top-badge {
@@ -822,6 +827,39 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
+    flex: 1;
+    margin-bottom: 16px;
+  }
+
+  .verg-btn {
+    width: 100%;
+    padding: 10px;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.12);
+    background: transparent;
+    color: rgba(255,255,255,0.5);
+    transition: all 0.2s;
+    margin-top: auto;
+  }
+
+  .verg-btn:hover {
+    border-color: rgba(255,255,255,0.3);
+    color: var(--white);
+  }
+
+  .verg-card.aanbevolen .verg-btn {
+    background: var(--green-400);
+    color: var(--night);
+    border-color: var(--green-400);
+  }
+
+  .verg-card.aanbevolen .verg-btn:hover {
+    background: var(--green-300);
+    border-color: var(--green-300);
   }
 
   .verg-check {
@@ -1217,27 +1255,26 @@
           <div class="vergelijking" id="vergelijking" style="display:none">
             <div class="verg-eyebrow">Jouw advies op basis van jouw wensen</div>
             <div class="verg-grid">
+              <div class="verg-card" id="vCardRatio">
+                <div class="verg-brand">Ratio</div>
+                <div class="verg-naam" id="vNaamRatio">—</div>
+                <div class="verg-checks" id="vChecksRatio"></div>
+                <button class="verg-btn" onclick="kiesProduct('Ratio')">Kies deze →</button>
+              </div>
               <div class="verg-card aanbevolen" id="vCardZaptec">
                 <div class="verg-top-badge">Aanbevolen</div>
                 <div class="verg-brand">Zaptec</div>
                 <div class="verg-naam" id="vNaamZaptec">—</div>
                 <div class="verg-checks" id="vChecksZaptec"></div>
-              </div>
-              <div class="verg-card" id="vCardRatio">
-                <div class="verg-brand">Ratio</div>
-                <div class="verg-naam" id="vNaamRatio">—</div>
-                <div class="verg-checks" id="vChecksRatio"></div>
+                <button class="verg-btn" onclick="kiesProduct('Zaptec')">Kies deze →</button>
               </div>
               <div class="verg-card" id="vCardAlfen">
                 <div class="verg-brand">Alfen</div>
                 <div class="verg-naam" id="vNaamAlfen">—</div>
                 <div class="verg-checks" id="vChecksAlfen"></div>
+                <button class="verg-btn" onclick="kiesProduct('Alfen')">Kies deze →</button>
               </div>
             </div>
-          </div>
-
-          <div class="form-nav">
-            <button class="btn-next" id="btnVolgende" onclick="nextStep(2)" style="display:none">Doorgaan met installatie →</button>
           </div>
         </div>
 
@@ -1521,7 +1558,13 @@
 
     const box = document.getElementById('vergelijking');
     if (box.style.display === 'none') box.style.display = 'block';
-    document.getElementById('btnVolgende').style.display = 'block';
+  }
+
+  let gekozenMerk = '';
+
+  function kiesProduct(brand) {
+    gekozenMerk = brand;
+    nextStep(2);
   }
 
   let currentStep = 1;
