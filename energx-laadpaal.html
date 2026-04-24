@@ -781,9 +781,9 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .hero-vergelijking {
-    max-width: var(--max);
-    margin: 56px auto 0;
+  .advies-sectie {
+    background: var(--night);
+    padding: 56px 6vw 72px;
     animation: slideIn 0.4s ease;
   }
 
@@ -1299,32 +1299,35 @@
 
     </div>
 
-    <!-- Vergelijking — full width, verschijnt na 4 vragen -->
-    <div class="hero-vergelijking" id="vergelijking" style="display:none">
-      <div class="verg-eyebrow">Jouw advies op basis van jouw wensen</div>
-      <div class="verg-grid">
-        <div class="verg-card" id="vCardRatio">
-          <img class="verg-img" src="images/ratio-installatie-1.jpg" alt="Ratio laadpaal">
-          <div class="verg-brand">Ratio</div>
-          <div class="verg-naam" id="vNaamRatio">—</div>
-          <div class="verg-checks" id="vChecksRatio"></div>
-          <button class="verg-btn" onclick="kiesProduct('Ratio')">Kies deze →</button>
-        </div>
-        <div class="verg-card aanbevolen" id="vCardZaptec">
-          <div class="verg-top-badge">Aanbevolen</div>
-          <img class="verg-img" src="images/zaptec-installatie-1.jpg" alt="Zaptec laadpaal">
-          <div class="verg-brand">Zaptec</div>
-          <div class="verg-naam" id="vNaamZaptec">—</div>
-          <div class="verg-checks" id="vChecksZaptec"></div>
-          <button class="verg-btn" onclick="kiesProduct('Zaptec')">Kies deze →</button>
-        </div>
-        <div class="verg-card" id="vCardAlfen">
-          <div class="verg-img-placeholder">Foto volgt</div>
-          <div class="verg-brand">Alfen</div>
-          <div class="verg-naam" id="vNaamAlfen">—</div>
-          <div class="verg-checks" id="vChecksAlfen"></div>
-          <button class="verg-btn" onclick="kiesProduct('Alfen')">Kies deze →</button>
-        </div>
+  </div>
+</div>
+
+<!-- VERGELIJKING -->
+<div class="advies-sectie" id="vergelijking" style="display:none">
+  <div class="container">
+    <div class="verg-eyebrow">Jouw advies op basis van jouw wensen</div>
+    <div class="verg-grid">
+      <div class="verg-card" id="vCardRatio">
+        <img class="verg-img" src="images/ratio-installatie-1.jpg" alt="Ratio laadpaal">
+        <div class="verg-brand">Ratio</div>
+        <div class="verg-naam" id="vNaamRatio">—</div>
+        <div class="verg-checks" id="vChecksRatio"></div>
+        <button class="verg-btn" onclick="kiesProduct('Ratio')">Kies deze →</button>
+      </div>
+      <div class="verg-card aanbevolen" id="vCardZaptec">
+        <div class="verg-top-badge">Aanbevolen</div>
+        <img class="verg-img" src="images/zaptec-installatie-1.jpg" alt="Zaptec laadpaal">
+        <div class="verg-brand">Zaptec</div>
+        <div class="verg-naam" id="vNaamZaptec">—</div>
+        <div class="verg-checks" id="vChecksZaptec"></div>
+        <button class="verg-btn" onclick="kiesProduct('Zaptec')">Kies deze →</button>
+      </div>
+      <div class="verg-card" id="vCardAlfen">
+        <div class="verg-img-placeholder">Foto volgt</div>
+        <div class="verg-brand">Alfen</div>
+        <div class="verg-naam" id="vNaamAlfen">—</div>
+        <div class="verg-checks" id="vChecksAlfen"></div>
+        <button class="verg-btn" onclick="kiesProduct('Alfen')">Kies deze →</button>
       </div>
     </div>
   </div>
