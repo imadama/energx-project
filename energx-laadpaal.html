@@ -746,13 +746,9 @@
     transition: width 0.4s ease;
   }
 
-  /* Product aanbeveling */
-  .product-aanbeveling {
+  /* Vergelijking sectie */
+  .vergelijking {
     margin-top: 24px;
-    padding: 22px;
-    background: linear-gradient(135deg, rgba(45,189,110,0.08), rgba(45,189,110,0.02));
-    border: 1px solid rgba(45,189,110,0.28);
-    border-radius: 16px;
     animation: slideIn 0.35s ease;
   }
 
@@ -761,67 +757,98 @@
     to   { opacity: 1; transform: translateY(0); }
   }
 
-  .pa-eyebrow {
+  .verg-eyebrow {
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--green-400);
+    margin-bottom: 12px;
+  }
+
+  .verg-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr 1fr;
+    gap: 8px;
+  }
+
+  .verg-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 16px 14px;
+    position: relative;
+  }
+
+  .verg-card.aanbevolen {
+    background: linear-gradient(145deg, rgba(45,189,110,0.1), rgba(45,189,110,0.03));
+    border-color: rgba(45,189,110,0.35);
+  }
+
+  .verg-top-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--green-400);
+    background: rgba(45,189,110,0.15);
+    border: 1px solid rgba(45,189,110,0.25);
+    border-radius: 100px;
+    padding: 3px 9px;
+    display: inline-block;
     margin-bottom: 10px;
   }
 
-  .pa-brand-badge {
-    display: inline-block;
-    font-size: 11px;
-    padding: 3px 10px;
-    border-radius: 100px;
-    background: rgba(45,189,110,0.15);
-    border: 1px solid rgba(45,189,110,0.3);
-    color: var(--green-400);
+  .verg-brand {
+    font-size: 10px;
     font-weight: 600;
-    margin-bottom: 8px;
-    letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
   }
 
-  .pa-name {
+  .verg-naam {
     font-family: var(--font-display);
-    font-size: 26px;
-    color: var(--white);
-    margin-bottom: 5px;
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 12px;
     line-height: 1.2;
   }
 
-  .pa-tagline {
-    font-size: 13px;
-    color: rgba(255,255,255,0.4);
-    font-weight: 300;
-    margin-bottom: 14px;
-    line-height: 1.5;
-  }
+  .verg-card.aanbevolen .verg-naam { color: var(--white); font-size: 18px; }
 
-  .pa-features {
+  .verg-checks {
     display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
+    flex-direction: column;
+    gap: 6px;
   }
 
-  .pa-feature {
-    font-size: 12px;
-    padding: 4px 11px;
-    border-radius: 100px;
-    background: rgba(45,189,110,0.12);
-    color: var(--green-400);
-    font-weight: 500;
+  .verg-check {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 7px;
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.3;
   }
 
-  .pa-feature::before {
-    content: '✓';
-    font-size: 10px;
-    font-weight: 700;
+  .verg-check.ok { color: rgba(255,255,255,0.75); }
+  .verg-check.nok { color: rgba(255,255,255,0.2); }
+
+  .verg-ci {
+    width: 15px; height: 15px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 9px;
+    font-weight: 800;
   }
+
+  .verg-check.ok  .verg-ci { background: rgba(45,189,110,0.2); color: var(--green-400); }
+  .verg-check.nok .verg-ci { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.2); }
 
   /* Success state */
   .form-success {
@@ -889,6 +916,7 @@
     .form-step-item { flex-direction: column; align-items: center; text-align: center; padding: 0; gap: 6px; min-width: 80px; }
     .form-step-item::before { display: none; }
     .step-desc { display: none; }
+    .verg-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -1185,13 +1213,27 @@
             </div>
           </div>
 
-          <!-- Product aanbeveling — verschijnt zodra alle 4 vragen beantwoord zijn -->
-          <div class="product-aanbeveling" id="productAanbeveling" style="display:none">
-            <div class="pa-eyebrow">Ons advies voor jou</div>
-            <div class="pa-brand-badge" id="paBrand">Zaptec</div>
-            <div class="pa-name" id="paName">Zaptec Go</div>
-            <div class="pa-tagline" id="paTagline"></div>
-            <div class="pa-features" id="paFeatures"></div>
+          <!-- Vergelijking — verschijnt zodra alle 4 vragen beantwoord zijn -->
+          <div class="vergelijking" id="vergelijking" style="display:none">
+            <div class="verg-eyebrow">Jouw advies op basis van jouw wensen</div>
+            <div class="verg-grid">
+              <div class="verg-card aanbevolen" id="vCardZaptec">
+                <div class="verg-top-badge">Aanbevolen</div>
+                <div class="verg-brand">Zaptec</div>
+                <div class="verg-naam" id="vNaamZaptec">—</div>
+                <div class="verg-checks" id="vChecksZaptec"></div>
+              </div>
+              <div class="verg-card" id="vCardRatio">
+                <div class="verg-brand">Ratio</div>
+                <div class="verg-naam" id="vNaamRatio">—</div>
+                <div class="verg-checks" id="vChecksRatio"></div>
+              </div>
+              <div class="verg-card" id="vCardAlfen">
+                <div class="verg-brand">Alfen</div>
+                <div class="verg-naam" id="vNaamAlfen">—</div>
+                <div class="verg-checks" id="vChecksAlfen"></div>
+              </div>
+            </div>
           </div>
 
           <div class="form-nav">
@@ -1427,16 +1469,34 @@
     verrekenen: 'Verrekenen via laadpas',
   };
 
-  function getBestMatch(needs) {
-    const eligible = LAADPALEN.filter(p =>
-      (!needs.ere        || p.ere) &&
-      (!needs.zon        || p.zon) &&
-      (!needs.v2g        || p.v2g) &&
-      (!needs.verrekenen || p.verrekenen)
+  function getBestPerBrand(needs, brand) {
+    const brandProducts = LAADPALEN.filter(p => p.brand === brand);
+    const eligible = brandProducts.filter(p =>
+      (!needs.ere || p.ere) && (!needs.zon || p.zon) &&
+      (!needs.v2g || p.v2g) && (!needs.verrekenen || p.verrekenen)
     );
-    const pool = eligible.length > 0 ? eligible : [LAADPALEN.find(p => p.id === 'go2')];
-    pool.sort((a, b) => a.prio !== b.prio ? a.prio - b.prio : a.weight - b.weight);
-    return pool[0];
+    if (eligible.length > 0) {
+      eligible.sort((a, b) => a.weight - b.weight);
+      return eligible[0];
+    }
+    // No full match — return the product with the most matching required features
+    brandProducts.sort((a, b) => {
+      const score = p => ['ere','zon','v2g','verrekenen'].filter(k => needs[k] && p[k]).length;
+      return score(b) - score(a) || a.weight - b.weight;
+    });
+    return brandProducts[0];
+  }
+
+  function renderChecks(needs, product) {
+    const active = Object.keys(needs).filter(k => needs[k]);
+    if (active.length === 0) {
+      return '<div class="verg-check ok"><div class="verg-ci">✓</div>Geschikt voor jouw situatie</div>';
+    }
+    return active.map(k => {
+      const ok = product[k];
+      return `<div class="verg-check ${ok ? 'ok' : 'nok'}">
+        <div class="verg-ci">${ok ? '✓' : '✗'}</div>${FEATURE_LABELS[k]}</div>`;
+    }).join('');
   }
 
   function checkRecommendation() {
@@ -1453,23 +1513,14 @@
       verrekenen: q4.dataset.value === 'ja',
     };
 
-    const product = getBestMatch(needs);
+    ['Zaptec', 'Ratio', 'Alfen'].forEach(brand => {
+      const product = getBestPerBrand(needs, brand);
+      document.getElementById('vNaam' + brand).textContent = product.name;
+      document.getElementById('vChecks' + brand).innerHTML = renderChecks(needs, product);
+    });
 
-    document.getElementById('paBrand').textContent = product.brand;
-    document.getElementById('paName').textContent = product.name;
-    document.getElementById('paTagline').textContent = product.tagline;
-
-    const matchedFeatures = Object.keys(needs)
-      .filter(k => needs[k] && product[k])
-      .map(k => `<div class="pa-feature">${FEATURE_LABELS[k]}</div>`)
-      .join('');
-    document.getElementById('paFeatures').innerHTML =
-      matchedFeatures || '<div class="pa-feature">Geschikt voor jouw situatie</div>';
-
-    const box = document.getElementById('productAanbeveling');
-    if (box.style.display === 'none') {
-      box.style.display = 'block';
-    }
+    const box = document.getElementById('vergelijking');
+    if (box.style.display === 'none') box.style.display = 'block';
     document.getElementById('btnVolgende').style.display = 'block';
   }
 
