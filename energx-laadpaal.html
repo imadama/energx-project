@@ -746,6 +746,83 @@
     transition: width 0.4s ease;
   }
 
+  /* Product aanbeveling */
+  .product-aanbeveling {
+    margin-top: 24px;
+    padding: 22px;
+    background: linear-gradient(135deg, rgba(45,189,110,0.08), rgba(45,189,110,0.02));
+    border: 1px solid rgba(45,189,110,0.28);
+    border-radius: 16px;
+    animation: slideIn 0.35s ease;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .pa-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-400);
+    margin-bottom: 10px;
+  }
+
+  .pa-brand-badge {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 100px;
+    background: rgba(45,189,110,0.15);
+    border: 1px solid rgba(45,189,110,0.3);
+    color: var(--green-400);
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .pa-name {
+    font-family: var(--font-display);
+    font-size: 26px;
+    color: var(--white);
+    margin-bottom: 5px;
+    line-height: 1.2;
+  }
+
+  .pa-tagline {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+    margin-bottom: 14px;
+    line-height: 1.5;
+  }
+
+  .pa-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+  }
+
+  .pa-feature {
+    font-size: 12px;
+    padding: 4px 11px;
+    border-radius: 100px;
+    background: rgba(45,189,110,0.12);
+    color: var(--green-400);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .pa-feature::before {
+    content: '✓';
+    font-size: 10px;
+    font-weight: 700;
+  }
+
   /* Success state */
   .form-success {
     display: none;
@@ -1002,8 +1079,8 @@
         <div class="form-step-item active" data-step="1">
           <div class="step-circle">1</div>
           <div class="step-info">
-            <div class="step-name">Laadpunt wensen</div>
-            <div class="step-desc">Functies & mogelijkheden</div>
+            <div class="step-name">Jouw laadpaal</div>
+            <div class="step-desc">Functies & aanbeveling</div>
           </div>
         </div>
         <div class="form-step-item" data-step="2">
@@ -1028,42 +1105,19 @@
           <div class="progress-fill" id="progressFill" style="width: 33%"></div>
         </div>
 
-        <!-- STAP 1: Laadpunt wensen -->
+        <!-- STAP 1: Jouw wensen -->
         <div class="form-section active" id="step1">
-          <div class="form-section-title">Wat wil jij van je laadpunt?</div>
-          <div class="form-section-sub">Selecteer wat op jou van toepassing is. Meerdere keuzes zijn mogelijk.</div>
+          <div class="form-section-title">Wat zijn jouw wensen?</div>
+          <div class="form-section-sub">Beantwoord 4 vragen — wij adviseren de beste laadpaal voor jou.</div>
 
           <div class="choice-group">
-            <span class="choice-label">Heb je een voorkeursmerk?</span>
-            <div class="choice-cards horizontal" id="qMerk">
-              <div class="choice-card" data-value="Ratio" onclick="selectMerk(this, 'Ratio')">
-                <div class="cc-body">
-                  <div class="cc-title">Ratio</div>
-                  <div class="cc-sub">Slim & betaalbaar</div>
-                </div>
-              </div>
-              <div class="choice-card" data-value="Zaptec" onclick="selectMerk(this, 'Zaptec')">
-                <div class="cc-body">
-                  <div class="cc-title">Zaptec</div>
-                  <div class="cc-sub">Premium &amp; V2G ready</div>
-                </div>
-              </div>
-              <div class="choice-card" data-value="" onclick="selectMerk(this, '')">
-                <div class="cc-body">
-                  <div class="cc-title">Geen voorkeur</div>
-                  <div class="cc-sub">Jullie adviseren mij</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="choice-group">
-            <span class="choice-label">Wil je geld kunnen verdienen met je laadpaal?</span>
+            <span class="choice-label">Wil jij geld verdienen met je laadpaal?</span>
             <div class="choice-cards horizontal" id="q1">
               <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q1', false)">
                 <div class="cc-icon"></div>
                 <div class="cc-body">
                   <div class="cc-title">Ja, interessant</div>
+                  <div class="cc-sub">Stroom terugleveren (ERE)</div>
                 </div>
               </div>
               <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q1', false)">
@@ -1076,7 +1130,7 @@
           </div>
 
           <div class="choice-group">
-            <span class="choice-label">Wil je laden op zonnestroom?</span>
+            <span class="choice-label">Heb je zonnepanelen en wil je laden op eigen stroom?</span>
             <div class="choice-cards horizontal" id="q2">
               <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q2', false)">
                 <div class="cc-icon"></div>
@@ -1087,19 +1141,20 @@
               <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q2', false)">
                 <div class="cc-icon"></div>
                 <div class="cc-body">
-                  <div class="cc-title">Niet nodig</div>
+                  <div class="cc-title">Nee / nog niet</div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="choice-group">
-            <span class="choice-label">Wil je een V2G-ready laadpaal? (auto als thuisbatterij)</span>
+            <span class="choice-label">Wil je je auto als thuisbatterij kunnen gebruiken? <span style="color:rgba(255,255,255,0.3);font-weight:300">(V2G)</span></span>
             <div class="choice-cards horizontal" id="q3">
               <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q3', false)">
                 <div class="cc-icon"></div>
                 <div class="cc-body">
                   <div class="cc-title">Ja, toekomstbestendig</div>
+                  <div class="cc-sub">Auto levert stroom terug aan huis</div>
                 </div>
               </div>
               <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q3', false)">
@@ -1112,12 +1167,13 @@
           </div>
 
           <div class="choice-group">
-            <span class="choice-label">Wil je kunnen verrekenen met een laadpas? (bijv. zakelijk)</span>
+            <span class="choice-label">Wil je laden verrekenen via een laadpas? <span style="color:rgba(255,255,255,0.3);font-weight:300">(bijv. zakelijk)</span></span>
             <div class="choice-cards horizontal" id="q4">
               <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q4', false)">
                 <div class="cc-icon"></div>
                 <div class="cc-body">
                   <div class="cc-title">Ja, handig</div>
+                  <div class="cc-sub">Bijv. zakelijk of deelauto</div>
                 </div>
               </div>
               <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q4', false)">
@@ -1129,8 +1185,17 @@
             </div>
           </div>
 
+          <!-- Product aanbeveling — verschijnt zodra alle 4 vragen beantwoord zijn -->
+          <div class="product-aanbeveling" id="productAanbeveling" style="display:none">
+            <div class="pa-eyebrow">Ons advies voor jou</div>
+            <div class="pa-brand-badge" id="paBrand">Zaptec</div>
+            <div class="pa-name" id="paName">Zaptec Go</div>
+            <div class="pa-tagline" id="paTagline"></div>
+            <div class="pa-features" id="paFeatures"></div>
+          </div>
+
           <div class="form-nav">
-            <button class="btn-next" onclick="nextStep(2)">Volgende stap →</button>
+            <button class="btn-next" id="btnVolgende" onclick="nextStep(2)" style="display:none">Doorgaan met installatie →</button>
           </div>
         </div>
 
@@ -1292,15 +1357,6 @@
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="form-label">Voorkeursmerk (optioneel)</label>
-            <select class="form-select" id="merkSelect">
-              <option value="">Geen voorkeur — adviseer mij</option>
-              <option value="Ratio">Ratio</option>
-              <option value="Zaptec">Zaptec</option>
-            </select>
-          </div>
-
           <div class="form-nav" style="flex-direction: column; gap: 10px;">
             <button class="btn-back" onclick="nextStep(2)" style="align-self: flex-start; padding: 10px 18px; font-size: 14px;">← Terug</button>
             <button class="form-submit" onclick="submitForm()">Stuur mijn offerte aanvraag →</button>
@@ -1348,11 +1404,73 @@
     }, 3000);
   }
 
-  function selectMerk(el, value) {
-    document.querySelectorAll('#qMerk .choice-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    const select = document.getElementById('merkSelect');
-    Array.from(select.options).forEach(opt => { opt.selected = opt.value === value; });
+  // Laadpaal keuzematrix
+  const LAADPALEN = [
+    { id: 'go',     name: 'Zaptec Go',     brand: 'Zaptec', prio: 1, weight: 2, ere: false, zon: true,  v2g: false, verrekenen: true,
+      tagline: 'De meest verkochte thuislader van dit moment' },
+    { id: 'go2',    name: 'Zaptec Go 2',   brand: 'Zaptec', prio: 1, weight: 4, ere: true,  zon: true,  v2g: true,  verrekenen: true,
+      tagline: 'Maximaal toekomstbestendig — inclusief V2G' },
+    { id: 'io6pro', name: 'Ratio iO6 Pro', brand: 'Ratio',  prio: 2, weight: 3, ere: true,  zon: true,  v2g: false, verrekenen: true,
+      tagline: 'Slim laden met terugverdienoptie' },
+    { id: 'io6',    name: 'Ratio iO6',     brand: 'Ratio',  prio: 2, weight: 2, ere: false, zon: true,  v2g: false, verrekenen: true,
+      tagline: 'Betrouwbaar laden met zonnestroom en laadpas' },
+    { id: 'solar',  name: 'Ratio Solar',   brand: 'Ratio',  prio: 2, weight: 1, ere: false, zon: true,  v2g: false, verrekenen: false,
+      tagline: 'Puur op zonnestroom, eenvoudig en betaalbaar' },
+    { id: 'sline',  name: 'Alfen eCb One', brand: 'Alfen',  prio: 3, weight: 2, ere: true,  zon: false, v2g: false, verrekenen: true,
+      tagline: 'Zakelijk laden met slimme terugverdienopties' },
+  ];
+
+  const FEATURE_LABELS = {
+    ere:        'Geld verdienen (ERE)',
+    zon:        'Laden op zonnestroom',
+    v2g:        'V2G — auto als batterij',
+    verrekenen: 'Verrekenen via laadpas',
+  };
+
+  function getBestMatch(needs) {
+    const eligible = LAADPALEN.filter(p =>
+      (!needs.ere        || p.ere) &&
+      (!needs.zon        || p.zon) &&
+      (!needs.v2g        || p.v2g) &&
+      (!needs.verrekenen || p.verrekenen)
+    );
+    const pool = eligible.length > 0 ? eligible : [LAADPALEN.find(p => p.id === 'go2')];
+    pool.sort((a, b) => a.prio !== b.prio ? a.prio - b.prio : a.weight - b.weight);
+    return pool[0];
+  }
+
+  function checkRecommendation() {
+    const q1 = document.querySelector('#q1 .selected');
+    const q2 = document.querySelector('#q2 .selected');
+    const q3 = document.querySelector('#q3 .selected');
+    const q4 = document.querySelector('#q4 .selected');
+    if (!q1 || !q2 || !q3 || !q4) return;
+
+    const needs = {
+      ere:        q1.dataset.value === 'ja',
+      zon:        q2.dataset.value === 'ja',
+      v2g:        q3.dataset.value === 'ja',
+      verrekenen: q4.dataset.value === 'ja',
+    };
+
+    const product = getBestMatch(needs);
+
+    document.getElementById('paBrand').textContent = product.brand;
+    document.getElementById('paName').textContent = product.name;
+    document.getElementById('paTagline').textContent = product.tagline;
+
+    const matchedFeatures = Object.keys(needs)
+      .filter(k => needs[k] && product[k])
+      .map(k => `<div class="pa-feature">${FEATURE_LABELS[k]}</div>`)
+      .join('');
+    document.getElementById('paFeatures').innerHTML =
+      matchedFeatures || '<div class="pa-feature">Geschikt voor jouw situatie</div>';
+
+    const box = document.getElementById('productAanbeveling');
+    if (box.style.display === 'none') {
+      box.style.display = 'block';
+    }
+    document.getElementById('btnVolgende').style.display = 'block';
   }
 
   let currentStep = 1;
@@ -1378,6 +1496,9 @@
       group.querySelectorAll('.choice-card').forEach(c => c.classList.remove('selected'));
     }
     el.classList.toggle('selected');
+    if (['q1', 'q2', 'q3', 'q4'].includes(groupId)) {
+      checkRecommendation();
+    }
   }
 
   function selectSituatie(el, type) {
