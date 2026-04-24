@@ -1232,39 +1232,12 @@
             </div>
           </div>
 
-          <!-- Situatie: direct -->
-          <div class="cond-field" id="condDirect">
-            <div class="form-group">
-              <span class="cond-label">Is er ruimte in de meterkast voor een aardlekautomaat?</span>
-              <div class="choice-cards horizontal" id="qAardlekDirect">
-                <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'qAardlekDirect', false)">
-                  <div class="cc-icon"></div>
-                  <div class="cc-body"><div class="cc-title">Ja, er is ruimte</div></div>
-                </div>
-                <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'qAardlekDirect', false)">
-                  <div class="cc-icon"></div>
-                  <div class="cc-body"><div class="cc-title">Nee / weet ik niet</div></div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <!-- Situatie: direct — geen extra vragen -->
+          <div class="cond-field" id="condDirect"></div>
 
           <!-- Situatie: kruip-gevel -->
           <div class="cond-field" id="condKruipGevel">
             <div class="form-group">
-              <span class="cond-label">Is er ruimte in de meterkast voor een aardlekautomaat?</span>
-              <div class="choice-cards horizontal" id="qAardlekGevel">
-                <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'qAardlekGevel', false)">
-                  <div class="cc-icon"></div>
-                  <div class="cc-body"><div class="cc-title">Ja, er is ruimte</div></div>
-                </div>
-                <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'qAardlekGevel', false)">
-                  <div class="cc-icon"></div>
-                  <div class="cc-body"><div class="cc-title">Nee / weet ik niet</div></div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group" style="margin-top: 12px;">
               <span class="cond-label">Hoeveel meter afstand (ongeveer) van meterkast naar de plek van de laadpaal?</span>
               <select class="form-select" id="afstandGevel">
                 <option value="">Kies een afstand</option>
@@ -1280,19 +1253,6 @@
           <!-- Situatie: kruip-graaf -->
           <div class="cond-field" id="condKruipGraaf">
             <div class="form-group">
-              <span class="cond-label">Is er ruimte in de meterkast voor een aardlekautomaat?</span>
-              <div class="choice-cards horizontal" id="qAardlekGraaf">
-                <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'qAardlekGraaf', false)">
-                  <div class="cc-icon"></div>
-                  <div class="cc-body"><div class="cc-title">Ja, er is ruimte</div></div>
-                </div>
-                <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'qAardlekGraaf', false)">
-                  <div class="cc-icon"></div>
-                  <div class="cc-body"><div class="cc-title">Nee / weet ik niet</div></div>
-                </div>
-              </div>
-            </div>
-            <div class="form-group" style="margin-top: 12px;">
               <span class="cond-label">Hoeveel meter afstand van meterkast naar laadpaal?</span>
               <select class="form-select" id="afstandGraaf">
                 <option value="">Kies een afstand</option>
