@@ -775,52 +775,54 @@
     transition: width 0.4s ease;
   }
 
-  /* Vergelijking sectie */
-  .vergelijking {
-    margin-top: 24px;
-    animation: slideIn 0.35s ease;
-  }
-
+  /* Vergelijking sectie — full width in hero */
   @keyframes slideIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
   }
 
+  .hero-vergelijking {
+    max-width: var(--max);
+    margin: 56px auto 0;
+    animation: slideIn 0.4s ease;
+  }
+
   .verg-eyebrow {
-    font-size: 11px;
+    font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--green-400);
-    margin-bottom: 12px;
+    margin-bottom: 20px;
   }
 
   .verg-grid {
     display: grid;
     grid-template-columns: 1fr 1.2fr 1fr;
-    gap: 8px;
+    gap: 16px;
     align-items: start;
   }
 
   .verg-card {
     background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 14px;
-    padding: 16px 14px;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 24px;
     position: relative;
     display: flex;
     flex-direction: column;
   }
 
   .verg-card.aanbevolen {
-    background: linear-gradient(145deg, rgba(45,189,110,0.1), rgba(45,189,110,0.03));
-    border-color: rgba(45,189,110,0.35);
-    margin-top: -10px;
-    padding: 22px 16px;
+    background: linear-gradient(145deg, rgba(45,189,110,0.12), rgba(45,189,110,0.03));
+    border-color: rgba(45,189,110,0.4);
+    margin-top: -14px;
+    padding: 32px 28px;
+    border-radius: 24px;
   }
 
   .verg-top-badge {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.07em;
     text-transform: uppercase;
@@ -828,55 +830,58 @@
     background: rgba(45,189,110,0.15);
     border: 1px solid rgba(45,189,110,0.25);
     border-radius: 100px;
-    padding: 3px 9px;
+    padding: 4px 12px;
     display: inline-block;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
   }
 
   .verg-brand {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
-    color: rgba(255,255,255,0.3);
-    letter-spacing: 0.07em;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 3px;
+    margin-bottom: 4px;
   }
 
   .verg-naam {
     font-family: var(--font-display);
-    font-size: 16px;
-    color: rgba(255,255,255,0.6);
-    margin-bottom: 12px;
+    font-size: 22px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 16px;
     line-height: 1.2;
   }
 
-  .verg-card.aanbevolen .verg-naam { color: var(--white); font-size: 18px; }
+  .verg-card.aanbevolen .verg-naam {
+    color: var(--white);
+    font-size: 28px;
+  }
 
   .verg-checks {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 10px;
     flex: 1;
-    margin-bottom: 16px;
+    margin-bottom: 22px;
   }
 
   .verg-btn {
     width: 100%;
-    padding: 10px;
-    border-radius: 10px;
+    padding: 13px;
+    border-radius: 12px;
     font-family: var(--font-body);
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    border: 1px solid rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.14);
     background: transparent;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.55);
     transition: all 0.2s;
     margin-top: auto;
   }
 
   .verg-btn:hover {
-    border-color: rgba(255,255,255,0.3);
+    border-color: rgba(255,255,255,0.35);
     color: var(--white);
   }
 
@@ -884,6 +889,8 @@
     background: var(--green-400);
     color: var(--night);
     border-color: var(--green-400);
+    padding: 15px;
+    font-size: 16px;
   }
 
   .verg-card.aanbevolen .verg-btn:hover {
@@ -895,22 +902,22 @@
     width: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: 8px;
-    margin-bottom: 12px;
+    border-radius: 12px;
+    margin-bottom: 16px;
     display: block;
   }
 
   .verg-img-placeholder {
     width: 100%;
     aspect-ratio: 4 / 3;
-    border-radius: 8px;
-    margin-bottom: 12px;
+    border-radius: 12px;
+    margin-bottom: 16px;
     background: rgba(255,255,255,0.04);
     border: 1px dashed rgba(255,255,255,0.1);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
+    font-size: 13px;
     color: rgba(255,255,255,0.2);
     font-weight: 400;
   }
@@ -918,23 +925,23 @@
   .verg-check {
     display: flex;
     align-items: center;
-    gap: 7px;
-    font-size: 11px;
+    gap: 9px;
+    font-size: 13px;
     font-weight: 400;
-    line-height: 1.3;
+    line-height: 1.4;
   }
 
-  .verg-check.ok { color: rgba(255,255,255,0.75); }
-  .verg-check.nok { color: rgba(255,255,255,0.2); }
+  .verg-check.ok { color: rgba(255,255,255,0.8); }
+  .verg-check.nok { color: rgba(255,255,255,0.22); }
 
   .verg-ci {
-    width: 15px; height: 15px;
+    width: 18px; height: 18px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 800;
   }
 
@@ -1007,6 +1014,7 @@
     .form-step-item::before { display: none; }
     .step-desc { display: none; }
     .verg-grid { grid-template-columns: 1fr; }
+    .verg-card.aanbevolen { margin-top: 0; }
   }
 </style>
 </head>
@@ -1170,34 +1178,6 @@
             </div>
           </div>
 
-          <!-- Vergelijking — verschijnt zodra alle 4 vragen beantwoord zijn -->
-          <div class="vergelijking" id="vergelijking" style="display:none">
-            <div class="verg-eyebrow">Jouw advies op basis van jouw wensen</div>
-            <div class="verg-grid">
-              <div class="verg-card" id="vCardRatio">
-                <img class="verg-img" src="images/ratio-installatie-1.jpg" alt="Ratio laadpaal">
-                <div class="verg-brand">Ratio</div>
-                <div class="verg-naam" id="vNaamRatio">—</div>
-                <div class="verg-checks" id="vChecksRatio"></div>
-                <button class="verg-btn" onclick="kiesProduct('Ratio')">Kies deze →</button>
-              </div>
-              <div class="verg-card aanbevolen" id="vCardZaptec">
-                <div class="verg-top-badge">Aanbevolen</div>
-                <img class="verg-img" src="images/zaptec-installatie-1.jpg" alt="Zaptec laadpaal">
-                <div class="verg-brand">Zaptec</div>
-                <div class="verg-naam" id="vNaamZaptec">—</div>
-                <div class="verg-checks" id="vChecksZaptec"></div>
-                <button class="verg-btn" onclick="kiesProduct('Zaptec')">Kies deze →</button>
-              </div>
-              <div class="verg-card" id="vCardAlfen">
-                <div class="verg-img-placeholder">Foto volgt</div>
-                <div class="verg-brand">Alfen</div>
-                <div class="verg-naam" id="vNaamAlfen">—</div>
-                <div class="verg-checks" id="vChecksAlfen"></div>
-                <button class="verg-btn" onclick="kiesProduct('Alfen')">Kies deze →</button>
-              </div>
-            </div>
-          </div>
         </div>
 
         <!-- STAP 2: Installatie situatie -->
@@ -1317,6 +1297,35 @@
         </div>
       </div>
 
+    </div>
+
+    <!-- Vergelijking — full width, verschijnt na 4 vragen -->
+    <div class="hero-vergelijking" id="vergelijking" style="display:none">
+      <div class="verg-eyebrow">Jouw advies op basis van jouw wensen</div>
+      <div class="verg-grid">
+        <div class="verg-card" id="vCardRatio">
+          <img class="verg-img" src="images/ratio-installatie-1.jpg" alt="Ratio laadpaal">
+          <div class="verg-brand">Ratio</div>
+          <div class="verg-naam" id="vNaamRatio">—</div>
+          <div class="verg-checks" id="vChecksRatio"></div>
+          <button class="verg-btn" onclick="kiesProduct('Ratio')">Kies deze →</button>
+        </div>
+        <div class="verg-card aanbevolen" id="vCardZaptec">
+          <div class="verg-top-badge">Aanbevolen</div>
+          <img class="verg-img" src="images/zaptec-installatie-1.jpg" alt="Zaptec laadpaal">
+          <div class="verg-brand">Zaptec</div>
+          <div class="verg-naam" id="vNaamZaptec">—</div>
+          <div class="verg-checks" id="vChecksZaptec"></div>
+          <button class="verg-btn" onclick="kiesProduct('Zaptec')">Kies deze →</button>
+        </div>
+        <div class="verg-card" id="vCardAlfen">
+          <div class="verg-img-placeholder">Foto volgt</div>
+          <div class="verg-brand">Alfen</div>
+          <div class="verg-naam" id="vNaamAlfen">—</div>
+          <div class="verg-checks" id="vChecksAlfen"></div>
+          <button class="verg-btn" onclick="kiesProduct('Alfen')">Kies deze →</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -1519,7 +1528,10 @@
     });
 
     const box = document.getElementById('vergelijking');
-    if (box.style.display === 'none') box.style.display = 'block';
+    if (box.style.display === 'none') {
+      box.style.display = 'block';
+      setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    }
   }
 
   let gekozenMerk = '';
