@@ -1322,7 +1322,7 @@
       </div>
       <div class="verg-card aanbevolen" id="vCardZaptec">
         <div class="verg-top-badge">Aanbevolen</div>
-        <img class="verg-img product-shot" src="images/zaptec-go-zwart.png" alt="Zaptec Go laadpaal">
+        <img class="verg-img product-shot" id="vImgZaptec" src="images/zaptec-go-zwart.png" alt="Zaptec Go laadpaal">
         <div class="verg-brand">Zaptec</div>
         <div class="verg-naam" id="vNaamZaptec">—</div>
         <div class="verg-checks" id="vChecksZaptec"></div>
@@ -1466,9 +1466,9 @@
   // Laadpaal keuzematrix
   const LAADPALEN = [
     { id: 'go',     name: 'Zaptec Go',     brand: 'Zaptec', prio: 1, weight: 2, ere: false, zon: true,  v2g: false, verrekenen: true,
-      tagline: 'De meest verkochte thuislader van dit moment' },
+      tagline: 'De meest verkochte thuislader van dit moment', img: 'images/zaptec-go-zwart.png' },
     { id: 'go2',    name: 'Zaptec Go 2',   brand: 'Zaptec', prio: 1, weight: 4, ere: true,  zon: true,  v2g: true,  verrekenen: true,
-      tagline: 'Maximaal toekomstbestendig — inclusief V2G' },
+      tagline: 'Maximaal toekomstbestendig — inclusief V2G', img: 'images/zaptec-go2.jpg' },
     { id: 'io6pro', name: 'Ratio iO6 Pro', brand: 'Ratio',  prio: 2, weight: 3, ere: true,  zon: true,  v2g: false, verrekenen: true,
       tagline: 'Slim laden met terugverdienoptie' },
     { id: 'io6',    name: 'Ratio iO6',     brand: 'Ratio',  prio: 2, weight: 2, ere: false, zon: true,  v2g: false, verrekenen: true,
@@ -1534,6 +1534,8 @@
       const product = getBestPerBrand(needs, brand);
       document.getElementById('vNaam' + brand).textContent = product.name;
       document.getElementById('vChecks' + brand).innerHTML = renderChecks(needs, product);
+      const imgEl = document.getElementById('vImg' + brand);
+      if (imgEl && product.img) { imgEl.src = product.img; imgEl.alt = product.name; }
     });
 
     const box = document.getElementById('vergelijking');
