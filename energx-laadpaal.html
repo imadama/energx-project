@@ -1238,15 +1238,8 @@
           <!-- Situatie: kruip-gevel -->
           <div class="cond-field" id="condKruipGevel">
             <div class="form-group">
-              <span class="cond-label">Hoeveel meter afstand (ongeveer) van meterkast naar de plek van de laadpaal?</span>
-              <select class="form-select" id="afstandGevel">
-                <option value="">Kies een afstand</option>
-                <option>0 – 5 meter</option>
-                <option>5 – 10 meter</option>
-                <option>10 – 15 meter</option>
-                <option>15 – 20 meter</option>
-                <option>Meer dan 20 meter</option>
-              </select>
+              <span class="cond-label">Hoeveel meter afstand van meterkast naar de plek van de laadpaal?</span>
+              <input type="number" class="form-input" id="afstandGevel" placeholder="bijv. 8" min="0" step="1">
             </div>
           </div>
 
@@ -1254,24 +1247,11 @@
           <div class="cond-field" id="condKruipGraaf">
             <div class="form-group">
               <span class="cond-label">Hoeveel meter afstand van meterkast naar laadpaal?</span>
-              <select class="form-select" id="afstandGraaf">
-                <option value="">Kies een afstand</option>
-                <option>0 – 5 meter</option>
-                <option>5 – 10 meter</option>
-                <option>10 – 15 meter</option>
-                <option>15 – 20 meter</option>
-                <option>Meer dan 20 meter</option>
-              </select>
+              <input type="number" class="form-input" id="afstandGraaf" placeholder="bijv. 12" min="0" step="1">
             </div>
             <div class="form-group" style="margin-top: 12px;">
               <span class="cond-label">Hoeveel meter graaf- en straatwerk is er nodig?</span>
-              <select class="form-select" id="meterGraaf">
-                <option value="">Kies een hoeveelheid</option>
-                <option>0 – 3 meter</option>
-                <option>3 – 6 meter</option>
-                <option>6 – 10 meter</option>
-                <option>Meer dan 10 meter</option>
-              </select>
+              <input type="number" class="form-input" id="meterGraaf" placeholder="bijv. 5" min="0" step="1">
             </div>
           </div>
 
