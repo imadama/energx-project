@@ -862,6 +862,30 @@
     border-color: var(--green-300);
   }
 
+  .verg-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .verg-img-placeholder {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    font-weight: 400;
+  }
+
   .verg-check {
     display: flex;
     align-items: center;
@@ -1256,6 +1280,7 @@
             <div class="verg-eyebrow">Jouw advies op basis van jouw wensen</div>
             <div class="verg-grid">
               <div class="verg-card" id="vCardRatio">
+                <img class="verg-img" src="images/ratio-installatie-1.jpg" alt="Ratio laadpaal">
                 <div class="verg-brand">Ratio</div>
                 <div class="verg-naam" id="vNaamRatio">—</div>
                 <div class="verg-checks" id="vChecksRatio"></div>
@@ -1263,12 +1288,14 @@
               </div>
               <div class="verg-card aanbevolen" id="vCardZaptec">
                 <div class="verg-top-badge">Aanbevolen</div>
+                <img class="verg-img" src="images/zaptec-installatie-1.jpg" alt="Zaptec laadpaal">
                 <div class="verg-brand">Zaptec</div>
                 <div class="verg-naam" id="vNaamZaptec">—</div>
                 <div class="verg-checks" id="vChecksZaptec"></div>
                 <button class="verg-btn" onclick="kiesProduct('Zaptec')">Kies deze →</button>
               </div>
               <div class="verg-card" id="vCardAlfen">
+                <div class="verg-img-placeholder">Foto volgt</div>
                 <div class="verg-brand">Alfen</div>
                 <div class="verg-naam" id="vNaamAlfen">—</div>
                 <div class="verg-checks" id="vChecksAlfen"></div>
