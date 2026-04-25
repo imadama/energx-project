@@ -1022,6 +1022,287 @@
     .verg-grid { grid-template-columns: 1fr; }
     .verg-card.aanbevolen { margin-top: 0; }
   }
+
+  /* ══════════════════════════════════════════
+     HERONTWERP: Hero single-column + Wizard
+  ══════════════════════════════════════════ */
+
+  /* Hero: single-column, centered */
+  .hero-inner {
+    grid-template-columns: 1fr !important;
+    max-width: 820px;
+    text-align: center;
+    justify-items: center;
+  }
+  .hero-sub { max-width: 580px; text-align: center; margin-left: auto; margin-right: auto; }
+  .hero-breadcrumb { justify-content: center; }
+  .hero-merken { justify-content: center; }
+
+  /* Hero CTA knop */
+  .btn-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--green-400);
+    color: var(--night);
+    padding: 18px 40px;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 700;
+    text-decoration: none;
+    margin-top: 2.5rem;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 8px 32px rgba(45,189,110,0.25);
+  }
+  .btn-hero-cta:hover { background: var(--green-300); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(45,189,110,0.35); }
+
+  /* ── WIZARD SECTIE ── */
+  .wizard-sectie {
+    background: var(--night-2);
+    padding: 72px 6vw 96px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+
+  .wizard-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Voortgangsbalk bovenaan wizard */
+  .wizard-progress {
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    margin-bottom: 56px;
+    overflow: hidden;
+  }
+  .wizard-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green-700), var(--green-400));
+    border-radius: 100px;
+    transition: width 0.5s ease;
+  }
+
+  /* Wizard blokken */
+  .wizard-block {
+    margin-bottom: 48px;
+  }
+  .wizard-block + .wizard-block {
+    padding-top: 48px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .wizard-block--success {
+    text-align: center;
+    padding: 40px 0 24px;
+  }
+
+  .wizard-step-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-400);
+    margin-bottom: 10px;
+  }
+
+  .wizard-heading {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3vw, 38px);
+    color: var(--white);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+
+  .wizard-subhead {
+    font-size: 16px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+
+  /* Vraag blokken */
+  .vraag-blok {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .vraag-blok:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .vraag-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .vraag-label .q-hint {
+    font-weight: 300;
+    color: rgba(255,255,255,0.3);
+    font-size: 14px;
+  }
+
+  /* Ja/Nee kaarten — 2 kolommen, gelijke hoogte */
+  .vraag-blok .choice-cards.horizontal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    flex-direction: unset;
+  }
+
+  .vraag-blok .choice-card {
+    min-height: 68px;
+    border-radius: 14px;
+    padding: 16px 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+  }
+  .vraag-blok .choice-card:hover {
+    border-color: rgba(45,189,110,0.4);
+    background: rgba(45,189,110,0.06);
+    color: var(--white);
+  }
+  .vraag-blok .choice-card.selected {
+    border-color: var(--green-400);
+    background: rgba(45,189,110,0.13);
+    color: var(--white);
+    font-weight: 600;
+  }
+  .vraag-blok .choice-card .cc-icon {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    flex-shrink: 0;
+    transition: all 0.18s;
+  }
+  .vraag-blok .choice-card.selected .cc-icon {
+    background: var(--green-400);
+    border-color: var(--green-400);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 5l2.5 2.5L8 3' stroke='%23090F0C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  .vraag-blok .choice-card .cc-body { flex: 1; }
+  .vraag-blok .choice-card .cc-title { font-size: 15px; line-height: 1.3; }
+  .vraag-blok .choice-card .cc-sub { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 2px; font-weight: 300; }
+
+  /* Vergelijking blok (inline in wizard) */
+  .wizard-block--comparison .wizard-heading { margin-bottom: 6px; }
+  .wizard-block--comparison .verg-grid { gap: 14px; }
+  .wizard-block--comparison .verg-grid { grid-template-columns: 1fr 1.2fr 1fr; }
+
+  /* Situatie-kaarten stap 2 */
+  #wizardStep2 .choice-cards {
+    flex-direction: column;
+    gap: 10px;
+    display: flex;
+  }
+  #wizardStep2 .choice-card {
+    min-height: 76px;
+    padding: 18px 22px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    font-size: 15px;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    transition: all 0.18s;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    user-select: none;
+  }
+  #wizardStep2 .choice-card:hover {
+    border-color: rgba(45,189,110,0.4);
+    background: rgba(45,189,110,0.06);
+    color: var(--white);
+  }
+  #wizardStep2 .choice-card.selected {
+    border-color: var(--green-400);
+    background: rgba(45,189,110,0.13);
+    color: var(--white);
+  }
+  #wizardStep2 .cc-icon {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    flex-shrink: 0;
+    transition: all 0.18s;
+  }
+  #wizardStep2 .choice-card.selected .cc-icon {
+    background: var(--green-400);
+    border-color: var(--green-400);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 5l2.5 2.5L8 3' stroke='%23090F0C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+  #wizardStep2 .cc-body { flex: 1; }
+  #wizardStep2 .cc-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+  #wizardStep2 .cc-desc { font-size: 13px; color: rgba(255,255,255,0.38); font-weight: 300; }
+
+  /* Wizard navigatie */
+  .wizard-nav {
+    display: flex;
+    gap: 12px;
+    margin-top: 28px;
+    align-items: center;
+  }
+  .btn-wiz-next {
+    flex: 1;
+    min-height: 54px;
+    background: var(--green-400);
+    color: var(--night);
+    border: none;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-wiz-next:hover { background: var(--green-300); transform: translateY(-1px); }
+
+  /* Contactformulier stap 3 */
+  #wizardStep3 .form-submit {
+    width: 100%;
+    min-height: 54px;
+    border-radius: 100px;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 20px;
+  }
+  #wizardStep3 .form-group { margin-bottom: 16px; }
+  #wizardStep3 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  #wizardStep3 .form-privacy { font-size: 12px; color: rgba(255,255,255,0.25); text-align: center; margin-top: 14px; }
+
+  /* Responsive wizard */
+  @media (max-width: 640px) {
+    .wizard-sectie { padding: 56px 5vw 72px; }
+    .wizard-block--comparison .verg-grid { grid-template-columns: 1fr; }
+    .verg-card.aanbevolen { margin-top: 0 !important; }
+    #wizardStep3 .form-row { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 420px) {
+    .vraag-blok .choice-cards.horizontal { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -1042,7 +1323,7 @@
     <li><a href="energx-laadpaal.html">Laadpaal</a></li>
     <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
     <li><a href="blog.html">Blog</a></li>
-    <li><a href="#offerte" class="nav-cta">Offerte aanvragen</a></li>
+    <li><a href="#wizard-sectie" class="nav-cta">Offerte aanvragen</a></li>
   </ul>
 </nav>
 
@@ -1063,6 +1344,10 @@
       <p class="hero-sub">
         Een eigen laadpaal installeren? Wij regelen het — van advies en offerte tot een gecertificeerde lokale installateur bij jou thuis. Snel, eerlijk geprijsd en zonder gedoe.
       </p>
+      <a href="#wizard-sectie" class="btn-hero-cta">
+        Bereken jouw advies
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3l6 6-6 6M3 9h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
       <div class="hero-merken">
         <span class="merk-label">Wij leveren:</span>
         <div class="merk-badge">Ratio</div>
@@ -1070,274 +1355,231 @@
         <div class="merk-badge">Alfen</div>
       </div>
     </div>
-
-    <div class="hero-right" id="offerte">
-
-      <!-- Stap-indicator -->
-      <div class="form-steps" id="formSteps">
-        <div class="form-step-item active" data-step="1">
-          <div class="step-circle">1</div>
-          <div class="step-info">
-            <div class="step-name">Jouw laadpaal</div>
-            <div class="step-desc">Functies & aanbeveling</div>
-          </div>
-        </div>
-        <div class="form-step-item" data-step="2">
-          <div class="step-circle">2</div>
-          <div class="step-info">
-            <div class="step-name">Installatie</div>
-            <div class="step-desc">Locatie & bekabeling</div>
-          </div>
-        </div>
-        <div class="form-step-item" data-step="3">
-          <div class="step-circle">3</div>
-          <div class="step-info">
-            <div class="step-name">Jouw gegevens</div>
-            <div class="step-desc">Contact & locatie</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Form card -->
-      <div class="form-card">
-        <div class="progress-bar">
-          <div class="progress-fill" id="progressFill" style="width: 33%"></div>
-        </div>
-
-        <!-- STAP 1: Jouw wensen -->
-        <div class="form-section active" id="step1">
-          <div class="form-section-title">Wat zijn jouw wensen?</div>
-          <div class="form-section-sub">Beantwoord 4 vragen — wij adviseren de beste laadpaal voor jou.</div>
-
-          <div class="choice-group">
-            <span class="choice-label">Wil jij geld verdienen met je laadpaal?</span>
-            <div class="choice-cards horizontal" id="q1">
-              <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q1', false)">
-                <div class="cc-icon"></div>
-                <div class="cc-body">
-                  <div class="cc-title">Ja, interessant</div>
-                  <div class="cc-sub">Stroom terugleveren (ERE)</div>
-                </div>
-              </div>
-              <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q1', false)">
-                <div class="cc-icon"></div>
-                <div class="cc-body">
-                  <div class="cc-title">Niet nodig</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="choice-group">
-            <span class="choice-label">Heb je zonnepanelen en wil je laden op eigen stroom?</span>
-            <div class="choice-cards horizontal" id="q2">
-              <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q2', false)">
-                <div class="cc-icon"></div>
-                <div class="cc-body">
-                  <div class="cc-title">Ja, ik heb zonnepanelen</div>
-                </div>
-              </div>
-              <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q2', false)">
-                <div class="cc-icon"></div>
-                <div class="cc-body">
-                  <div class="cc-title">Nee / nog niet</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="choice-group">
-            <span class="choice-label">Wil je je auto als thuisbatterij kunnen gebruiken? <span style="color:rgba(255,255,255,0.3);font-weight:300">(V2G)</span></span>
-            <div class="choice-cards horizontal" id="q3">
-              <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q3', false)">
-                <div class="cc-icon"></div>
-                <div class="cc-body">
-                  <div class="cc-title">Ja, toekomstbestendig</div>
-                  <div class="cc-sub">Auto levert stroom terug aan huis</div>
-                </div>
-              </div>
-              <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q3', false)">
-                <div class="cc-icon"></div>
-                <div class="cc-body">
-                  <div class="cc-title">Niet nodig</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="choice-group">
-            <span class="choice-label">Wil je laden verrekenen via een laadpas? <span style="color:rgba(255,255,255,0.3);font-weight:300">(bijv. zakelijk)</span></span>
-            <div class="choice-cards horizontal" id="q4">
-              <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q4', false)">
-                <div class="cc-icon"></div>
-                <div class="cc-body">
-                  <div class="cc-title">Ja, handig</div>
-                  <div class="cc-sub">Bijv. zakelijk of deelauto</div>
-                </div>
-              </div>
-              <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q4', false)">
-                <div class="cc-icon"></div>
-                <div class="cc-body">
-                  <div class="cc-title">Niet nodig</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <!-- STAP 2: Installatie situatie -->
-        <div class="form-section" id="step2">
-          <div class="form-section-title">Hoe ziet jouw situatie eruit?</div>
-          <div class="form-section-sub">Dit bepaalt de installatiekosten. Kies de situatie die het best bij jou past.</div>
-
-          <div class="choice-group">
-            <span class="choice-label">Welke installatiesituatie heb jij?</span>
-            <div class="choice-cards" id="qSituatie">
-              <div class="choice-card" data-value="direct" onclick="selectSituatie(this, 'direct')">
-                <div class="cc-icon"></div>
-                <div class="cc-body">
-                  <div class="cc-title">Direct achter de meterkast</div>
-                  <div class="cc-desc">Laadpaal komt vlak naast de meterkast — geen lange kabelroute nodig</div>
-                </div>
-              </div>
-              <div class="choice-card" data-value="kruip-gevel" onclick="selectSituatie(this, 'kruip-gevel')">
-                <div class="cc-icon"></div>
-                <div class="cc-body">
-                  <div class="cc-title">Kruipruimte & direct tegen de gevel</div>
-                  <div class="cc-desc">Kabel loopt via de kruipruimte naar de buitenmuur</div>
-                </div>
-              </div>
-              <div class="choice-card" data-value="kruip-graaf" onclick="selectSituatie(this, 'kruip-graaf')">
-                <div class="cc-icon"></div>
-                <div class="cc-body">
-                  <div class="cc-title">Kruipruimte met graaf- en straatwerk</div>
-                  <div class="cc-desc">Kabel moet worden ingegraven naar de laadpaal op de oprit/parkeerplaats</div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Situatie: direct — geen extra vragen -->
-          <div class="cond-field" id="condDirect"></div>
-
-          <!-- Situatie: kruip-gevel -->
-          <div class="cond-field" id="condKruipGevel">
-            <div class="form-group">
-              <span class="cond-label">Hoeveel meter afstand van meterkast naar de plek van de laadpaal?</span>
-              <input type="number" class="form-input" id="afstandGevel" placeholder="bijv. 8" min="0" step="1">
-            </div>
-          </div>
-
-          <!-- Situatie: kruip-graaf -->
-          <div class="cond-field" id="condKruipGraaf">
-            <div class="form-group">
-              <span class="cond-label">Hoeveel meter afstand van meterkast naar laadpaal?</span>
-              <input type="number" class="form-input" id="afstandGraaf" placeholder="bijv. 12" min="0" step="1">
-            </div>
-            <div class="form-group" style="margin-top: 12px;">
-              <span class="cond-label">Hoeveel meter graaf- en straatwerk is er nodig?</span>
-              <input type="number" class="form-input" id="meterGraaf" placeholder="bijv. 5" min="0" step="1">
-            </div>
-          </div>
-
-          <div class="form-nav">
-            <button class="btn-back" onclick="nextStep(1)">← Terug</button>
-            <button class="btn-next" onclick="nextStep(3)">Volgende stap →</button>
-          </div>
-        </div>
-
-        <!-- STAP 3: Contactgegevens -->
-        <div class="form-section" id="step3">
-          <div class="form-section-title">Bijna klaar — jouw gegevens</div>
-          <div class="form-section-sub">We sturen je offerte direct naar je e-mailadres.</div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Voornaam</label>
-              <input type="text" class="form-input" placeholder="Jan">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Achternaam</label>
-              <input type="text" class="form-input" placeholder="de Vries">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">E-mailadres</label>
-            <input type="email" class="form-input" placeholder="jan@email.nl">
-          </div>
-
-          <div class="form-group">
-            <label class="form-label">Telefoonnummer</label>
-            <input type="tel" class="form-input" placeholder="06 12345678">
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Postcode</label>
-              <input type="text" class="form-input" placeholder="1234 AB">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Huisnummer</label>
-              <input type="text" class="form-input" placeholder="12">
-            </div>
-          </div>
-
-          <div class="form-nav" style="flex-direction: column; gap: 10px;">
-            <button class="btn-back" onclick="nextStep(2)" style="align-self: flex-start; padding: 10px 18px; font-size: 14px;">← Terug</button>
-            <button class="form-submit" onclick="submitForm()">Stuur mijn offerte aanvraag →</button>
-          </div>
-          <p class="form-privacy">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
-        </div>
-
-        <!-- SUCCESS -->
-        <div class="form-success" id="formSuccess">
-          <div class="success-icon">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-              <path d="M6 14l5.5 5.5L22 8" stroke="#2DBD6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="success-title">Aanvraag ontvangen!</div>
-          <p class="success-sub">Je offerte is onderweg naar je mailbox.<br>Binnen enkele minuten ontvang je een persoonlijk voorstel.</p>
-        </div>
-      </div>
-
-    </div>
-
   </div>
 </div>
 
-<!-- VERGELIJKING -->
-<div class="advies-sectie" id="vergelijking" style="display:none">
-  <div class="container">
-    <div class="verg-eyebrow">Jouw advies op basis van jouw wensen</div>
-    <div class="verg-grid">
-      <div class="verg-card" id="vCardRatio">
-        <img class="verg-img product-shot" id="vImgRatio" src="images/ratio-installatie-1.jpg" alt="Ratio laadpaal">
-        <div class="verg-brand">Ratio</div>
-        <div class="verg-naam" id="vNaamRatio">—</div>
-        <div class="verg-checks" id="vChecksRatio"></div>
-        <button class="verg-btn" onclick="kiesProduct('Ratio')">Kies deze →</button>
+<!-- WIZARD -->
+<section id="wizard-sectie" class="wizard-sectie">
+  <div class="wizard-inner">
+
+    <!-- Voortgangsbalk -->
+    <div class="wizard-progress">
+      <div class="wizard-progress-fill" id="wizardProgressFill" style="width:8%"></div>
+    </div>
+
+    <!-- BLOK 1: Stap 1 — altijd zichtbaar -->
+    <div class="wizard-block" id="wizardStep1">
+      <div class="wizard-step-label">Stap 1 van 3 — Jouw wensen</div>
+      <h2 class="wizard-heading">Wat wil jij met je laadpaal?</h2>
+      <p class="wizard-subhead">Beantwoord 4 vragen — wij adviseren de beste laadpaal voor jou.</p>
+
+      <div class="vraag-blok">
+        <span class="vraag-label">Wil jij geld verdienen met je laadpaal? <span class="q-hint">(stroom terugleveren)</span></span>
+        <div class="choice-cards horizontal" id="q1">
+          <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q1', false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Ja, interessant</div>
+              <div class="cc-sub">Stroom terugleveren (ERE)</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q1', false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body"><div class="cc-title">Niet nodig</div></div>
+          </div>
+        </div>
       </div>
-      <div class="verg-card aanbevolen" id="vCardZaptec">
-        <div class="verg-top-badge">Aanbevolen</div>
-        <img class="verg-img product-shot" id="vImgZaptec" src="images/zaptec-go-zwart.png" alt="Zaptec Go laadpaal">
-        <div class="verg-brand">Zaptec</div>
-        <div class="verg-naam" id="vNaamZaptec">—</div>
-        <div class="verg-checks" id="vChecksZaptec"></div>
-        <button class="verg-btn" onclick="kiesProduct('Zaptec')">Kies deze →</button>
+
+      <div class="vraag-blok">
+        <span class="vraag-label">Heb je zonnepanelen en wil je laden op eigen stroom?</span>
+        <div class="choice-cards horizontal" id="q2">
+          <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q2', false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body"><div class="cc-title">Ja, ik heb zonnepanelen</div></div>
+          </div>
+          <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q2', false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body"><div class="cc-title">Nee / nog niet</div></div>
+          </div>
+        </div>
       </div>
-      <div class="verg-card" id="vCardAlfen">
-        <img class="verg-img product-shot" id="vImgAlfen" src="images/alfen-sline.webp" alt="Alfen Eve S-line laadpaal">
-        <div class="verg-brand">Alfen</div>
-        <div class="verg-naam" id="vNaamAlfen">—</div>
-        <div class="verg-checks" id="vChecksAlfen"></div>
-        <button class="verg-btn" onclick="kiesProduct('Alfen')">Kies deze →</button>
+
+      <div class="vraag-blok">
+        <span class="vraag-label">Wil je je auto als thuisbatterij gebruiken? <span class="q-hint">(V2G)</span></span>
+        <div class="choice-cards horizontal" id="q3">
+          <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q3', false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Ja, toekomstbestendig</div>
+              <div class="cc-sub">Auto levert stroom terug aan huis</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q3', false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body"><div class="cc-title">Niet nodig</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="vraag-blok">
+        <span class="vraag-label">Wil je laden verrekenen via een laadpas? <span class="q-hint">(bijv. zakelijk)</span></span>
+        <div class="choice-cards horizontal" id="q4">
+          <div class="choice-card" data-value="ja" onclick="selectChoice(this, 'q4', false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Ja, handig</div>
+              <div class="cc-sub">Bijv. zakelijk of deelauto</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="nee" onclick="selectChoice(this, 'q4', false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body"><div class="cc-title">Niet nodig</div></div>
+          </div>
+        </div>
       </div>
     </div>
+
+    <!-- BLOK 2: Vergelijking — verschijnt inline na 4 antwoorden -->
+    <div class="wizard-block wizard-block--comparison" id="vergelijking" style="display:none">
+      <div class="wizard-step-label">Jouw persoonlijk advies</div>
+      <h2 class="wizard-heading">Kies jouw laadpaal</h2>
+      <p class="wizard-subhead">Op basis van jouw antwoorden — klik op een kaart om door te gaan.</p>
+      <div class="verg-grid">
+        <div class="verg-card" id="vCardRatio">
+          <img class="verg-img product-shot" id="vImgRatio" src="images/ratio-installatie-1.jpg" alt="Ratio laadpaal">
+          <div class="verg-brand">Ratio</div>
+          <div class="verg-naam" id="vNaamRatio">—</div>
+          <div class="verg-checks" id="vChecksRatio"></div>
+          <button class="verg-btn" onclick="kiesProduct('Ratio')">Kies deze →</button>
+        </div>
+        <div class="verg-card aanbevolen" id="vCardZaptec">
+          <div class="verg-top-badge">Aanbevolen</div>
+          <img class="verg-img product-shot" id="vImgZaptec" src="images/zaptec-go-zwart.png" alt="Zaptec Go laadpaal">
+          <div class="verg-brand">Zaptec</div>
+          <div class="verg-naam" id="vNaamZaptec">—</div>
+          <div class="verg-checks" id="vChecksZaptec"></div>
+          <button class="verg-btn" onclick="kiesProduct('Zaptec')">Kies deze →</button>
+        </div>
+        <div class="verg-card" id="vCardAlfen">
+          <img class="verg-img product-shot" id="vImgAlfen" src="images/alfen-sline.webp" alt="Alfen Eve S-line laadpaal">
+          <div class="verg-brand">Alfen</div>
+          <div class="verg-naam" id="vNaamAlfen">—</div>
+          <div class="verg-checks" id="vChecksAlfen"></div>
+          <button class="verg-btn" onclick="kiesProduct('Alfen')">Kies deze →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOK 3: Stap 2 — installatiesituatie -->
+    <div class="wizard-block" id="wizardStep2" style="display:none">
+      <div class="wizard-step-label">Stap 2 van 3 — Installatie</div>
+      <h2 class="wizard-heading">Hoe ziet jouw situatie eruit?</h2>
+      <p class="wizard-subhead">Dit bepaalt de installatiekosten. Kies de situatie die het best bij jou past.</p>
+
+      <div class="choice-cards" id="qSituatie">
+        <div class="choice-card" data-value="direct" onclick="selectSituatie(this, 'direct')">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Direct achter de meterkast</div>
+            <div class="cc-desc">Laadpaal komt vlak naast de meterkast — geen lange kabelroute nodig</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="kruip-gevel" onclick="selectSituatie(this, 'kruip-gevel')">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Kruipruimte & direct tegen de gevel</div>
+            <div class="cc-desc">Kabel loopt via de kruipruimte naar de buitenmuur</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="kruip-graaf" onclick="selectSituatie(this, 'kruip-graaf')">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Kruipruimte met graaf- en straatwerk</div>
+            <div class="cc-desc">Kabel moet worden ingegraven naar de laadpaal op de oprit of parkeerplaats</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cond-field" id="condDirect"></div>
+
+      <div class="cond-field" id="condKruipGevel">
+        <div class="form-group">
+          <span class="cond-label">Hoeveel meter afstand van meterkast naar de plek van de laadpaal?</span>
+          <input type="number" class="form-input" id="afstandGevel" placeholder="bijv. 8" min="0" step="1">
+        </div>
+      </div>
+
+      <div class="cond-field" id="condKruipGraaf">
+        <div class="form-group">
+          <span class="cond-label">Hoeveel meter afstand van meterkast naar laadpaal?</span>
+          <input type="number" class="form-input" id="afstandGraaf" placeholder="bijv. 12" min="0" step="1">
+        </div>
+        <div class="form-group" style="margin-top: 12px;">
+          <span class="cond-label">Hoeveel meter graaf- en straatwerk is er nodig?</span>
+          <input type="number" class="form-input" id="meterGraaf" placeholder="bijv. 5" min="0" step="1">
+        </div>
+      </div>
+
+      <div class="wizard-nav">
+        <button class="btn-wiz-next" onclick="nextStep(3)">Volgende stap →</button>
+      </div>
+    </div>
+
+    <!-- BLOK 4: Stap 3 — contactgegevens -->
+    <div class="wizard-block" id="wizardStep3" style="display:none">
+      <div class="wizard-step-label">Stap 3 van 3 — Jouw gegevens</div>
+      <h2 class="wizard-heading">Bijna klaar</h2>
+      <p class="wizard-subhead">We sturen je offerte direct naar je e-mailadres.</p>
+
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div class="form-group">
+          <label class="form-label">Voornaam</label>
+          <input type="text" class="form-input" placeholder="Jan">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Achternaam</label>
+          <input type="text" class="form-input" placeholder="de Vries">
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label">E-mailadres</label>
+        <input type="email" class="form-input" placeholder="jan@email.nl">
+      </div>
+
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label">Telefoonnummer</label>
+        <input type="tel" class="form-input" placeholder="06 12345678">
+      </div>
+
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div class="form-group">
+          <label class="form-label">Postcode</label>
+          <input type="text" class="form-input" placeholder="1234 AB">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Huisnummer</label>
+          <input type="text" class="form-input" placeholder="12">
+        </div>
+      </div>
+
+      <button class="form-submit" onclick="submitForm()" style="width:100%;min-height:54px;border-radius:100px;font-size:16px;font-weight:700;margin-top:8px;">Stuur mijn offerte aanvraag →</button>
+      <p style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;margin-top:14px;font-weight:300;">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
+    </div>
+
+    <!-- BLOK 5: Succes -->
+    <div class="wizard-block wizard-block--success" id="formSuccess" style="display:none">
+      <div class="success-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M6 14l5.5 5.5L22 8" stroke="#2DBD6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="success-title">Aanvraag ontvangen!</div>
+      <p class="success-sub">Je offerte is onderweg naar je mailbox.<br>Binnen enkele minuten ontvang je een persoonlijk voorstel.</p>
+    </div>
+
   </div>
-</div>
+</section>
 
 <!-- MERKEN -->
 <section class="merken">
@@ -1363,7 +1605,7 @@
             <div class="merk-spec"><div class="spec-dot"></div>Eenvoudig en snel wil installeren</div>
             <div class="merk-spec"><div class="spec-dot"></div>Tot 22 kW laadvermogen nodig hebt</div>
           </div>
-          <a href="#offerte" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">Offerte aanvragen →</a>
+          <a href="#wizard-sectie" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">Offerte aanvragen →</a>
         </div>
       </div>
 
@@ -1383,7 +1625,7 @@
             <div class="merk-spec"><div class="spec-dot"></div>Laden op zonnestroom & laadpas-ondersteuning</div>
             <div class="merk-spec"><div class="spec-dot"></div>Tot 22 kW laadvermogen nodig hebt</div>
           </div>
-          <a href="#offerte" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">Offerte aanvragen →</a>
+          <a href="#wizard-sectie" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">Offerte aanvragen →</a>
         </div>
       </div>
 
@@ -1405,7 +1647,7 @@
             <div class="merk-spec"><div class="spec-dot"></div>Betrouwbaarheid en lange levensduur belangrijk vindt</div>
             <div class="merk-spec"><div class="spec-dot"></div>Tot 22 kW laadvermogen nodig hebt</div>
           </div>
-          <a href="#offerte" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">Offerte aanvragen →</a>
+          <a href="#wizard-sectie" class="btn-primary" style="display:inline-block; font-size:14px; padding:11px 22px;">Offerte aanvragen →</a>
         </div>
       </div>
     </div>
@@ -1541,7 +1783,7 @@
     const box = document.getElementById('vergelijking');
     if (box.style.display === 'none') {
       box.style.display = 'block';
-      setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+      setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 80);
     }
   }
 
@@ -1555,18 +1797,24 @@
   let currentStep = 1;
 
   function nextStep(step) {
-    document.getElementById('step' + currentStep).classList.remove('active');
-    document.querySelectorAll('.form-step-item').forEach(el => {
-      const s = parseInt(el.dataset.step);
-      el.classList.remove('active', 'done');
-      if (s < step) el.classList.add('done');
-      if (s === step) el.classList.add('active');
-    });
-    document.getElementById('step' + step).classList.add('active');
     currentStep = step;
-    const pct = step === 1 ? 33 : step === 2 ? 66 : 100;
-    document.getElementById('progressFill').style.width = pct + '%';
-    document.getElementById('offerte').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    const fill = document.getElementById('wizardProgressFill');
+    const pct = { 2: 50, 3: 80 }[step] || 8;
+    if (fill) fill.style.width = pct + '%';
+
+    if (step === 2) {
+      const el = document.getElementById('wizardStep2');
+      el.style.display = 'block';
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    } else if (step === 3) {
+      const el = document.getElementById('wizardStep3');
+      el.style.display = 'block';
+      setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    } else {
+      document.getElementById('wizardStep2').style.display = 'none';
+      document.getElementById('wizardStep3').style.display = 'none';
+      document.getElementById('wizard-sectie').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
   function selectChoice(el, groupId, multi) {
@@ -1592,10 +1840,12 @@
   }
 
   function submitForm() {
-    document.getElementById('step3').classList.remove('active');
-    document.getElementById('formSuccess').classList.add('visible');
-    document.querySelectorAll('.form-step-item').forEach(el => el.classList.add('done'));
-    document.getElementById('progressFill').style.width = '100%';
+    document.getElementById('wizardStep3').style.display = 'none';
+    const success = document.getElementById('formSuccess');
+    success.style.display = 'block';
+    setTimeout(() => success.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+    const fill = document.getElementById('wizardProgressFill');
+    if (fill) fill.style.width = '100%';
   }
 
   // Scroll animations
