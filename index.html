@@ -195,7 +195,7 @@
 
   .hero-sub {
     font-size: 18px;
-    color: rgba(255,255,255,0.55);
+    color: rgba(255,255,255,0.82);
     line-height: 1.7;
     max-width: 480px;
     margin-bottom: 2.5rem;
@@ -227,132 +227,101 @@
 
   .btn-ghost {
     background: transparent;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.85);
     padding: 14px 28px;
     border-radius: 100px;
     font-size: 15px;
     font-weight: 400;
     text-decoration: none;
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
     transition: border-color 0.2s, color 0.2s;
     display: inline-block;
   }
 
-  .btn-ghost:hover { border-color: rgba(255,255,255,0.5); color: var(--white); }
+  .btn-ghost:hover { border-color: rgba(255,255,255,0.6); color: var(--white); }
 
   .hero-stats {
     display: flex;
     gap: 2rem;
     margin-top: 3rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid rgba(255,255,255,0.12);
   }
 
   .stat-item { display: flex; flex-direction: column; gap: 2px; }
   .stat-num { font-family: var(--font-display); font-size: 28px; color: var(--white); }
   .stat-num span { color: var(--green-400); }
-  .stat-label { font-size: 12px; color: rgba(255,255,255,0.4); font-weight: 300; }
+  .stat-label { font-size: 12px; color: rgba(255,255,255,0.65); font-weight: 400; }
 
-  /* Hero right — visual */
+  /* Hero right — photo */
   .hero-visual {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 520px;
+    height: 540px;
   }
 
-  .hero-card-main {
-    background: var(--night-3);
-    border: 1px solid rgba(45,189,110,0.2);
+  .hero-photo-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
     border-radius: 24px;
-    padding: 28px;
-    width: 320px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-  }
-
-  .hc-label {
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--green-400);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    margin-bottom: 16px;
-  }
-
-  .hc-value {
-    font-family: var(--font-display);
-    font-size: 40px;
-    color: var(--white);
-    margin-bottom: 4px;
-  }
-
-  .hc-sub {
-    font-size: 13px;
-    color: rgba(255,255,255,0.4);
-    margin-bottom: 20px;
-  }
-
-  .hc-bar-wrap {
-    background: rgba(255,255,255,0.06);
-    border-radius: 100px;
-    height: 6px;
-    margin-bottom: 20px;
     overflow: hidden;
   }
 
-  .hc-bar {
+  .hero-photo {
+    width: 100%;
     height: 100%;
-    width: 73%;
-    background: linear-gradient(90deg, var(--green-600), var(--green-400));
-    border-radius: 100px;
-    animation: grow 2s ease-out forwards;
+    object-fit: cover;
+    object-position: center top;
   }
 
-  @keyframes grow { from { width: 0; } to { width: 73%; } }
-
-  .hc-row {
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 8px;
-  }
-
-  .hc-row strong { color: var(--white); font-weight: 500; }
-
-  .hero-card-sm {
-    background: var(--night-3);
-    border: 1px solid rgba(45,189,110,0.15);
-    border-radius: 16px;
-    padding: 16px 20px;
+  .hero-photo-badge {
     position: absolute;
+    bottom: 24px;
+    left: 24px;
+    right: 24px;
+    background: rgba(9,15,12,0.88);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(45,189,110,0.35);
+    border-radius: 16px;
+    padding: 14px 18px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
   }
 
-  .hero-card-sm.c1 { top: 60px; right: 0; width: 190px; }
-  .hero-card-sm.c2 { bottom: 80px; left: 0; width: 210px; }
-
-  .hcsm-icon {
-    width: 36px;
-    height: 36px;
+  .hpb-icon {
+    width: 38px;
+    height: 38px;
     border-radius: 10px;
-    background: rgba(45,189,110,0.15);
+    background: rgba(45,189,110,0.18);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
   }
 
-  .hcsm-text { display: flex; flex-direction: column; gap: 2px; }
-  .hcsm-title { font-size: 13px; font-weight: 500; color: var(--white); }
-  .hcsm-sub { font-size: 11px; color: var(--green-400); }
+  .hpb-body { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+  .hpb-body strong { font-size: 14px; color: var(--white); font-weight: 600; }
+  .hpb-body span { font-size: 12px; color: rgba(255,255,255,0.65); }
+
+  .hpb-rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .hpb-stars { display: flex; gap: 2px; }
+  .hpb-star {
+    width: 13px;
+    height: 13px;
+    background: #F9C846;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+  .hpb-score { font-size: 13px; font-weight: 600; color: var(--white); }
 
   /* ── SECTION BASE ── */
   section { padding: 100px 6vw; }
@@ -398,11 +367,10 @@
   .dienst-card {
     background: var(--white);
     border-radius: 20px;
-    padding: 36px 32px;
+    overflow: hidden;
     border: 1px solid var(--gray-200);
     transition: transform 0.2s, box-shadow 0.2s;
     position: relative;
-    overflow: hidden;
   }
 
   .dienst-card::after {
@@ -418,6 +386,15 @@
 
   .dienst-card:hover { transform: translateY(-4px); box-shadow: 0 20px 40px rgba(15,74,42,0.08); }
   .dienst-card:hover::after { transform: scaleX(1); }
+
+  .dienst-photo {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .dienst-body { padding: 28px 28px 32px; }
 
   .dienst-icon {
     width: 52px;
@@ -457,6 +434,28 @@
   }
 
   .dienst-link:hover { gap: 10px; }
+
+  /* ── FOTO STRIP ── */
+  .foto-strip {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .foto-strip-inner {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    height: 280px;
+  }
+
+  .foto-strip-inner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+
+  .foto-strip-inner img:hover { transform: scale(1.04); }
 
   /* ── HOE WE WERKEN ── */
   .hoe-grid {
@@ -501,12 +500,29 @@
   .hoe-visual {
     background: var(--night);
     border-radius: 24px;
-    padding: 40px;
-    position: relative;
     overflow: hidden;
+    position: relative;
   }
 
-  .hoe-visual::before {
+  .hoe-visual-photos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 200px;
+  }
+
+  .hoe-visual-photos img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .hoe-visual-body {
+    padding: 32px 36px 36px;
+    position: relative;
+  }
+
+  .hoe-visual-body::before {
     content: '';
     position: absolute;
     width: 300px;
@@ -520,9 +536,9 @@
 
   .lokaal-title {
     font-family: var(--font-display);
-    font-size: 28px;
+    font-size: 26px;
     color: var(--white);
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     line-height: 1.2;
   }
 
@@ -530,10 +546,10 @@
 
   .lokaal-text {
     font-size: 15px;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255,255,255,0.75);
     line-height: 1.8;
     font-weight: 300;
-    margin-bottom: 28px;
+    margin-bottom: 24px;
   }
 
   .lokaal-items { display: flex; flex-direction: column; gap: 12px; }
@@ -543,7 +559,7 @@
     align-items: flex-start;
     gap: 12px;
     font-size: 14px;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.85);
     font-weight: 300;
   }
 
@@ -624,7 +640,7 @@
   /* ── OFFERTE ── */
   .offerte { background: var(--night); }
   .offerte .section-title { color: var(--white); }
-  .offerte .section-sub { color: rgba(255,255,255,0.45); }
+  .offerte .section-sub { color: rgba(255,255,255,0.75); }
   .offerte .section-tag { color: var(--green-400); }
 
   .offerte-header { text-align: center; max-width: 560px; margin: 0 auto 3rem; }
@@ -689,7 +705,7 @@
 
   .keuze-text {
     font-size: 14px;
-    color: rgba(255,255,255,0.45);
+    color: rgba(255,255,255,0.72);
     line-height: 1.7;
     font-weight: 300;
     flex: 1;
@@ -725,7 +741,7 @@
   footer {
     background: #060D09;
     padding: 60px 6vw 32px;
-    color: rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.58);
   }
 
   .footer-inner {
@@ -738,7 +754,7 @@
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 3rem;
     padding-bottom: 40px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
     margin-bottom: 28px;
   }
 
@@ -761,7 +777,7 @@
 
   .footer-tagline {
     font-size: 14px;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.58);
     line-height: 1.6;
     font-weight: 300;
     max-width: 260px;
@@ -770,7 +786,7 @@
   .footer-col-title {
     font-size: 13px;
     font-weight: 600;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255,255,255,0.82);
     margin-bottom: 14px;
     letter-spacing: 0.03em;
   }
@@ -779,7 +795,7 @@
 
   .footer-col a {
     font-size: 14px;
-    color: rgba(255,255,255,0.35);
+    color: rgba(255,255,255,0.58);
     text-decoration: none;
     font-weight: 300;
     transition: color 0.2s;
@@ -795,7 +811,7 @@
     font-weight: 300;
   }
 
-  .footer-green { color: var(--green-600); }
+  .footer-green { color: var(--green-500); }
 
   /* ── ANIMATIONS ── */
   .fade-up {
@@ -820,6 +836,7 @@
     .offerte-keuze { grid-template-columns: 1fr; }
     .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
     .nav-links { display: none; }
+    .foto-strip-inner { grid-template-columns: repeat(2, 1fr); height: 200px; }
   }
 </style>
 </head>
@@ -877,37 +894,28 @@
   </div>
 
   <div class="hero-visual">
-    <div class="hero-card-main">
-      <div class="hc-label">Jouw jaarlijkse besparing</div>
-      <div class="hc-value">€ 1.840</div>
-      <div class="hc-sub">Gebaseerd op gemiddeld verbruik</div>
-      <div class="hc-bar-wrap"><div class="hc-bar"></div></div>
-      <div class="hc-row"><span>Opwekking zonnepanelen</span><strong>4.200 kWh</strong></div>
-      <div class="hc-row"><span>Opgeslagen in batterij</span><strong>1.800 kWh</strong></div>
-      <div class="hc-row"><span>Teruggeleverd net</span><strong>1.100 kWh</strong></div>
-    </div>
-    <div class="hero-card-sm c1">
-      <div class="hcsm-icon">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M10 2L17 6V14L10 18L3 14V6L10 2Z" stroke="#2DBD6E" stroke-width="1.3" fill="none"/>
-          <circle cx="10" cy="10" r="2" fill="#2DBD6E"/>
-        </svg>
-      </div>
-      <div class="hcsm-text">
-        <span class="hcsm-title">Thuisbatterij</span>
-        <span class="hcsm-sub">Opgeladen · 94%</span>
-      </div>
-    </div>
-    <div class="hero-card-sm c2">
-      <div class="hcsm-icon">
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <rect x="4" y="6" width="12" height="9" rx="2" stroke="#2DBD6E" stroke-width="1.3" fill="none"/>
-          <path d="M8 6V4M12 6V4M7 14V17M13 14V17" stroke="#2DBD6E" stroke-width="1.3" stroke-linecap="round"/>
-        </svg>
-      </div>
-      <div class="hcsm-text">
-        <span class="hcsm-title">Laadpaal actief</span>
-        <span class="hcsm-sub">11 kW · Auto 68%</span>
+    <div class="hero-photo-wrap">
+      <img src="images/zaptec-installatie-1.jpg" alt="Laadpaal installatie bij woning" class="hero-photo">
+      <div class="hero-photo-badge">
+        <div class="hpb-icon">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+            <path d="M3 9L7 13L15 5" stroke="#2DBD6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="hpb-body">
+          <strong>Gecertificeerde installateurs</strong>
+          <span>Door heel Nederland beschikbaar</span>
+        </div>
+        <div class="hpb-rating">
+          <div class="hpb-stars">
+            <div class="hpb-star"></div>
+            <div class="hpb-star"></div>
+            <div class="hpb-star"></div>
+            <div class="hpb-star"></div>
+            <div class="hpb-star"></div>
+          </div>
+          <span class="hpb-score">4.9</span>
+        </div>
       </div>
     </div>
   </div>
@@ -922,45 +930,64 @@
 
     <div class="diensten-grid">
       <div class="dienst-card fade-up">
-        <div class="dienst-icon">
-          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-            <path d="M13 3L22 8V18L13 23L4 18V8L13 3Z" stroke="#1A7A42" stroke-width="1.5" fill="none"/>
-            <path d="M13 8V18M9 11L17 15M9 15L17 11" stroke="#1A7A42" stroke-width="1.5" stroke-linecap="round"/>
-            <circle cx="13" cy="13" r="2" fill="#1A7A42"/>
-          </svg>
+        <img src="images/zaptec-installatie-2.jpg" alt="Thuisbatterij installatie" class="dienst-photo">
+        <div class="dienst-body">
+          <div class="dienst-icon">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <path d="M13 3L22 8V18L13 23L4 18V8L13 3Z" stroke="#1A7A42" stroke-width="1.5" fill="none"/>
+              <path d="M13 8V18M9 11L17 15M9 15L17 11" stroke="#1A7A42" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="13" cy="13" r="2" fill="#1A7A42"/>
+            </svg>
+          </div>
+          <div class="dienst-title">Thuisbatterij</div>
+          <p class="dienst-text">Sla je zelf opgewekte stroom op en gebruik die wanneer jij het nodig hebt. Nooit meer energie teruggeven voor een fooi — maximaal rendement op je eigen panelen.</p>
+          <a href="energx-laadpaal.html" class="dienst-link">Offerte aanvragen <span>→</span></a>
         </div>
-        <div class="dienst-title">Thuisbatterij</div>
-        <p class="dienst-text">Sla je zelf opgewekte stroom op en gebruik die wanneer jij het nodig hebt. Nooit meer energie teruggeven voor een fooi — maximaal rendement op je eigen panelen.</p>
-        <a href="energx-laadpaal.html" class="dienst-link">Offerte aanvragen <span>→</span></a>
       </div>
 
       <div class="dienst-card fade-up">
-        <div class="dienst-icon">
-          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-            <rect x="5" y="8" width="16" height="12" rx="2.5" stroke="#1A7A42" stroke-width="1.5" fill="none"/>
-            <path d="M10 8V5.5M16 8V5.5M9 20V22.5M17 20V22.5" stroke="#1A7A42" stroke-width="1.5" stroke-linecap="round"/>
-            <path d="M10 14h2l1-3 1.5 6L16 14h1" stroke="#1A7A42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          </svg>
+        <img src="images/ratio-installatie-1.jpg" alt="Laadpaal installatie" class="dienst-photo">
+        <div class="dienst-body">
+          <div class="dienst-icon">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <rect x="5" y="8" width="16" height="12" rx="2.5" stroke="#1A7A42" stroke-width="1.5" fill="none"/>
+              <path d="M10 8V5.5M16 8V5.5M9 20V22.5M17 20V22.5" stroke="#1A7A42" stroke-width="1.5" stroke-linecap="round"/>
+              <path d="M10 14h2l1-3 1.5 6L16 14h1" stroke="#1A7A42" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="dienst-title">Laadpaal</div>
+          <p class="dienst-text">Laad je elektrische auto thuis op met de snelheid die jij nodig hebt. Slim laden op basis van het stroomtarief of je eigen zonnepanelen — volledig automatisch.</p>
+          <a href="energx-laadpaal.html" class="dienst-link">Offerte aanvragen <span>→</span></a>
         </div>
-        <div class="dienst-title">Laadpaal</div>
-        <p class="dienst-text">Laad je elektrische auto thuis op met de snelheid die jij nodig hebt. Slim laden op basis van het stroomtarief of je eigen zonnepanelen — volledig automatisch.</p>
-        <a href="energx-laadpaal.html" class="dienst-link">Offerte aanvragen <span>→</span></a>
       </div>
 
       <div class="dienst-card fade-up">
-        <div class="dienst-icon">
-          <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
-            <path d="M13 4C9.5 4 7 7 7 10.5C7 14 9 16 13 20C17 16 19 14 19 10.5C19 7 16.5 4 13 4Z" stroke="#1A7A42" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
-            <path d="M10 10.5C10 8.8 11.3 7.5 13 7.5" stroke="#1A7A42" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
+        <img src="images/zaptec-installatie-3.jpg" alt="Warmtepomp installatie" class="dienst-photo">
+        <div class="dienst-body">
+          <div class="dienst-icon">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+              <path d="M13 4C9.5 4 7 7 7 10.5C7 14 9 16 13 20C17 16 19 14 19 10.5C19 7 16.5 4 13 4Z" stroke="#1A7A42" stroke-width="1.5" fill="none" stroke-linejoin="round"/>
+              <path d="M10 10.5C10 8.8 11.3 7.5 13 7.5" stroke="#1A7A42" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="dienst-title">Warmtepomp</div>
+          <p class="dienst-text">Verwarm je huis efficiënt en zonder gas. Een moderne warmtepomp levert drie tot vijf keer zoveel energie als hij verbruikt — goed voor je portemonnee én het klimaat.</p>
+          <a href="#offerte" class="dienst-link">Offerte aanvragen <span>→</span></a>
         </div>
-        <div class="dienst-title">Warmtepomp</div>
-        <p class="dienst-text">Verwarm je huis efficiënt en zonder gas. Een moderne warmtepomp levert drie tot vijf keer zoveel energie als hij verbruikt — goed voor je portemonnee én het klimaat.</p>
-        <a href="#offerte" class="dienst-link">Offerte aanvragen <span>→</span></a>
       </div>
     </div>
   </div>
 </section>
+
+<!-- FOTO STRIP -->
+<div class="foto-strip">
+  <div class="foto-strip-inner">
+    <img src="images/zaptec-installatie-4.jpg" alt="">
+    <img src="images/ratio-installatie-2.jpg" alt="">
+    <img src="images/zaptec-installatie-2.jpg" alt="">
+    <img src="images/ratio-installatie-1.jpg" alt="">
+  </div>
+</div>
 
 <!-- HOE WE WERKEN -->
 <section id="hoe-we-werken">
@@ -1002,50 +1029,56 @@
       </div>
 
       <div class="hoe-visual fade-up">
-        <div class="lokaal-title">Waarom <em>lokale</em><br>installateurs?</div>
-        <p class="lokaal-text">
-          Grote landelijke bedrijven sturen je een monteur die 's ochtends al drie andere klanten heeft gehad. Wij geloven in vakmanschap uit de buurt — iemand die jouw straat kent, snel ter plaatse is en na afloop ook gewoon bereikbaar blijft.
-        </p>
-        <div class="lokaal-items">
-          <div class="lokaal-item">
-            <div class="lokaal-check">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+        <div class="hoe-visual-photos">
+          <img src="images/zaptec-installatie-1.jpg" alt="Laadpaal installatie">
+          <img src="images/ratio-installatie-2.jpg" alt="Installateur aan het werk">
+        </div>
+        <div class="hoe-visual-body">
+          <div class="lokaal-title">Waarom <em>lokale</em><br>installateurs?</div>
+          <p class="lokaal-text">
+            Grote landelijke bedrijven sturen je een monteur die 's ochtends al drie andere klanten heeft gehad. Wij geloven in vakmanschap uit de buurt — iemand die jouw straat kent, snel ter plaatse is en na afloop ook gewoon bereikbaar blijft.
+          </p>
+          <div class="lokaal-items">
+            <div class="lokaal-item">
+              <div class="lokaal-check">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              Snelle beschikbaarheid — geen weken wachten
             </div>
-            Snelle beschikbaarheid — geen weken wachten
-          </div>
-          <div class="lokaal-item">
-            <div class="lokaal-check">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div class="lokaal-item">
+              <div class="lokaal-check">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              Gecertificeerd en verzekerd vakmanschap
             </div>
-            Gecertificeerd en verzekerd vakmanschap
-          </div>
-          <div class="lokaal-item">
-            <div class="lokaal-check">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div class="lokaal-item">
+              <div class="lokaal-check">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              Persoonlijk contact, ook ná de installatie
             </div>
-            Persoonlijk contact, ook ná de installatie
-          </div>
-          <div class="lokaal-item">
-            <div class="lokaal-check">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div class="lokaal-item">
+              <div class="lokaal-check">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              Kennis van lokale regelgeving en subsidies
             </div>
-            Kennis van lokale regelgeving en subsidies
-          </div>
-          <div class="lokaal-item">
-            <div class="lokaal-check">
-              <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-                <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+            <div class="lokaal-item">
+              <div class="lokaal-check">
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                  <path d="M2 5L4.2 7.5L8 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              Bijdrage aan de lokale economie
             </div>
-            Bijdrage aan de lokale economie
           </div>
         </div>
       </div>
