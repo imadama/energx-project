@@ -1281,6 +1281,64 @@
   .btn-wiz-next:hover { background: var(--green-300); transform: translateY(-1px); }
 
   /* Contactformulier stap 3 */
+  /* Contact voorkeur cards */
+  .contact-choice-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .contact-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .contact-card:hover {
+    border-color: rgba(255,255,255,0.28);
+    background: rgba(255,255,255,0.04);
+  }
+
+  .contact-card.selected {
+    border-color: var(--green-400);
+    background: rgba(45,189,110,0.1);
+  }
+
+  .contact-card-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .contact-card.selected .contact-card-icon { background: rgba(45,189,110,0.2); }
+
+  .contact-card-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 3px;
+  }
+
+  .contact-card-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.45);
+    transition: color 0.2s;
+  }
+
+  .contact-card.selected .contact-card-sub { color: rgba(255,255,255,0.68); }
+
   #wizardStep3 .form-submit {
     width: 100%;
     min-height: 54px;
@@ -1529,37 +1587,71 @@
     <div class="wizard-block" id="wizardStep3" style="display:none">
       <div class="wizard-step-label">Stap 3 van 3 — Jouw gegevens</div>
       <h2 class="wizard-heading">Bijna klaar</h2>
-      <p class="wizard-subhead">We sturen je offerte direct naar je e-mailadres.</p>
+      <p class="wizard-subhead">Vul je naam en adres in — dan kiezen we samen hoe we contact opnemen.</p>
 
       <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
         <div class="form-group">
           <label class="form-label">Voornaam</label>
-          <input type="text" class="form-input" placeholder="Jan">
+          <input type="text" class="form-input" id="inputVoornaam" placeholder="Jan">
         </div>
         <div class="form-group">
           <label class="form-label">Achternaam</label>
-          <input type="text" class="form-input" placeholder="de Vries">
+          <input type="text" class="form-input" id="inputAchternaam" placeholder="de Vries">
         </div>
       </div>
 
-      <div class="form-group" style="margin-bottom:16px;">
-        <label class="form-label">E-mailadres</label>
-        <input type="email" class="form-input" placeholder="jan@email.nl">
-      </div>
-
-      <div class="form-group" style="margin-bottom:16px;">
-        <label class="form-label">Telefoonnummer</label>
-        <input type="tel" class="form-input" placeholder="06 12345678">
-      </div>
-
-      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px;">
         <div class="form-group">
           <label class="form-label">Postcode</label>
-          <input type="text" class="form-input" placeholder="1234 AB">
+          <input type="text" class="form-input" id="inputPostcode" placeholder="1234 AB">
         </div>
         <div class="form-group">
           <label class="form-label">Huisnummer</label>
-          <input type="text" class="form-input" placeholder="12">
+          <input type="text" class="form-input" id="inputHuisnummer" placeholder="12">
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:16px;">
+        <label class="form-label" style="font-size:15px;font-weight:600;color:white;margin-bottom:10px;display:block;">Hoe wil je dat we contact opnemen?</label>
+        <div class="contact-choice-cards">
+          <div class="contact-card" id="cWhatsapp" onclick="selectContact('whatsapp')">
+            <div class="contact-card-icon">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                <path d="M11 2C6.03 2 2 6.03 2 11c0 1.6.42 3.1 1.15 4.4L2 20l4.73-1.12A8.96 8.96 0 0011 20c4.97 0 9-4.03 9-9s-4.03-9-9-9z" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+                <path d="M8 8.5c.2.5.8 1.7 1.4 2.3.6.6 1.8 1.2 2.3 1.4l.8-.8c.2-.2.5-.2.7-.1.5.2 1 .5 1.5.7.2.1.3.3.3.5v1.5c0 .3-.2.5-.5.5C9.8 14.5 7.5 12.2 7.5 9.5c0-.3.2-.5.5-.5h1.5c.2 0 .4.1.5.3.2.5.5 1 .7 1.5.1.2.1.5-.1.7l-.6.5z" stroke="#2DBD6E" stroke-width="1.2" fill="none"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-card-title">WhatsApp</div>
+              <div class="contact-card-sub">Snel en persoonlijk</div>
+            </div>
+          </div>
+          <div class="contact-card" id="cEmail" onclick="selectContact('email')">
+            <div class="contact-card-icon">
+              <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+                <rect x="3" y="5" width="16" height="12" rx="2" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+                <path d="M3 8l8 5 8-5" stroke="#2DBD6E" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-card-title">E-mail</div>
+              <div class="contact-card-sub">Uitgebreid & overzichtelijk</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="fieldWhatsapp" style="display:none;margin-bottom:16px;">
+        <div class="form-group">
+          <label class="form-label">WhatsApp nummer</label>
+          <input type="tel" class="form-input" id="inputWhatsapp" placeholder="06 12345678">
+        </div>
+      </div>
+
+      <div id="fieldEmail" style="display:none;margin-bottom:16px;">
+        <div class="form-group">
+          <label class="form-label">E-mailadres</label>
+          <input type="email" class="form-input" id="inputEmail" placeholder="jan@email.nl">
         </div>
       </div>
 
@@ -1825,6 +1917,18 @@
     el.classList.toggle('selected');
     if (['q1', 'q2', 'q3', 'q4'].includes(groupId)) {
       checkRecommendation();
+    }
+  }
+
+  function selectContact(type) {
+    document.getElementById('cWhatsapp').classList.toggle('selected', type === 'whatsapp');
+    document.getElementById('cEmail').classList.toggle('selected', type === 'email');
+    document.getElementById('fieldWhatsapp').style.display = type === 'whatsapp' ? 'block' : 'none';
+    document.getElementById('fieldEmail').style.display = type === 'email' ? 'block' : 'none';
+    if (type === 'whatsapp') {
+      setTimeout(() => document.getElementById('inputWhatsapp').focus(), 50);
+    } else {
+      setTimeout(() => document.getElementById('inputEmail').focus(), 50);
     }
   }
 
