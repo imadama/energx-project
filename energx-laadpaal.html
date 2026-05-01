@@ -104,7 +104,7 @@
 
   /* ── HERO ── */
   .hero {
-    background: var(--night);
+    background: linear-gradient(160deg, var(--green-50) 0%, var(--white) 65%);
     padding: 120px 6vw 80px;
     position: relative;
     overflow: hidden;
@@ -115,7 +115,7 @@
     position: absolute;
     width: 600px; height: 600px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(45,189,110,0.14) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(15,74,42,0.07) 0%, transparent 70%);
     top: -150px; right: -100px;
     pointer-events: none;
   }
@@ -131,15 +131,15 @@
 
   .hero-breadcrumb {
     font-size: 13px;
-    color: rgba(255,255,255,0.35);
+    color: var(--gray-600);
     margin-bottom: 16px;
     display: flex;
     align-items: center;
     gap: 8px;
   }
 
-  .hero-breadcrumb a { color: var(--green-400); text-decoration: none; }
-  .hero-breadcrumb span { color: rgba(255,255,255,0.2); }
+  .hero-breadcrumb a { color: var(--green-600); text-decoration: none; }
+  .hero-breadcrumb span { color: var(--gray-400); }
 
   .btn-primary {
     display: inline-block;
@@ -159,9 +159,9 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(45,189,110,0.12);
-    border: 1px solid rgba(45,189,110,0.25);
-    color: var(--green-300);
+    background: rgba(15,74,42,0.07);
+    border: 1px solid rgba(15,74,42,0.18);
+    color: var(--green-700);
     font-size: 13px;
     font-weight: 500;
     padding: 6px 14px;
@@ -173,7 +173,7 @@
     content: '';
     width: 6px; height: 6px;
     border-radius: 50%;
-    background: var(--green-400);
+    background: var(--green-600);
     animation: pulse 2s infinite;
   }
 
@@ -185,17 +185,17 @@
   .hero-title {
     font-family: var(--font-display);
     font-size: clamp(38px, 4.5vw, 60px);
-    color: var(--white);
+    color: var(--green-900);
     line-height: 1.05;
     letter-spacing: -1px;
     margin-bottom: 1.25rem;
   }
 
-  .hero-title em { font-style: italic; color: var(--green-400); }
+  .hero-title em { font-style: italic; color: var(--green-500); }
 
   .hero-sub {
     font-size: 17px;
-    color: rgba(255,255,255,0.5);
+    color: var(--gray-600);
     line-height: 1.75;
     font-weight: 300;
     margin-bottom: 2rem;
@@ -208,19 +208,19 @@
     align-items: center;
     margin-top: 2rem;
     padding-top: 2rem;
-    border-top: 1px solid rgba(255,255,255,0.08);
+    border-top: 1px solid var(--gray-200);
   }
 
-  .merk-label { font-size: 12px; color: rgba(255,255,255,0.3); margin-right: 4px; }
+  .merk-label { font-size: 12px; color: var(--gray-400); margin-right: 4px; }
 
   .merk-badge {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--white);
+    border: 1px solid var(--gray-200);
     border-radius: 8px;
     padding: 8px 16px;
     font-size: 14px;
     font-weight: 600;
-    color: rgba(255,255,255,0.8);
+    color: var(--night);
     letter-spacing: 0.03em;
   }
 
@@ -257,17 +257,17 @@
   .hero-right .form-card { margin: 0; }
 
   .install-card {
-    background: var(--night-3);
-    border: 1px solid rgba(45,189,110,0.15);
+    background: var(--white);
+    border: 1px solid var(--gray-200);
     border-radius: 18px;
     padding: 20px 24px;
     display: flex;
     align-items: center;
     gap: 16px;
-    transition: border-color 0.2s;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
-  .install-card:hover { border-color: rgba(45,189,110,0.35); }
+  .install-card:hover { border-color: var(--green-400); box-shadow: 0 8px 24px rgba(15,74,42,0.08); }
 
   .ic-icon {
     width: 44px; height: 44px;
@@ -280,8 +280,8 @@
   }
 
   .ic-body { flex: 1; }
-  .ic-title { font-size: 15px; font-weight: 500; color: var(--white); margin-bottom: 2px; }
-  .ic-sub { font-size: 13px; color: rgba(255,255,255,0.4); font-weight: 300; }
+  .ic-title { font-size: 15px; font-weight: 500; color: var(--night); margin-bottom: 2px; }
+  .ic-sub { font-size: 13px; color: var(--gray-400); font-weight: 300; }
   .ic-tag {
     font-size: 11px; font-weight: 600;
     color: var(--green-400);
@@ -319,10 +319,10 @@
   }
 
   /* ── MERKEN ── */
-  .merken { background: var(--night); }
+  .merken { background: var(--green-800); }
   .merken .section-tag { color: var(--green-400); }
   .merken .section-title { color: var(--white); }
-  .merken .section-sub { color: rgba(255,255,255,0.45); }
+  .merken .section-sub { color: rgba(255,255,255,0.65); }
 
   .merken-grid {
     display: grid;
@@ -332,9 +332,9 @@
   }
 
   .merk-card {
-    background: var(--night-3);
+    background: var(--green-700);
     border-radius: 24px;
-    border: 1px solid rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.1);
     overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
   }
@@ -461,9 +461,9 @@
   }
 
   /* ── FORMULIER ── */
-  .formulier { background: var(--night); }
+  .formulier { background: var(--green-800); }
   .formulier .section-title { color: var(--white); }
-  .formulier .section-sub { color: rgba(255,255,255,0.45); }
+  .formulier .section-sub { color: rgba(255,255,255,0.65); }
   .formulier .section-tag { color: var(--green-400); }
 
   .form-layout {
@@ -538,8 +538,8 @@
 
   /* Form card */
   .form-card {
-    background: var(--night-3);
-    border: 1px solid rgba(45,189,110,0.12);
+    background: var(--green-700);
+    border: 1px solid rgba(45,189,110,0.2);
     border-radius: 24px;
     padding: 36px;
   }
@@ -782,7 +782,7 @@
   }
 
   .advies-sectie {
-    background: var(--night);
+    background: var(--green-800);
     padding: 56px 6vw 72px;
     animation: slideIn 0.4s ease;
   }
@@ -998,7 +998,7 @@
 
   /* ── FOOTER ── */
   footer {
-    background: #060D09;
+    background: var(--green-900);
     padding: 32px 6vw;
     text-align: center;
     font-size: 13px;
@@ -1059,9 +1059,9 @@
 
   /* ── WIZARD SECTIE ── */
   .wizard-sectie {
-    background: var(--night-2);
+    background: var(--green-800);
     padding: 72px 6vw 96px;
-    border-top: 1px solid rgba(255,255,255,0.04);
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
 
   .wizard-inner {

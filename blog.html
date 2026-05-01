@@ -59,7 +59,7 @@
 
   /* HERO */
   .hero {
-    background: var(--night);
+    background: linear-gradient(160deg, var(--green-50) 0%, var(--white) 65%);
     padding: 140px 6vw 80px;
     text-align: center;
     position: relative;
@@ -70,17 +70,17 @@
     position: absolute;
     width: 600px; height: 600px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(45,189,110,0.12) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba(15,74,42,0.07) 0%, transparent 70%);
     top: -100px; left: 50%; transform: translateX(-50%);
     pointer-events: none;
   }
   .hero-tag {
     display: inline-block;
     font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--green-400); margin-bottom: 16px;
+    color: var(--green-700); margin-bottom: 16px;
   }
-  .hero-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); color: var(--white); line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 1rem; }
-  .hero-sub { font-size: 18px; color: rgba(255,255,255,0.5); font-weight: 300; max-width: 520px; margin: 0 auto; }
+  .hero-title { font-family: var(--font-display); font-size: clamp(36px, 5vw, 60px); color: var(--green-900); line-height: 1.1; letter-spacing: -0.5px; margin-bottom: 1rem; }
+  .hero-sub { font-size: 18px; color: var(--gray-600); font-weight: 300; max-width: 520px; margin: 0 auto; }
 
   /* BLOG GRID */
   .blog-section { padding: 80px 6vw; }
@@ -148,7 +148,7 @@
   .blog-card:hover .blog-read-more { gap: 9px; }
 
   /* FOOTER */
-  footer { background: #060D09; padding: 40px 6vw; text-align: center; font-size: 13px; color: rgba(255,255,255,0.25); font-weight: 300; }
+  footer { background: var(--green-900); padding: 40px 6vw; text-align: center; font-size: 13px; color: rgba(255,255,255,0.25); font-weight: 300; }
   footer a { color: var(--green-600); text-decoration: none; }
 
   @media (max-width: 900px) {
