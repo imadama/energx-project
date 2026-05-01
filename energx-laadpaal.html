@@ -1864,13 +1864,16 @@
       verrekenen: q4.dataset.value === 'ja',
     };
 
+    const bestPerBrand = {};
     ['Zaptec', 'Ratio', 'Alfen'].forEach(brand => {
       const product = getBestPerBrand(needs, brand);
+      bestPerBrand[brand] = product;
       document.getElementById('vNaam' + brand).textContent = product.name;
       document.getElementById('vChecks' + brand).innerHTML = renderChecks(needs, product);
       const imgEl = document.getElementById('vImg' + brand);
       if (imgEl && product.img) { imgEl.src = product.img; imgEl.alt = product.name; }
     });
+    window._bestPerBrand = bestPerBrand;
 
     const box = document.getElementById('vergelijking');
     if (box.style.display === 'none') {
@@ -1880,9 +1883,12 @@
   }
 
   let gekozenMerk = '';
+  let gekozenProductId = '';
 
   function kiesProduct(brand) {
     gekozenMerk = brand;
+    const product = (window._bestPerBrand || {})[brand];
+    gekozenProductId = product ? product.id : '';
     nextStep(2);
   }
 
@@ -1952,8 +1958,10 @@
     const situatieMap = { 'direct': 'meterkast', 'kruip-gevel': 'kruipruimte', 'kruip-graaf': 'graafwerk' };
     const situatie = situatieMap[situatieRaw] || 'meterkast';
 
-    // Template kiezen op basis van situatie
-    const templateId = (situatie === 'meterkast') ? 'zaptec-go' : 'zaptec-go-kruip';
+    // Template kiezen op basis van gekozen product + situatie
+    const situatieShort = situatie === 'meterkast' ? 'direct' : 'kruip';
+    const productIdForTemplate = gekozenProductId || 'go';
+    const templateId = `${productIdForTemplate}-${situatieShort}`;
 
     // Contactvoorkeur
     const contactIsWhatsapp = document.getElementById('cWhatsapp').classList.contains('selected');
@@ -1968,7 +1976,7 @@
     const email = !contactIsWhatsapp ? document.getElementById('inputEmail').value.trim() : (voornaam.toLowerCase().replace(/\s+/g,'.') + '@aanvraag.energx.nl');
 
     // Details velden
-    const details = { situatie };
+    const details = { situatie, model: productIdForTemplate };
     const afstandGevel = document.getElementById('afstandGevel').value;
     const afstandGraaf = document.getElementById('afstandGraaf').value;
     const meterGraaf = document.getElementById('meterGraaf').value;
