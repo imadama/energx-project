@@ -1943,13 +1943,86 @@
     if (type === 'kruip-graaf') document.getElementById('condKruipGraaf').classList.add('visible');
   }
 
-  function submitForm() {
-    document.getElementById('wizardStep3').style.display = 'none';
-    const success = document.getElementById('formSuccess');
-    success.style.display = 'block';
-    setTimeout(() => success.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
-    const fill = document.getElementById('wizardProgressFill');
-    if (fill) fill.style.width = '100%';
+  async function submitForm() {
+    // Lees situatie
+    const situatieEl = document.querySelector('#qSituatie .choice-card.selected');
+    const situatieRaw = situatieEl ? situatieEl.dataset.value : null;
+
+    // Mapping wizard → API waarden
+    const situatieMap = { 'direct': 'meterkast', 'kruip-gevel': 'kruipruimte', 'kruip-graaf': 'graafwerk' };
+    const situatie = situatieMap[situatieRaw] || 'meterkast';
+
+    // Template kiezen op basis van situatie
+    const templateId = (situatie === 'meterkast') ? 'zaptec-go' : 'zaptec-go-kruip';
+
+    // Contactvoorkeur
+    const contactIsWhatsapp = document.getElementById('cWhatsapp').classList.contains('selected');
+    const commPref = contactIsWhatsapp ? 'whatsapp' : 'email';
+
+    // Klantgegevens
+    const voornaam = document.getElementById('inputVoornaam').value.trim();
+    const achternaam = document.getElementById('inputAchternaam').value.trim();
+    const postcode = document.getElementById('inputPostcode').value.trim();
+    const huisnummer = document.getElementById('inputHuisnummer').value.trim();
+    const phone = contactIsWhatsapp ? document.getElementById('inputWhatsapp').value.trim() : null;
+    const email = !contactIsWhatsapp ? document.getElementById('inputEmail').value.trim() : (voornaam.toLowerCase().replace(/\s+/g,'.') + '@aanvraag.energx.nl');
+
+    // Details velden
+    const details = { situatie };
+    const afstandGevel = document.getElementById('afstandGevel').value;
+    const afstandGraaf = document.getElementById('afstandGraaf').value;
+    const meterGraaf = document.getElementById('meterGraaf').value;
+    if (situatie === 'kruipruimte' && afstandGevel) details.meters_kabel = parseInt(afstandGevel, 10);
+    if (situatie === 'graafwerk' && afstandGraaf) details.meters_kabel = parseInt(afstandGraaf, 10);
+    if (situatie === 'graafwerk' && meterGraaf) details.graawerk_meters = parseInt(meterGraaf, 10);
+
+    // Submit knop tonen als loading
+    const btn = document.querySelector('#wizardStep3 .form-submit');
+    const origText = btn.textContent;
+    btn.textContent = 'Even geduld...';
+    btn.disabled = true;
+
+    const payload = {
+      customer: {
+        name: `${voornaam} ${achternaam}`.trim(),
+        email,
+        phone: phone || undefined,
+        postalcode: postcode || undefined,
+        housenumber: huisnummer || undefined,
+        country: 'NL',
+      },
+      communicationPreference: commPref,
+      offerTemplateId: templateId,
+      details,
+    };
+
+    try {
+      const resp = await fetch('http://w0g8wgwkk8wg0cwwo48wskkk.185.96.45.63.sslip.io/api/v1/offer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await resp.json();
+
+      if (resp.ok) {
+        document.getElementById('wizardStep3').style.display = 'none';
+        const success = document.getElementById('formSuccess');
+        success.style.display = 'block';
+        setTimeout(() => success.scrollIntoView({ behavior: 'smooth', block: 'start' }), 50);
+        const fill = document.getElementById('wizardProgressFill');
+        if (fill) fill.style.width = '100%';
+      } else {
+        const msgs = data.errors ? Object.values(data.errors).flat().join(' ') : (data.message || 'Er is iets misgegaan.');
+        alert('Fout: ' + msgs);
+        btn.textContent = origText;
+        btn.disabled = false;
+      }
+    } catch (err) {
+      alert('Verbindingsfout. Probeer het opnieuw.');
+      btn.textContent = origText;
+      btn.disabled = false;
+    }
   }
 
   // Scroll animations
