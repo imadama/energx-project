@@ -1132,7 +1132,7 @@
 
       <!-- SMILE5 -->
       <div class="merk-card fade-up">
-        <div class="merk-foto-placeholder">Foto Alpha ESS SMILE5 — binnenkort beschikbaar</div>
+        <img class="merk-foto" src="/images/alpha-smile5.jpg" alt="Alpha ESS SMILE5 thuisbatterij">
         <div class="merk-body">
           <div class="merk-header">
             <div>
@@ -1175,7 +1175,7 @@
 
       <!-- SMILE-B3 Plus -->
       <div class="merk-card fade-up">
-        <div class="merk-foto-placeholder">Foto Alpha ESS SMILE-B3 Plus — binnenkort beschikbaar</div>
+        <img class="merk-foto" src="/images/alpha-b3plus.jpg" alt="Alpha ESS SMILE-B3 Plus thuisbatterij">
         <div class="merk-body">
           <div class="merk-header">
             <div>
@@ -1658,6 +1658,7 @@
       },
     };
 
+    const fotos = { smile5: '/images/alpha-smile5.jpg', b3plus: '/images/alpha-b3plus.jpg' };
     const volgorde = aanbevolen === 'smile5' ? ['smile5', 'b3plus'] : ['b3plus', 'smile5'];
 
     const html = volgorde.map((id, i) => {
@@ -1673,7 +1674,7 @@
       return `
         <div class="verg-card ${isAanbevolen ? 'aanbevolen' : ''}">
           ${badge}
-          <div class="verg-img-placeholder">Foto binnenkort</div>
+          <img class="verg-img" src="${fotos[id]}" alt="Alpha ESS ${p.naam}">
           <div class="verg-brand">Alpha ESS</div>
           <div class="verg-naam">${p.naam}</div>
           <div class="verg-capacity">${p.capaciteit}</div>
