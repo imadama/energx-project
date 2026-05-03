@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thuisbatterij installatie — Energx</title>
+<meta name="description" content="Sla zonne-energie op met een Alpha ESS thuisbatterij. Energx regelt advies, offerte en installatie via gecertificeerde lokale installateurs. Binnen 1 werkdag reactie.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-900: #0B3320;
+    --green-800: #0F4A2A;
+    --green-700: #155E34;
+    --green-600: #1A7A42;
+    --green-500: #22A058;
+    --green-400: #2DBD6E;
+    --green-300: #5FD496;
+    --green-100: #D4F2E2;
+    --green-50:  #EDF9F3;
+    --night:     #090F0C;
+    --night-2:   #0E1A12;
+    --night-3:   #162019;
+    --white:     #FAFCFB;
+    --gray-100:  #F0F4F1;
+    --gray-200:  #DCE5DE;
+    --gray-400:  #8FA896;
+    --gray-600:  #4A6152;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'Outfit', sans-serif;
+    --max: 1200px;
+    --radius: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-body);
+    background: var(--white);
+    color: var(--night);
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 2rem;
+    height: 68px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(250,252,251,0.9);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-icon { width: 34px; height: 34px; }
+  .nav-logo-text { font-family: var(--font-display); font-size: 22px; color: var(--green-800); letter-spacing: -0.3px; }
+  .nav-logo-text span { color: var(--green-400); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--gray-600);
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--green-800); }
+
+  .nav-cta {
+    background: var(--green-800);
+    color: var(--white) !important;
+    padding: 9px 20px;
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--green-600) !important; }
+
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--green-800);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(160deg, var(--green-50) 0%, var(--white) 65%);
+    padding: 120px 6vw 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(15,74,42,0.07) 0%, transparent 70%);
+    top: -150px; right: -100px;
+    pointer-events: none;
+  }
+
+  .hero-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .hero-breadcrumb {
+    font-size: 13px;
+    color: var(--gray-600);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .hero-breadcrumb a { color: var(--green-600); text-decoration: none; }
+  .hero-breadcrumb span { color: var(--gray-400); }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(15,74,42,0.07);
+    border: 1px solid rgba(15,74,42,0.18);
+    color: var(--green-700);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-tag::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green-600);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50% { opacity:0.5; transform:scale(0.8); }
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(38px, 4.5vw, 60px);
+    color: var(--green-900);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-title em { font-style: italic; color: var(--green-500); }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--gray-600);
+    line-height: 1.75;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-merken {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--gray-200);
+    justify-content: center;
+  }
+
+  .merk-label { font-size: 12px; color: var(--gray-400); margin-right: 4px; }
+
+  .merk-badge {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--night);
+    letter-spacing: 0.03em;
+  }
+
+  .btn-hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--green-400);
+    color: var(--night);
+    padding: 18px 40px;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  }
+  .btn-hero-cta:hover { background: var(--green-300); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(45,189,110,0.35); }
+
+  /* ── VOORDELEN ── */
+  .voordelen { background: var(--white); }
+
+  .voordelen-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 3rem;
+  }
+
+  .voordeel-card {
+    background: var(--green-50);
+    border: 1px solid rgba(15,74,42,0.1);
+    border-radius: 20px;
+    padding: 28px 24px;
+  }
+
+  .voordeel-icon {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: rgba(45,189,110,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+  }
+
+  .voordeel-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--green-900);
+    margin-bottom: 8px;
+  }
+
+  .voordeel-sub {
+    font-size: 14px;
+    color: var(--gray-600);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ── SECTION BASE ── */
+  section { padding: 90px 6vw; }
+  .container { max-width: var(--max); margin: 0 auto; }
+  .section-tag {
+    display: inline-block;
+    font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-600);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(30px, 3.5vw, 44px);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    color: var(--night);
+    margin-bottom: 1rem;
+  }
+  .section-sub {
+    font-size: 17px;
+    color: var(--gray-600);
+    font-weight: 300;
+    max-width: 520px;
+    line-height: 1.7;
+  }
+
+  /* ── MERKEN ── */
+  .merken { background: var(--green-800); }
+  .merken .section-tag { color: var(--green-400); }
+  .merken .section-title { color: var(--white); }
+  .merken .section-sub { color: rgba(255,255,255,0.65); }
+
+  .merken-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 3rem;
+  }
+
+  .merk-card {
+    background: var(--green-700);
+    border-radius: 24px;
+    border: 1px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .merk-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px rgba(0,0,0,0.3); }
+
+  .merk-foto {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+  }
+
+  .merk-foto-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: rgba(255,255,255,0.04);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.2);
+    font-size: 13px;
+  }
+
+  .merk-body { padding: 32px; }
+
+  .merk-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    gap: 12px;
+  }
+
+  .merk-name {
+    font-family: var(--font-display);
+    font-size: 30px;
+    color: var(--white);
+    letter-spacing: -0.5px;
+  }
+
+  .merk-type {
+    font-size: 11px;
+    color: var(--green-400);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    background: rgba(45,189,110,0.12);
+    border: 1px solid rgba(45,189,110,0.2);
+    padding: 4px 12px;
+    border-radius: 100px;
+    white-space: nowrap;
+    margin-top: 6px;
+  }
+
+  .merk-desc {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.8;
+    font-weight: 300;
+    margin-bottom: 24px;
+  }
+
+  .merk-specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .merk-spec-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 12px 16px;
+  }
+
+  .merk-spec-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  .merk-spec-value {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--white);
+  }
+
+  .merk-voor {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .merk-specs-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+
+  .merk-spec {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    font-weight: 300;
+  }
+
+  .spec-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--green-400);
+    flex-shrink: 0;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--green-400);
+    color: var(--night);
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body);
+  }
+
+  .btn-primary:hover { background: var(--green-300); transform: translateY(-1px); }
+
+  /* ── WIZARD SECTIE ── */
+  .wizard-sectie {
+    background: var(--green-800);
+    padding: 72px 6vw 96px;
+  }
+
+  .wizard-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .wizard-progress {
+    height: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    margin-bottom: 48px;
+    overflow: hidden;
+  }
+
+  .wizard-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--green-700), var(--green-400));
+    border-radius: 100px;
+    transition: width 0.5s ease;
+  }
+
+  .wizard-block { animation: fadeUp 0.35s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .wizard-step-label {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-400);
+    margin-bottom: 12px;
+  }
+
+  .wizard-heading {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 3vw, 36px);
+    color: var(--white);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+  }
+
+  .wizard-subhead {
+    font-size: 16px;
+    color: rgba(255,255,255,0.5);
+    font-weight: 300;
+    margin-bottom: 36px;
+    line-height: 1.6;
+  }
+
+  /* Vragen */
+  .vraag-blok { margin-bottom: 28px; }
+
+  .vraag-label {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 12px;
+    display: block;
+    line-height: 1.45;
+  }
+
+  .vraag-label .q-hint {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    font-weight: 300;
+  }
+
+  /* Choice cards */
+  .choice-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .choice-cards.horizontal {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .choice-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    user-select: none;
+  }
+
+  .choice-card:hover {
+    border-color: rgba(45,189,110,0.3);
+    color: rgba(255,255,255,0.85);
+  }
+
+  .choice-card.selected {
+    border-color: var(--green-400);
+    background: rgba(45,189,110,0.1);
+    color: var(--white);
+  }
+
+  .choice-card .cc-icon {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+
+  .choice-card.selected .cc-icon {
+    border-color: var(--green-400);
+    background: var(--green-400);
+  }
+
+  .choice-card.selected .cc-icon::after {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--night);
+  }
+
+  .choice-card .cc-body { flex: 1; }
+  .choice-card .cc-title { font-size: 14px; font-weight: 500; color: inherit; }
+  .choice-card .cc-sub { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 3px; font-weight: 300; }
+  .choice-card.selected .cc-sub { color: rgba(255,255,255,0.6); }
+
+  /* Stap navigatie knoppen */
+  .btn-wiz-next {
+    background: var(--green-400);
+    color: var(--night);
+    padding: 14px 32px;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    margin-top: 8px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-wiz-next:hover { background: var(--green-300); transform: translateY(-1px); }
+
+  .btn-wiz-back {
+    background: transparent;
+    color: rgba(255,255,255,0.4);
+    padding: 13px 20px;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    border: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-right: 8px;
+  }
+  .btn-wiz-back:hover { color: var(--white); border-color: rgba(255,255,255,0.25); }
+
+  /* Conditionele velden stap 2 */
+  .cond-field {
+    display: none;
+    margin-top: 16px;
+    padding: 20px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.06);
+    animation: fadeUp 0.25s ease;
+  }
+  .cond-field.visible { display: block; }
+
+  .cond-label {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 300;
+  }
+
+  /* Vergelijking / advies blok */
+  .wizard-block--comparison .verg-eyebrow {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-400);
+    margin-bottom: 20px;
+  }
+
+  .verg-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 16px;
+    align-items: start;
+    margin-bottom: 28px;
+  }
+
+  .verg-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .verg-card.aanbevolen {
+    background: linear-gradient(145deg, rgba(45,189,110,0.12), rgba(45,189,110,0.03));
+    border-color: rgba(45,189,110,0.4);
+    margin-top: -14px;
+    padding: 32px 28px;
+    border-radius: 24px;
+  }
+
+  .verg-top-badge {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--green-400);
+    background: rgba(45,189,110,0.15);
+    border: 1px solid rgba(45,189,110,0.25);
+    border-radius: 100px;
+    padding: 4px 12px;
+    display: inline-block;
+    margin-bottom: 14px;
+  }
+
+  .verg-brand {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .verg-naam {
+    font-family: var(--font-display);
+    font-size: 22px;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .verg-card.aanbevolen .verg-naam {
+    color: var(--white);
+    font-size: 28px;
+  }
+
+  .verg-capacity {
+    font-size: 13px;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 18px;
+    font-weight: 300;
+  }
+
+  .verg-card.aanbevolen .verg-capacity { color: rgba(255,255,255,0.55); }
+
+  .verg-img-placeholder {
+    width: 100%;
+    aspect-ratio: 4/3;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    background: rgba(255,255,255,0.04);
+    border: 1px dashed rgba(255,255,255,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: rgba(255,255,255,0.2);
+  }
+
+  .verg-img {
+    width: 100%;
+    aspect-ratio: 4/3;
+    object-fit: contain;
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .verg-checks { display: flex; flex-direction: column; gap: 10px; flex: 1; margin-bottom: 22px; }
+
+  .verg-check {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .verg-check.ok { color: rgba(255,255,255,0.8); }
+  .verg-check.nok { color: rgba(255,255,255,0.22); }
+
+  .verg-ci {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 10px;
+    font-weight: 800;
+  }
+
+  .verg-check.ok  .verg-ci { background: rgba(45,189,110,0.2); color: var(--green-400); }
+  .verg-check.nok .verg-ci { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.2); }
+
+  .verg-btn {
+    width: 100%;
+    padding: 13px;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.14);
+    background: transparent;
+    color: rgba(255,255,255,0.55);
+    transition: all 0.2s;
+    margin-top: auto;
+  }
+
+  .verg-btn:hover { border-color: rgba(255,255,255,0.35); color: var(--white); }
+
+  .verg-card.aanbevolen .verg-btn {
+    background: var(--green-400);
+    color: var(--night);
+    border-color: var(--green-400);
+    padding: 15px;
+    font-size: 16px;
+  }
+
+  .verg-card.aanbevolen .verg-btn:hover { background: var(--green-300); border-color: var(--green-300); }
+
+  /* Stap 2 — situatie kaarten */
+  .situatie-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .situatie-card {
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 20px 22px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .situatie-card:hover { border-color: rgba(45,189,110,0.3); background: rgba(255,255,255,0.06); }
+
+  .situatie-card.selected {
+    border-color: var(--green-400);
+    background: rgba(45,189,110,0.08);
+  }
+
+  .situatie-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .situatie-card.selected .situatie-card-icon { background: rgba(45,189,110,0.15); }
+
+  .situatie-card-body { flex: 1; }
+  .situatie-card-title { font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.8); margin-bottom: 3px; }
+  .situatie-card.selected .situatie-card-title { color: var(--white); }
+  .situatie-card-sub { font-size: 13px; color: rgba(255,255,255,0.35); font-weight: 300; }
+
+  /* Form inputs stap 3 */
+  .form-group { margin-bottom: 16px; }
+
+  .form-label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    margin-bottom: 7px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .form-input {
+    width: 100%;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.10);
+    border: 1.5px solid rgba(255,255,255,0.28);
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--white);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-appearance: none;
+  }
+
+  .form-input::placeholder { color: rgba(255,255,255,0.45); }
+  .form-input:focus { border-color: var(--green-400); background: rgba(255,255,255,0.14); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  /* Contact voorkeur kaarten */
+  .contact-choice-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+  .contact-card { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px; border: 1.5px solid rgba(255,255,255,0.1); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .contact-card:hover { border-color: rgba(255,255,255,0.28); background: rgba(255,255,255,0.04); }
+  .contact-card.selected { border-color: var(--green-400); background: rgba(45,189,110,0.1); }
+  .contact-card-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; }
+  .contact-card.selected .contact-card-icon { background: rgba(45,189,110,0.2); }
+  .contact-card-title { font-size: 14px; font-weight: 600; color: white; margin-bottom: 2px; }
+  .contact-card-sub { font-size: 11px; color: rgba(255,255,255,0.45); }
+  .contact-card.selected .contact-card-sub { color: rgba(255,255,255,0.68); }
+
+  .form-submit {
+    width: 100%;
+    min-height: 54px;
+    padding: 15px;
+    background: var(--green-400);
+    color: var(--night);
+    border: none;
+    border-radius: 100px;
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .form-submit:hover { background: var(--green-300); transform: translateY(-1px); }
+
+  /* Succes */
+  .wizard-block--success {
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .success-icon {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: rgba(45,189,110,0.15);
+    border: 2px solid var(--green-400);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  .success-title {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+
+  .success-sub {
+    font-size: 15px;
+    color: rgba(255,255,255,0.4);
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* ── FADE ANIMATIONS ── */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--green-900); padding: 60px 6vw 32px; color: rgba(255,255,255,0.58); }
+  .footer-inner { max-width: var(--max); margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 28px; }
+  .footer-brand { display: flex; flex-direction: column; gap: 14px; }
+  .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .footer-logo-text { font-family: var(--font-display); font-size: 20px; color: var(--white); }
+  .footer-logo-text span { color: var(--green-400); }
+  .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.58); line-height: 1.6; font-weight: 300; max-width: 260px; }
+  .footer-col-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.82); margin-bottom: 14px; letter-spacing: 0.03em; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 14px; color: rgba(255,255,255,0.58); text-decoration: none; font-weight: 300; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--green-400); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 300; }
+  .footer-green { color: var(--green-500); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .voordelen-grid { grid-template-columns: 1fr 1fr; }
+    .merken-grid { grid-template-columns: 1fr; }
+    .verg-grid { grid-template-columns: 1fr; }
+    .verg-card.aanbevolen { margin-top: 0; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(250,252,251,0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gray-200);
+      flex-direction: column;
+      padding: 8px 2rem 24px;
+      gap: 0;
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: 14px 0; font-size: 16px; border-bottom: 1px solid var(--gray-100); color: var(--night) !important; }
+    .nav-links li:last-child a { border-bottom: none; }
+    .nav-cta { margin-top: 8px; text-align: center; padding: 12px 24px !important; border-radius: 100px; }
+    .merk-specs-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .wizard-sectie { padding: 56px 5vw 72px; }
+    .form-row { grid-template-columns: 1fr; }
+    .contact-choice-cards { grid-template-columns: 1fr; }
+    .voordelen-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr; }
+    .merk-specs-grid { grid-template-columns: 1fr; }
+    .hero { padding: 100px 5vw 60px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <svg class="nav-logo-icon" viewBox="0 0 34 34" fill="none">
+      <rect width="34" height="34" rx="9" fill="#0F4A2A"/>
+      <path d="M17 7L27 13V21L17 27L7 21V13L17 7Z" stroke="#2DBD6E" stroke-width="1.5" fill="none"/>
+      <path d="M17 12L22 15V21L17 24L12 21V15L17 12Z" fill="#2DBD6E" fill-opacity="0.25"/>
+      <circle cx="17" cy="17" r="2.5" fill="#2DBD6E"/>
+    </svg>
+    <span class="nav-logo-text">Ener<span>gx</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="energx-thuisbatterij.html" style="color:var(--green-800);font-weight:500;">Thuisbatterij</a></li>
+    <li><a href="energx-laadpaal.html">Laadpaal</a></li>
+    <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
+    <li><a href="blog.html">Blog</a></li>
+    <li><a href="#wizard-sectie" class="nav-cta">Offerte aanvragen</a></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Menu openen" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      Thuisbatterij
+    </div>
+    <div class="hero-tag">Thuis energie opslaan</div>
+    <h1 class="hero-title">
+      Sla je zonne-energie op,<br>
+      <em>gebruik het wanneer jij wil.</em>
+    </h1>
+    <p class="hero-sub">
+      Een thuisbatterij maakt je écht onafhankelijk. Sla overdag opgewekte zonne-energie op en gebruik die 's avonds. Energx regelt advies, offerte en installatie via gecertificeerde lokale installateurs.
+    </p>
+    <a href="#wizard-sectie" class="btn-hero-cta">
+      Bereken jouw advies
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3l6 6-6 6M3 9h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <div class="hero-merken">
+      <span class="merk-label">Wij leveren:</span>
+      <div class="merk-badge">Alpha ESS</div>
+    </div>
+  </div>
+</div>
+
+<!-- VOORDELEN -->
+<section class="voordelen">
+  <div class="container">
+    <span class="section-tag">Waarom een thuisbatterij</span>
+    <h2 class="section-title">Minder afhankelijk,<br>meer besparing</h2>
+    <p class="section-sub">Een thuisbatterij verandert de manier waarop jij energie gebruikt — en wat je er voor betaalt.</p>
+
+    <div class="voordelen-grid" style="margin-top:3rem;">
+      <div class="voordeel-card fade-up">
+        <div class="voordeel-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="4" fill="#2DBD6E"/>
+            <path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12" stroke="#2DBD6E" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="voordeel-title">Eigen stroom gebruiken</div>
+        <p class="voordeel-sub">Sla zonne-energie op overdag en gebruik die 's avonds en 's nachts. Tot 90% zelfvoorzienend.</p>
+      </div>
+      <div class="voordeel-card fade-up">
+        <div class="voordeel-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <rect x="3" y="6" width="18" height="13" rx="2" stroke="#2DBD6E" stroke-width="1.6" fill="none"/>
+            <path d="M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2" stroke="#2DBD6E" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M12 11v4M10 13h4" stroke="#2DBD6E" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="voordeel-title">Lagere energierekening</div>
+        <p class="voordeel-sub">Koop minder dure stroom van het net. Bespaar honderden euro's per jaar op je energierekening.</p>
+      </div>
+      <div class="voordeel-card fade-up">
+        <div class="voordeel-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="#2DBD6E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          </svg>
+        </div>
+        <div class="voordeel-title">Back-up bij stroomuitval</div>
+        <p class="voordeel-sub">Alpha ESS heeft een EPS-functie: bij stroomuitval schakel je automatisch over op de batterij.</p>
+      </div>
+      <div class="voordeel-card fade-up">
+        <div class="voordeel-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2a10 10 0 100 20A10 10 0 0012 2z" stroke="#2DBD6E" stroke-width="1.5" fill="none"/>
+            <path d="M8 12h4l2-4" stroke="#2DBD6E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="voordeel-title">Slim energiebeheer</div>
+        <p class="voordeel-sub">Koppel met je laadpaal en zonnepanelen via de Alpha ESS app. Alles in één overzicht.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MERKEN -->
+<section class="merken">
+  <div class="container">
+    <span class="section-tag">Ons merk</span>
+    <h2 class="section-title">Alpha ESS —<br>bewezen thuisbatterij technologie</h2>
+    <p class="section-sub">Alpha ESS is een van Europa's meest verkochte thuisbatterij-merken. Betrouwbaar, uitbreidbaar en altijd klaar voor de toekomst.</p>
+
+    <div class="merken-grid" style="margin-top:3rem;">
+
+      <!-- SMILE5 -->
+      <div class="merk-card fade-up">
+        <div class="merk-foto-placeholder">Foto Alpha ESS SMILE5 — binnenkort beschikbaar</div>
+        <div class="merk-body">
+          <div class="merk-header">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">Alpha ESS</div>
+              <div class="merk-name">SMILE5</div>
+            </div>
+            <div class="merk-type">All-in-one</div>
+          </div>
+          <p class="merk-desc">De SMILE5 combineert hybride omvormer én batterij in één compacte unit. Ideaal als je zonnepanelen wil koppelen aan opslag — alles in één installatie. Uitbreidbaar met extra batterijmodules.</p>
+
+          <div class="merk-specs-grid">
+            <div class="merk-spec-item">
+              <div class="merk-spec-label">Capaciteit</div>
+              <div class="merk-spec-value">5,7 kWh</div>
+            </div>
+            <div class="merk-spec-item">
+              <div class="merk-spec-label">Omvormer</div>
+              <div class="merk-spec-value">3–6 kW</div>
+            </div>
+            <div class="merk-spec-item">
+              <div class="merk-spec-label">Rendement</div>
+              <div class="merk-spec-value">97,7%</div>
+            </div>
+            <div class="merk-spec-item">
+              <div class="merk-spec-label">Garantie</div>
+              <div class="merk-spec-value">10 jaar</div>
+            </div>
+          </div>
+
+          <div class="merk-voor">Ideaal als je...</div>
+          <div class="merk-specs-list">
+            <div class="merk-spec"><div class="spec-dot"></div>Zonnepanelen hebt of gaat plaatsen</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Een all-in-one hybride omvormer + opslag wil</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Later wil uitbreiden naar meer capaciteit</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Alles wil beheren via één app</div>
+          </div>
+          <a href="#wizard-sectie" class="btn-primary" style="font-size:14px;padding:11px 22px;">Offerte aanvragen →</a>
+        </div>
+      </div>
+
+      <!-- SMILE-B3 Plus -->
+      <div class="merk-card fade-up">
+        <div class="merk-foto-placeholder">Foto Alpha ESS SMILE-B3 Plus — binnenkort beschikbaar</div>
+        <div class="merk-body">
+          <div class="merk-header">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.35);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">Alpha ESS</div>
+              <div class="merk-name">SMILE-B3 Plus</div>
+            </div>
+            <div class="merk-type">Stapelbaar</div>
+          </div>
+          <p class="merk-desc">De SMILE-B3 Plus is een losse batterij die koppelt aan je bestaande omvormer. Stapelbaar tot 17,1 kWh — perfect voor grotere huishoudens of wie maximale onafhankelijkheid wil. Inclusief EPS back-up functie.</p>
+
+          <div class="merk-specs-grid">
+            <div class="merk-spec-item">
+              <div class="merk-spec-label">Capaciteit</div>
+              <div class="merk-spec-value">5,7–17,1 kWh</div>
+            </div>
+            <div class="merk-spec-item">
+              <div class="merk-spec-label">Modules</div>
+              <div class="merk-spec-value">1–3 stuks</div>
+            </div>
+            <div class="merk-spec-item">
+              <div class="merk-spec-label">Back-up</div>
+              <div class="merk-spec-value">EPS functie</div>
+            </div>
+            <div class="merk-spec-item">
+              <div class="merk-spec-label">Garantie</div>
+              <div class="merk-spec-value">10 jaar</div>
+            </div>
+          </div>
+
+          <div class="merk-voor">Ideaal als je...</div>
+          <div class="merk-specs-list">
+            <div class="merk-spec"><div class="spec-dot"></div>Al een omvormer hebt en alleen opslag wil toevoegen</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Meer dan 5 kWh capaciteit nodig hebt</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Back-up stroom wil bij een stroomstoring</div>
+            <div class="merk-spec"><div class="spec-dot"></div>Flexibel wil uitbreiden in de toekomst</div>
+          </div>
+          <a href="#wizard-sectie" class="btn-primary" style="font-size:14px;padding:11px 22px;">Offerte aanvragen →</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- WIZARD -->
+<section id="wizard-sectie" class="wizard-sectie">
+  <div class="wizard-inner">
+
+    <div class="wizard-progress">
+      <div class="wizard-progress-fill" id="wizardProgressFill" style="width:8%"></div>
+    </div>
+
+    <!-- BLOK 1: Stap 1 — jouw situatie -->
+    <div class="wizard-block" id="wizardStep1">
+      <div class="wizard-step-label">Stap 1 van 3 — Jouw situatie</div>
+      <h2 class="wizard-heading">Wat is jouw situatie?</h2>
+      <p class="wizard-subhead">Beantwoord 3 vragen — wij adviseren de beste batterij voor jou.</p>
+
+      <div class="vraag-blok">
+        <span class="vraag-label">Heb je zonnepanelen?</span>
+        <div class="choice-cards" id="qZonnepanelen">
+          <div class="choice-card" data-value="ja" onclick="selectChoice(this,'qZonnepanelen',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Ja, ik heb zonnepanelen</div>
+              <div class="cc-sub">Ik wil mijn opgewekte stroom opslaan</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="gepland" onclick="selectChoice(this,'qZonnepanelen',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Nog niet, maar ik plan ze binnenkort</div>
+              <div class="cc-sub">Ik wil alvast klaarstaan voor opslag</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="nee" onclick="selectChoice(this,'qZonnepanelen',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Nee, (nog) geen zonnepanelen</div>
+              <div class="cc-sub">Ik wil goedkope nachtstroom opslaan of back-up</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="vraag-blok">
+        <span class="vraag-label">Wat is je voornaamste doel?</span>
+        <div class="choice-cards" id="qDoel">
+          <div class="choice-card" data-value="opslaan" onclick="selectChoice(this,'qDoel',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Zelfopgewekte stroom opslaan</div>
+              <div class="cc-sub">Maximaal profiteren van mijn zonnepanelen</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="besparen" onclick="selectChoice(this,'qDoel',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Energierekening verlagen</div>
+              <div class="cc-sub">Minder afhankelijk van dure netprijzen</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="backup" onclick="selectChoice(this,'qDoel',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Back-up stroom bij stroomuitval</div>
+              <div class="cc-sub">Altijd stroom, ook als het net uitvalt</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="onafhankelijk" onclick="selectChoice(this,'qDoel',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Maximale onafhankelijkheid</div>
+              <div class="cc-sub">Zo min mogelijk van het stroomnet afhankelijk zijn</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="vraag-blok">
+        <span class="vraag-label">Hoe groot is je jaarlijks stroomverbruik? <span class="q-hint">(staat op je energierekening)</span></span>
+        <div class="choice-cards horizontal" id="qVerbruik">
+          <div class="choice-card" data-value="klein" onclick="selectChoice(this,'qVerbruik',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Klein</div>
+              <div class="cc-sub">&lt; 3.500 kWh</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="gemiddeld" onclick="selectChoice(this,'qVerbruik',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Gemiddeld</div>
+              <div class="cc-sub">3.500–5.500 kWh</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="groot" onclick="selectChoice(this,'qVerbruik',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Groot</div>
+              <div class="cc-sub">&gt; 5.500 kWh</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-wiz-next" onclick="showAdvies()">Bekijk jouw advies →</button>
+    </div>
+
+    <!-- BLOK 2: Advies / vergelijking -->
+    <div class="wizard-block wizard-block--comparison" id="wizardAdvies" style="display:none">
+      <div class="verg-eyebrow">Jouw persoonlijk advies</div>
+      <h2 class="wizard-heading" style="margin-bottom:8px;">Dit adviseren wij voor jou</h2>
+      <p class="wizard-subhead">Op basis van jouw wensen raden we dit aan — kies en ga verder.</p>
+
+      <div class="verg-grid" id="vergGrid">
+        <!-- Gevuld door JS -->
+      </div>
+
+      <button class="btn-wiz-back" onclick="showBlock('wizardStep1', 8)">← Pas aan</button>
+    </div>
+
+    <!-- BLOK 3: Stap 2 — installatie -->
+    <div class="wizard-block" id="wizardStep2" style="display:none">
+      <div class="wizard-step-label">Stap 2 van 3 — Installatie</div>
+      <h2 class="wizard-heading">Waar komt de batterij?</h2>
+      <p class="wizard-subhead">Vertel ons iets over de installatielocatie zodat onze installateur goed voorbereid komt.</p>
+
+      <div class="vraag-blok">
+        <span class="vraag-label">Waar wil je de batterij plaatsen?</span>
+        <div class="situatie-cards" id="qLocatie">
+          <div class="situatie-card" data-value="garage" onclick="selectSituatie(this,'garage')">
+            <div class="situatie-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <rect x="2" y="10" width="20" height="12" rx="2" stroke="#2DBD6E" stroke-width="1.5" fill="none"/>
+                <path d="M2 10L12 3l10 7" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                <rect x="9" y="15" width="6" height="7" rx="1" stroke="#2DBD6E" stroke-width="1.3" fill="none"/>
+              </svg>
+            </div>
+            <div class="situatie-card-body">
+              <div class="situatie-card-title">Garage of bijkeuken</div>
+              <div class="situatie-card-sub">Binnenshuis, droog en beschermd — ideaal voor wandmontage</div>
+            </div>
+          </div>
+          <div class="situatie-card" data-value="kelder" onclick="selectSituatie(this,'kelder')">
+            <div class="situatie-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="18" height="18" rx="2" stroke="#2DBD6E" stroke-width="1.5" fill="none"/>
+                <path d="M3 12h18M12 3v18" stroke="#2DBD6E" stroke-width="1.3" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="situatie-card-body">
+              <div class="situatie-card-title">Kelder of technische ruimte</div>
+              <div class="situatie-card-sub">Grotere ruimte, ook geschikt voor meerdere modules</div>
+            </div>
+          </div>
+          <div class="situatie-card" data-value="buiten" onclick="selectSituatie(this,'buiten')">
+            <div class="situatie-card-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="#2DBD6E" stroke-width="1.5" fill="none"/>
+                <path d="M12 7v5l3 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="situatie-card-body">
+              <div class="situatie-card-title">Buitenopstelling</div>
+              <div class="situatie-card-sub">Speciale behuizing nodig — we bespreken de opties</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cond-field" id="condAfstand">
+        <div class="form-group">
+          <span class="cond-label">Hoeveel meter is de afstand van de meterkast naar de batterijlocatie?</span>
+          <input type="number" class="form-input" id="inputAfstand" placeholder="bijv. 5" min="0" step="1">
+        </div>
+      </div>
+
+      <div style="margin-top:24px;">
+        <button class="btn-wiz-back" onclick="showBlock('wizardAdvies', 55)">← Terug</button>
+        <button class="btn-wiz-next" onclick="showBlock('wizardStep3', 75)">Volgende stap →</button>
+      </div>
+    </div>
+
+    <!-- BLOK 4: Stap 3 — contactgegevens -->
+    <div class="wizard-block" id="wizardStep3" style="display:none">
+      <div class="wizard-step-label">Stap 3 van 3 — Jouw gegevens</div>
+      <h2 class="wizard-heading">Bijna klaar</h2>
+      <p class="wizard-subhead">Vul je gegevens in zodat we je persoonlijk kunnen bereiken.</p>
+
+      <div class="form-row" style="margin-bottom:16px;">
+        <div class="form-group">
+          <label class="form-label">Voornaam</label>
+          <input type="text" class="form-input" id="inputVoornaam" placeholder="Jan">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Achternaam</label>
+          <input type="text" class="form-input" id="inputAchternaam" placeholder="de Vries">
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-bottom:16px;">
+        <div class="form-group">
+          <label class="form-label">Postcode</label>
+          <input type="text" class="form-input" id="inputPostcode" placeholder="1234 AB">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Huisnummer</label>
+          <input type="text" class="form-input" id="inputHuisnummer" placeholder="12">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Telefoonnummer</label>
+        <input type="tel" class="form-input" id="inputTelefoon" placeholder="06 12 34 56 78">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">E-mailadres</label>
+        <input type="email" class="form-input" id="inputEmail" placeholder="jan@email.nl">
+      </div>
+
+      <div class="form-group" style="margin-top:8px;">
+        <label class="form-label" style="font-size:11px;margin-bottom:12px;">Hoe nemen wij het liefst contact op?</label>
+        <div class="contact-choice-cards">
+          <div class="contact-card" data-type="whatsapp" onclick="selectContact('whatsapp')">
+            <div class="contact-card-icon">
+              <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+                <path d="M11 2C6.03 2 2 6.03 2 11c0 1.6.42 3.1 1.15 4.4L2 20l4.73-1.12A8.96 8.96 0 0011 20c4.97 0 9-4.03 9-9s-4.03-9-9-9z" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+                <path d="M8 8.5c.2.5.8 1.7 1.4 2.3.6.6 1.8 1.2 2.3 1.4l.8-.8c.2-.2.5-.2.7-.1.5.2 1 .5 1.5.7.2.1.3.3.3.5v1.5c0 .3-.2.5-.5.5C9.8 14.5 7.5 12.2 7.5 9.5c0-.3.2-.5.5-.5h1.5c.2 0 .4.1.5.3.2.5.5 1 .7 1.5.1.2.1.5-.1.7l-.6.5z" stroke="#2DBD6E" stroke-width="1.2" fill="none"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-card-title">WhatsApp</div>
+              <div class="contact-card-sub">Snel & persoonlijk</div>
+            </div>
+          </div>
+          <div class="contact-card" data-type="bellen" onclick="selectContact('bellen')">
+            <div class="contact-card-icon">
+              <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+                <path d="M6.5 3C6.5 3 5 3 4 4.5c-1 1.5-1 3.5 0 5.5s2.5 4 4.5 6 4 3.5 6 4.5 4 1 5.5 0c1.5-1 1.5-2.5 1.5-2.5l-3-3s-1 0-1.5.5L16 16c-1.5-.5-4-2.5-5.5-4S8.5 8 8 6.5l1.5-1.5C10 4.5 10 3.5 10 3.5L7 .5S6.5 3 6.5 3z" stroke="#2DBD6E" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-card-title">Bellen</div>
+              <div class="contact-card-sub">Direct antwoord</div>
+            </div>
+          </div>
+          <div class="contact-card" data-type="email" onclick="selectContact('email')">
+            <div class="contact-card-icon">
+              <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+                <rect x="3" y="5" width="16" height="12" rx="2" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+                <path d="M3 8l8 5 8-5" stroke="#2DBD6E" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-card-title">E-mail</div>
+              <div class="contact-card-sub">Overzichtelijk</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="form-submit" onclick="submitForm()">Stuur mijn offerte aanvraag →</button>
+      <p style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;margin-top:14px;font-weight:300;">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
+
+      <div style="margin-top:16px;">
+        <button class="btn-wiz-back" onclick="showBlock('wizardStep2', 55)">← Terug</button>
+      </div>
+    </div>
+
+    <!-- BLOK 5: Succes -->
+    <div class="wizard-block wizard-block--success" id="formSuccess" style="display:none">
+      <div class="success-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M6 14l5.5 5.5L22 8" stroke="#2DBD6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="success-title">Aanvraag ontvangen!</div>
+      <p class="success-sub">Je offerte aanvraag is binnen. Een lokale installateur neemt binnen 1 werkdag contact met je op.<br>Vragen? Mail ons op <a href="mailto:info@energx.nl" style="color:var(--green-400);">info@energx.nl</a></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="7" fill="#155E34"/>
+            <path d="M14 5L22 10V18L14 23L6 18V10L14 5Z" stroke="#2DBD6E" stroke-width="1.3" fill="none"/>
+            <circle cx="14" cy="14" r="2" fill="#2DBD6E"/>
+          </svg>
+          <span class="footer-logo-text">Ener<span>gx</span></span>
+        </a>
+        <p class="footer-tagline">Duurzame energie voor thuis — via lokale, gecertificeerde installateurs.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Diensten</div>
+        <ul>
+          <li><a href="energx-thuisbatterij.html">Thuisbatterij</a></li>
+          <li><a href="energx-laadpaal.html">Laadpaal</a></li>
+          <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Bedrijf</div>
+        <ul>
+          <li><a href="index.html#hoe-we-werken">Hoe we werken</a></li>
+          <li><a href="index.html">Over ons</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <ul>
+          <li><a href="mailto:info@energx.nl">info@energx.nl</a></li>
+          <li><a href="#">Privacybeleid</a></li>
+          <li><a href="#">Algemene voorwaarden</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Energx.nl — Alle rechten voorbehouden</span>
+      <span class="footer-green">Duurzaam gebouwd ♻</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ── HAMBURGER ──
+  function toggleMenu() {
+    document.querySelector('.nav-hamburger').classList.toggle('open');
+    document.querySelector('.nav-links').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelector('.nav-hamburger').classList.remove('open');
+      document.querySelector('.nav-links').classList.remove('open');
+    });
+  });
+
+  // ── FADE UP ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // ── WIZARD STATE ──
+  let gekozenProduct = null; // 'smile5' | 'b3plus'
+
+  function getSelectedValue(groupId) {
+    const selected = document.querySelector(`#${groupId} .choice-card.selected`);
+    return selected ? selected.dataset.value : null;
+  }
+
+  function selectChoice(el, groupId, autoNext) {
+    document.querySelectorAll(`#${groupId} .choice-card`).forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    if (autoNext) {
+      setTimeout(() => showAdvies(), 300);
+    }
+  }
+
+  function selectSituatie(el, type) {
+    document.querySelectorAll('#qLocatie .situatie-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    const afstand = document.getElementById('condAfstand');
+    afstand.classList.toggle('visible', type === 'buiten');
+  }
+
+  function selectContact(type) {
+    document.querySelectorAll('.contact-card').forEach(c => c.classList.remove('selected'));
+    const card = document.querySelector(`.contact-card[data-type="${type}"]`);
+    if (card) card.classList.add('selected');
+  }
+
+  function showBlock(id, progress) {
+    document.querySelectorAll('.wizard-block').forEach(b => b.style.display = 'none');
+    const block = document.getElementById(id);
+    block.style.display = 'block';
+    block.style.animation = 'none';
+    block.offsetHeight;
+    block.style.animation = '';
+    document.getElementById('wizardProgressFill').style.width = (progress || 8) + '%';
+    document.getElementById('wizard-sectie').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── ADVIES LOGICA ──
+  function showAdvies() {
+    const zonnepanelen = getSelectedValue('qZonnepanelen');
+    const doel = getSelectedValue('qDoel');
+    const verbruik = getSelectedValue('qVerbruik');
+
+    // Bepaal aanbevolen product
+    let aanbevolen = 'smile5';
+    if (doel === 'backup' || doel === 'onafhankelijk' || verbruik === 'groot') {
+      aanbevolen = 'b3plus';
+    }
+    if (zonnepanelen === 'ja' && doel === 'opslaan' && verbruik !== 'groot') {
+      aanbevolen = 'smile5';
+    }
+
+    gekozenProduct = aanbevolen;
+    renderVergelijking(aanbevolen);
+    showBlock('wizardAdvies', 40);
+  }
+
+  function kiesProduct(productId) {
+    gekozenProduct = productId;
+    showBlock('wizardStep2', 55);
+  }
+
+  function renderVergelijking(aanbevolen) {
+    const producten = {
+      smile5: {
+        naam: 'SMILE5',
+        capaciteit: '5,7 kWh — uitbreidbaar',
+        checks: [
+          { ok: true,  txt: 'Hybride omvormer inbegrepen' },
+          { ok: true,  txt: 'Ideaal met nieuwe zonnepanelen' },
+          { ok: true,  txt: '97,7% rendement' },
+          { ok: true,  txt: 'Tot 10 kWh uitbreidbaar' },
+          { ok: false, txt: 'Vereist geen bestaande omvormer' },
+        ],
+      },
+      b3plus: {
+        naam: 'SMILE-B3 Plus',
+        capaciteit: '5,7–17,1 kWh stapelbaar',
+        checks: [
+          { ok: true,  txt: 'Koppelt aan bestaande omvormer' },
+          { ok: true,  txt: 'EPS back-up bij stroomuitval' },
+          { ok: true,  txt: 'Tot 3 modules stapelbaar' },
+          { ok: true,  txt: 'Maximale onafhankelijkheid' },
+          { ok: true,  txt: 'Flexibel uitbreidbaar' },
+        ],
+      },
+    };
+
+    const volgorde = aanbevolen === 'smile5' ? ['smile5', 'b3plus'] : ['b3plus', 'smile5'];
+
+    const html = volgorde.map((id, i) => {
+      const p = producten[id];
+      const isAanbevolen = id === aanbevolen;
+      const badge = isAanbevolen ? `<div class="verg-top-badge">⭐ Aanbevolen voor jou</div>` : '';
+      const checks = p.checks.map(c =>
+        `<div class="verg-check ${c.ok ? 'ok' : 'nok'}">
+          <div class="verg-ci">${c.ok ? '✓' : '✕'}</div>
+          ${c.txt}
+        </div>`
+      ).join('');
+      return `
+        <div class="verg-card ${isAanbevolen ? 'aanbevolen' : ''}">
+          ${badge}
+          <div class="verg-img-placeholder">Foto binnenkort</div>
+          <div class="verg-brand">Alpha ESS</div>
+          <div class="verg-naam">${p.naam}</div>
+          <div class="verg-capacity">${p.capaciteit}</div>
+          <div class="verg-checks">${checks}</div>
+          <button class="verg-btn" onclick="kiesProduct('${id}')">
+            ${isAanbevolen ? 'Dit wil ik — offerte aanvragen →' : 'Toch deze kiezen'}
+          </button>
+        </div>`;
+    }).join('');
+
+    document.getElementById('vergGrid').innerHTML = html;
+  }
+
+  // ── SUBMIT ──
+  async function submitForm() {
+    const selectedCard = document.querySelector('.contact-card.selected');
+    const commPref = selectedCard ? selectedCard.dataset.type : 'email';
+
+    const voornaam = document.getElementById('inputVoornaam').value.trim();
+    const achternaam = document.getElementById('inputAchternaam').value.trim();
+    const postcode = document.getElementById('inputPostcode').value.trim();
+    const huisnummer = document.getElementById('inputHuisnummer').value.trim();
+    const phone = document.getElementById('inputTelefoon').value.trim() || undefined;
+    const email = document.getElementById('inputEmail').value.trim();
+
+    const locatieEl = document.querySelector('#qLocatie .situatie-card.selected');
+    const locatie = locatieEl ? locatieEl.dataset.value : null;
+    const afstand = document.getElementById('inputAfstand').value;
+
+    const details = {
+      product: gekozenProduct || 'smile5',
+      zonnepanelen: getSelectedValue('qZonnepanelen'),
+      doel: getSelectedValue('qDoel'),
+      verbruik: getSelectedValue('qVerbruik'),
+      locatie,
+    };
+    if (afstand) details.afstand_meter = parseInt(afstand, 10);
+
+    const btn = document.querySelector('#wizardStep3 .form-submit');
+    const origText = btn.textContent;
+    btn.textContent = 'Even geduld...';
+    btn.disabled = true;
+
+    const payload = {
+      customer: {
+        name: `${voornaam} ${achternaam}`.trim(),
+        email,
+        phone,
+        postalcode: postcode || undefined,
+        housenumber: huisnummer || undefined,
+        country: 'NL',
+      },
+      communicationPreference: commPref,
+      offerTemplateId: `thuisbatterij-${details.product}`,
+      details,
+    };
+
+    try {
+      const resp = await fetch('https://crm.energx.nl/api/v1/offer', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (resp.ok) {
+        showBlock('formSuccess', 100);
+      } else {
+        throw new Error('API error');
+      }
+    } catch (e) {
+      btn.textContent = origText;
+      btn.disabled = false;
+      alert('Er ging iets mis. Probeer het opnieuw of mail ons op info@energx.nl');
+    }
+  }
+</script>
+</body>
+</html>

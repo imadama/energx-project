@@ -12,6 +12,7 @@ export default defineConfig({
         'blog-ratio-zaptec': resolve(__dirname, 'blog/ratio-vs-zaptec.html'),
         'blog-installatie': resolve(__dirname, 'blog/laadpaal-installatie-dag.html'),
         warmtepomp: resolve(__dirname, 'energx-warmtepomp.html'),
+        thuisbatterij: resolve(__dirname, 'energx-thuisbatterij.html'),
       },
     },
   },
