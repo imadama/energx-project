@@ -224,11 +224,21 @@
   .choice-card.selected .cc-desc { color: rgba(255,255,255,0.5); }
 
   .form-group { margin-bottom: 14px; }
-  .form-label { display: block; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.5); margin-bottom: 6px; letter-spacing: 0.04em; }
-  .form-input { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; font-family: var(--font-body); font-size: 15px; color: var(--white); outline: none; transition: border-color 0.2s; -webkit-appearance: none; }
-  .form-input::placeholder { color: rgba(255,255,255,0.2); }
-  .form-input:focus { border-color: var(--green-400); }
-  .form-select { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; font-family: var(--font-body); font-size: 15px; color: var(--white); outline: none; cursor: pointer; -webkit-appearance: none; }
+  .form-label { display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75); margin-bottom: 7px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .form-input { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.10); border: 1.5px solid rgba(255,255,255,0.28); border-radius: 10px; font-family: var(--font-body); font-size: 15px; color: var(--white); outline: none; transition: border-color 0.2s, background 0.2s; -webkit-appearance: none; }
+  .form-input::placeholder { color: rgba(255,255,255,0.45); }
+  .form-input:focus { border-color: var(--green-400); background: rgba(255,255,255,0.14); }
+  .form-select { width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.10); border: 1.5px solid rgba(255,255,255,0.28); border-radius: 10px; font-family: var(--font-body); font-size: 15px; color: var(--white); outline: none; cursor: pointer; -webkit-appearance: none; }
+  .contact-choice-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+  .contact-card { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 14px; border: 1.5px solid rgba(255,255,255,0.1); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .contact-card:hover { border-color: rgba(255,255,255,0.28); background: rgba(255,255,255,0.04); }
+  .contact-card.selected { border-color: var(--green-400); background: rgba(45,189,110,0.1); }
+  .contact-card-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; }
+  .contact-card.selected .contact-card-icon { background: rgba(45,189,110,0.2); }
+  .contact-card-title { font-size: 14px; font-weight: 600; color: white; margin-bottom: 2px; }
+  .contact-card-sub { font-size: 11px; color: rgba(255,255,255,0.45); }
+  .contact-card.selected .contact-card-sub { color: rgba(255,255,255,0.68); }
+  @media (max-width: 640px) { .contact-choice-cards { grid-template-columns: 1fr; } }
   .form-select option { background: var(--night); }
   .form-select:focus { border-color: var(--green-400); }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -858,7 +868,48 @@
             <input type="text" id="fOpmerkingen" class="form-input" placeholder="Bijv. huidige situatie, specifieke wensen...">
           </div>
 
-          <div class="form-nav" style="flex-direction: column; gap: 10px;">
+          <div class="form-group" style="margin-top:8px;">
+            <label class="form-label" style="font-size:11px;margin-bottom:12px;">Hoe nemen wij het liefst contact op?</label>
+            <div class="contact-choice-cards">
+              <div class="contact-card" data-type="whatsapp" onclick="selectContact('whatsapp')">
+                <div class="contact-card-icon">
+                  <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+                    <path d="M11 2C6.03 2 2 6.03 2 11c0 1.6.42 3.1 1.15 4.4L2 20l4.73-1.12A8.96 8.96 0 0011 20c4.97 0 9-4.03 9-9s-4.03-9-9-9z" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+                    <path d="M8 8.5c.2.5.8 1.7 1.4 2.3.6.6 1.8 1.2 2.3 1.4l.8-.8c.2-.2.5-.2.7-.1.5.2 1 .5 1.5.7.2.1.3.3.3.5v1.5c0 .3-.2.5-.5.5C9.8 14.5 7.5 12.2 7.5 9.5c0-.3.2-.5.5-.5h1.5c.2 0 .4.1.5.3.2.5.5 1 .7 1.5.1.2.1.5-.1.7l-.6.5z" stroke="#2DBD6E" stroke-width="1.2" fill="none"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="contact-card-title">WhatsApp</div>
+                  <div class="contact-card-sub">Snel & persoonlijk</div>
+                </div>
+              </div>
+              <div class="contact-card" data-type="bellen" onclick="selectContact('bellen')">
+                <div class="contact-card-icon">
+                  <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+                    <path d="M6.5 3C6.5 3 5 3 4 4.5c-1 1.5-1 3.5 0 5.5s2.5 4 4.5 6 4 3.5 6 4.5 4 1 5.5 0c1.5-1 1.5-2.5 1.5-2.5l-3-3s-1 0-1.5.5L16 16c-1.5-.5-4-2.5-5.5-4S8.5 8 8 6.5l1.5-1.5C10 4.5 10 3.5 10 3.5L7 .5S6.5 3 6.5 3z" stroke="#2DBD6E" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="contact-card-title">Bellen</div>
+                  <div class="contact-card-sub">Direct antwoord</div>
+                </div>
+              </div>
+              <div class="contact-card" data-type="email" onclick="selectContact('email')">
+                <div class="contact-card-icon">
+                  <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+                    <rect x="3" y="5" width="16" height="12" rx="2" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+                    <path d="M3 8l8 5 8-5" stroke="#2DBD6E" stroke-width="1.4" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <div class="contact-card-title">E-mail</div>
+                  <div class="contact-card-sub">Overzichtelijk</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-nav" style="flex-direction: column; gap: 10px; margin-top: 20px;">
             <button class="btn-back" onclick="nextStep(2)" style="align-self: flex-start; padding: 10px 18px; font-size: 14px;">← Terug</button>
             <button class="form-submit" onclick="submitForm()">Stuur mijn offerte aanvraag →</button>
           </div>
@@ -986,6 +1037,12 @@
     return el ? (el.querySelector('.cc-title') || el.querySelector('.cc-body')).textContent.trim() : '—';
   }
 
+  function selectContact(type) {
+    document.querySelectorAll('.contact-card').forEach(c => c.classList.remove('selected'));
+    const card = document.querySelector(`.contact-card[data-type="${type}"]`);
+    if (card) card.classList.add('selected');
+  }
+
   async function submitForm() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF({ unit: 'mm', format: 'a4' });
@@ -1040,6 +1097,9 @@
     rij('Telefoonnummer', document.getElementById('fTelefoon').value || '—');
     const adres = ((document.getElementById('fPostcode').value || '') + ' ' + (document.getElementById('fHuisnummer').value || '')).trim();
     rij('Postcode & huisnummer', adres || '—');
+    const selectedContactCard = document.querySelector('.contact-card.selected');
+    const contactPrefLabel = { whatsapp: 'WhatsApp', bellen: 'Bellen', email: 'E-mail' };
+    rij('Contactvoorkeur', contactPrefLabel[selectedContactCard?.dataset.type] || '—');
     y += 4;
 
     sectie('Warmtepomp wensen');
