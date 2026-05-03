@@ -112,6 +112,28 @@
 
   .nav-cta:hover { background: var(--green-600) !important; color: var(--white) !important; }
 
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--green-800);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
@@ -835,8 +857,25 @@
     .reviews-grid { grid-template-columns: 1fr; }
     .offerte-keuze { grid-template-columns: 1fr; }
     .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
-    .nav-links { display: none; }
     .foto-strip-inner { grid-template-columns: repeat(2, 1fr); height: 200px; }
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(250,252,251,0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gray-200);
+      flex-direction: column;
+      padding: 8px 2rem 24px;
+      gap: 0;
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: 14px 0; font-size: 16px; border-bottom: 1px solid var(--gray-100); color: var(--night) !important; }
+    .nav-links li:last-child a { border-bottom: none; }
+    .nav-cta { margin-top: 8px; text-align: center; padding: 12px 24px !important; border-radius: 100px; }
   }
 </style>
 </head>
@@ -854,12 +893,15 @@
     <span class="nav-logo-text">Energ<span>x</span></span>
   </a>
   <ul class="nav-links">
-    <li><a href="#offerte">Thuisbatterij</a></li>
+    <li><a href="index.html#offerte">Thuisbatterij</a></li>
     <li><a href="energx-laadpaal.html">Laadpaal</a></li>
     <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
     <li><a href="blog.html">Blog</a></li>
-    <li><a href="#offerte" class="nav-cta">Offerte aanvragen</a></li>
+    <li><a href="index.html#offerte" class="nav-cta">Offerte aanvragen</a></li>
   </ul>
+  <button class="nav-hamburger" aria-label="Menu openen" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1207,7 +1249,7 @@
       <div class="footer-col">
         <div class="footer-col-title">Diensten</div>
         <ul>
-          <li><a href="#offerte">Thuisbatterij</a></li>
+          <li><a href="index.html#offerte">Thuisbatterij</a></li>
           <li><a href="energx-laadpaal.html">Laadpaal</a></li>
           <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
         </ul>
@@ -1216,8 +1258,8 @@
         <div class="footer-col-title">Bedrijf</div>
         <ul>
           <li><a href="#">Over ons</a></li>
-          <li><a href="#hoe-we-werken">Hoe we werken</a></li>
-          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="index.html#hoe-we-werken">Hoe we werken</a></li>
+          <li><a href="index.html#reviews">Reviews</a></li>
           <li><a href="#">Installateurs worden?</a></li>
         </ul>
       </div>
@@ -1241,8 +1283,18 @@
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
-
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function toggleMenu() {
+    document.querySelector('.nav-hamburger').classList.toggle('open');
+    document.querySelector('.nav-links').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelector('.nav-hamburger').classList.remove('open');
+      document.querySelector('.nav-links').classList.remove('open');
+    });
+  });
 </script>
 </body>
 </html>

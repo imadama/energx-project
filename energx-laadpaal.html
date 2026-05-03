@@ -102,6 +102,28 @@
   }
   .nav-cta:hover { background: var(--green-600); }
 
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--green-800);
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
   /* ── HERO ── */
   .hero {
     background: linear-gradient(160deg, var(--green-50) 0%, var(--white) 65%);
@@ -997,14 +1019,20 @@
   .fade-up.visible { opacity: 1; transform: translateY(0); }
 
   /* ── FOOTER ── */
-  footer {
-    background: var(--green-900);
-    padding: 32px 6vw;
-    text-align: center;
-    font-size: 13px;
-    color: rgba(255,255,255,0.25);
-    font-weight: 300;
-  }
+  footer { background: var(--green-900); padding: 60px 6vw 32px; color: rgba(255,255,255,0.58); }
+  .footer-inner { max-width: var(--max); margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 28px; }
+  .footer-brand { display: flex; flex-direction: column; gap: 14px; }
+  .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .footer-logo-text { font-family: var(--font-display); font-size: 20px; color: var(--white); }
+  .footer-logo-text span { color: var(--green-400); }
+  .footer-tagline { font-size: 14px; color: rgba(255,255,255,0.58); line-height: 1.6; font-weight: 300; max-width: 260px; }
+  .footer-col-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.82); margin-bottom: 14px; letter-spacing: 0.03em; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 14px; color: rgba(255,255,255,0.58); text-decoration: none; font-weight: 300; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--green-400); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 300; }
+  .footer-green { color: var(--green-500); }
 
   footer a { color: var(--green-600); text-decoration: none; }
 
@@ -1021,6 +1049,25 @@
     .step-desc { display: none; }
     .verg-grid { grid-template-columns: 1fr; }
     .verg-card.aanbevolen { margin-top: 0; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .nav-hamburger { display: flex; }
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: rgba(250,252,251,0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--gray-200);
+      flex-direction: column;
+      padding: 8px 2rem 24px;
+      gap: 0;
+      z-index: 99;
+    }
+    .nav-links.open { display: flex; }
+    .nav-links li { width: 100%; }
+    .nav-links a { display: block; padding: 14px 0; font-size: 16px; border-bottom: 1px solid var(--gray-100); color: var(--night) !important; }
+    .nav-links li:last-child a { border-bottom: none; }
+    .nav-cta { margin-top: 8px; text-align: center; padding: 12px 24px !important; border-radius: 100px; }
   }
 
   /* ══════════════════════════════════════════
@@ -1381,8 +1428,11 @@
     <li><a href="energx-laadpaal.html">Laadpaal</a></li>
     <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
     <li><a href="blog.html">Blog</a></li>
-    <li><a href="#wizard-sectie" class="nav-cta">Offerte aanvragen</a></li>
+    <li><a href="index.html#offerte" class="nav-cta">Offerte aanvragen</a></li>
   </ul>
+  <button class="nav-hamburger" aria-label="Menu openen" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
 
 <!-- HERO -->
@@ -1774,7 +1824,50 @@
 
 <!-- FOOTER -->
 <footer>
-  <p>© 2025 <a href="index.html">Energx.nl</a> — Slimme energie, lokale kracht · <a href="#">Privacybeleid</a></p>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="7" fill="#1A7A42"/>
+            <path d="M14 5L21 9.5V18.5L14 23L7 18.5V9.5L14 5Z" stroke="#2DBD6E" stroke-width="1.2" fill="none"/>
+            <circle cx="14" cy="14" r="2" fill="#2DBD6E"/>
+          </svg>
+          <span class="footer-logo-text">Energ<span>x</span></span>
+        </a>
+        <p class="footer-tagline">Slimme energie, lokale kracht. Wij verbinden je met de beste installateurs in jouw regio.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Diensten</div>
+        <ul>
+          <li><a href="index.html#offerte">Thuisbatterij</a></li>
+          <li><a href="energx-laadpaal.html">Laadpaal</a></li>
+          <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Bedrijf</div>
+        <ul>
+          <li><a href="#">Over ons</a></li>
+          <li><a href="index.html#hoe-we-werken">Hoe we werken</a></li>
+          <li><a href="index.html#reviews">Reviews</a></li>
+          <li><a href="#">Installateurs worden?</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <ul>
+          <li><a href="mailto:info@energx.nl">info@energx.nl</a></li>
+          <li><a href="#">Privacybeleid</a></li>
+          <li><a href="#">Algemene voorwaarden</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 Energx.nl — Alle rechten voorbehouden</span>
+      <span class="footer-green">Duurzaam gebouwd ♻</span>
+    </div>
+  </div>
 </footer>
 
 <script>
@@ -2038,6 +2131,17 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.12 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  function toggleMenu() {
+    document.querySelector('.nav-hamburger').classList.toggle('open');
+    document.querySelector('.nav-links').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelector('.nav-hamburger').classList.remove('open');
+      document.querySelector('.nav-links').classList.remove('open');
+    });
+  });
 </script>
 </body>
 </html>
