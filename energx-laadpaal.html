@@ -341,10 +341,10 @@
   }
 
   /* ── MERKEN ── */
-  .merken { background: var(--green-800); }
-  .merken .section-tag { color: var(--green-400); }
-  .merken .section-title { color: var(--white); }
-  .merken .section-sub { color: rgba(255,255,255,0.65); }
+  .merken { background: var(--gray-50, #F5F9F6); }
+  .merken .section-tag { color: var(--green-600); }
+  .merken .section-title { color: var(--green-900); }
+  .merken .section-sub { color: var(--gray-600); }
 
   .merken-grid {
     display: grid;
@@ -354,14 +354,15 @@
   }
 
   .merk-card {
-    background: var(--green-700);
+    background: var(--white);
     border-radius: 24px;
-    border: 1px solid rgba(255,255,255,0.1);
+    border: 1px solid var(--gray-200);
     overflow: hidden;
     transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 12px rgba(15,74,42,0.06);
   }
 
-  .merk-card:hover { transform: translateY(-4px); box-shadow: 0 24px 48px rgba(0,0,0,0.3); }
+  .merk-card:hover { transform: translateY(-4px); box-shadow: 0 20px 48px rgba(15,74,42,0.12); }
 
   .merk-foto {
     width: 100%;
@@ -383,18 +384,18 @@
   .merk-name {
     font-family: var(--font-display);
     font-size: 30px;
-    color: var(--white);
+    color: var(--green-900);
     letter-spacing: -0.5px;
   }
 
   .merk-type {
     font-size: 11px;
-    color: var(--green-400);
+    color: var(--green-600);
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    background: rgba(45,189,110,0.12);
-    border: 1px solid rgba(45,189,110,0.2);
+    background: var(--green-50);
+    border: 1px solid var(--green-100, #C2E8D3);
     padding: 4px 12px;
     border-radius: 100px;
     white-space: nowrap;
@@ -403,7 +404,7 @@
 
   .merk-desc {
     font-size: 14px;
-    color: rgba(255,255,255,0.5);
+    color: var(--gray-600);
     line-height: 1.8;
     font-weight: 300;
     margin-bottom: 24px;
@@ -412,7 +413,7 @@
   .merk-voor {
     font-size: 11px;
     font-weight: 600;
-    color: rgba(255,255,255,0.3);
+    color: var(--gray-400);
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-bottom: 12px;
@@ -425,14 +426,14 @@
     align-items: center;
     gap: 10px;
     font-size: 14px;
-    color: rgba(255,255,255,0.7);
+    color: var(--gray-600);
     font-weight: 300;
   }
 
   .spec-dot {
     width: 6px; height: 6px;
     border-radius: 50%;
-    background: var(--green-400);
+    background: var(--green-500);
     flex-shrink: 0;
   }
 
@@ -1880,8 +1881,8 @@
       </div>
 
       <div class="merk-card fade-up">
-        <div class="merk-foto" style="background: linear-gradient(135deg, #162019, #0e1a12); display:flex; align-items:center; justify-content:center;">
-          <span style="font-family: var(--font-display); font-size: 32px; color: rgba(255,255,255,0.15); letter-spacing: 2px;">Alfen</span>
+        <div class="merk-foto" style="background: linear-gradient(135deg, var(--green-50), var(--green-100, #C2E8D3)); display:flex; align-items:center; justify-content:center;">
+          <span style="font-family: var(--font-display); font-size: 32px; color: var(--green-400); letter-spacing: 2px;">Alfen</span>
         </div>
         <div class="merk-body">
           <div class="merk-header">
