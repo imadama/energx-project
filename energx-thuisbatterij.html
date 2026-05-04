@@ -1339,30 +1339,30 @@
       </div>
 
       <div class="vraag-blok">
-        <span class="vraag-label">Wat is je voornaamste doel?</span>
+        <span class="vraag-label">Wat zijn je doelen? <span class="q-hint">(meerdere keuzes mogelijk)</span></span>
         <div class="choice-cards" id="qDoel">
-          <div class="choice-card" data-value="opslaan" onclick="selectChoice(this,'qDoel',false)">
+          <div class="choice-card" data-value="opslaan" onclick="toggleDoel(this)">
             <div class="cc-icon"></div>
             <div class="cc-body">
               <div class="cc-title">Zelfopgewekte stroom opslaan</div>
               <div class="cc-sub">Maximaal profiteren van mijn zonnepanelen</div>
             </div>
           </div>
-          <div class="choice-card" data-value="besparen" onclick="selectChoice(this,'qDoel',false)">
+          <div class="choice-card" data-value="besparen" onclick="toggleDoel(this)">
             <div class="cc-icon"></div>
             <div class="cc-body">
               <div class="cc-title">Energierekening verlagen</div>
               <div class="cc-sub">Minder afhankelijk van dure netprijzen</div>
             </div>
           </div>
-          <div class="choice-card" data-value="backup" onclick="selectChoice(this,'qDoel',false)">
+          <div class="choice-card" data-value="backup" onclick="toggleDoel(this)">
             <div class="cc-icon"></div>
             <div class="cc-body">
               <div class="cc-title">Back-up stroom bij stroomuitval</div>
               <div class="cc-sub">Altijd stroom, ook als het net uitvalt</div>
             </div>
           </div>
-          <div class="choice-card" data-value="onafhankelijk" onclick="selectChoice(this,'qDoel',false)">
+          <div class="choice-card" data-value="onafhankelijk" onclick="toggleDoel(this)">
             <div class="cc-icon"></div>
             <div class="cc-body">
               <div class="cc-title">Maximale onafhankelijkheid</div>
@@ -1689,11 +1689,21 @@
     }
   }
 
+  function toggleDoel(el) {
+    el.classList.toggle('selected');
+    updateCalculator();
+  }
+
+  function getSelectedDoelen() {
+    return Array.from(document.querySelectorAll('#qDoel .choice-card.selected'))
+      .map(c => c.dataset.value);
+  }
+
   // ── BESPARINGSCALCULATOR ──
   function updateCalculator() {
     const zonnepanelen = getSelectedValue('qZonnepanelen');
     const verbruik     = getSelectedValue('qVerbruik');
-    const doel         = getSelectedValue('qDoel');
+    const doelen       = getSelectedDoelen();
 
     const card = document.getElementById('besparingCard');
     if (!zonnepanelen && !verbruik) return;
@@ -1727,7 +1737,7 @@
     const co2 = Math.round(extraKwh * 0.41);
 
     // Batterij progress (hoeveel vragen beantwoord)
-    const answered = [zonnepanelen, doel, verbruik].filter(Boolean).length;
+    const answered = [zonnepanelen, doelen.length > 0 ? 'x' : null, verbruik].filter(Boolean).length;
     const maxFill = 32; // px
     const fillW = Math.round((answered / 3) * maxFill);
     document.getElementById('batterijFill').setAttribute('width', fillW);
@@ -1794,15 +1804,15 @@
   // ── ADVIES LOGICA ──
   function showAdvies() {
     const zonnepanelen = getSelectedValue('qZonnepanelen');
-    const doel = getSelectedValue('qDoel');
+    const doelen = getSelectedDoelen();
     const verbruik = getSelectedValue('qVerbruik');
 
     // Bepaal aanbevolen product
     let aanbevolen = 'smile5';
-    if (doel === 'backup' || doel === 'onafhankelijk' || verbruik === 'groot') {
+    if (doelen.includes('backup') || doelen.includes('onafhankelijk') || verbruik === 'groot') {
       aanbevolen = 'b3plus';
     }
-    if (zonnepanelen === 'ja' && doel === 'opslaan' && verbruik !== 'groot') {
+    if (zonnepanelen === 'ja' && doelen.includes('opslaan') && !doelen.includes('backup') && !doelen.includes('onafhankelijk') && verbruik !== 'groot') {
       aanbevolen = 'smile5';
     }
 
@@ -1891,7 +1901,7 @@
     const details = {
       product: gekozenProduct || 'smile5',
       zonnepanelen: getSelectedValue('qZonnepanelen'),
-      doel: getSelectedValue('qDoel'),
+      doelen: getSelectedDoelen(),
       verbruik: getSelectedValue('qVerbruik'),
       locatie,
     };
