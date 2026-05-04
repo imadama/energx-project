@@ -1014,6 +1014,83 @@
     .footer-top { grid-template-columns: 1fr; }
     .merk-specs-grid { grid-template-columns: 1fr; }
     .hero { padding: 100px 5vw 60px; }
+    .besparing-grid { grid-template-columns: 1fr; gap: 12px; }
+    .besparing-item { border: none !important; padding: 0 !important; }
+  }
+
+  /* ── BESPARINGSCALCULATOR ── */
+  .besparing-card {
+    display: none;
+    background: rgba(45,189,110,0.07);
+    border: 1px solid rgba(45,189,110,0.22);
+    border-radius: 20px;
+    padding: 24px 28px;
+    margin: 28px 0 8px;
+    animation: fadeUp 0.4s ease;
+  }
+  .besparing-card.visible { display: block; }
+
+  .batterij-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .batterij-tekst {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    font-weight: 300;
+    line-height: 1.4;
+  }
+  .batterij-tekst strong { color: var(--green-400); font-weight: 500; }
+
+  .besparing-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--green-400);
+    margin-bottom: 16px;
+  }
+
+  .besparing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .besparing-item {
+    text-align: center;
+    padding: 0 16px;
+  }
+
+  .besparing-item:nth-child(2) {
+    border-left: 1px solid rgba(255,255,255,0.08);
+    border-right: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .besparing-value {
+    font-family: var(--font-display);
+    font-size: 30px;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 5px;
+    letter-spacing: -0.5px;
+  }
+
+  .besparing-unit {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    font-weight: 300;
+  }
+
+  .besparing-note {
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    text-align: center;
+    margin-top: 16px;
+    font-weight: 300;
   }
 </style>
 </head>
@@ -1322,6 +1399,34 @@
         </div>
       </div>
 
+      <!-- BESPARINGSCALCULATOR -->
+      <div class="besparing-card" id="besparingCard">
+        <div class="batterij-wrap">
+          <svg width="44" height="22" viewBox="0 0 44 22" fill="none" style="flex-shrink:0">
+            <rect x="1" y="1" width="37" height="20" rx="4" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
+            <rect x="38" y="7" width="5" height="8" rx="2" fill="rgba(255,255,255,0.15)"/>
+            <rect id="batterijFill" x="2.5" y="2.5" width="0" height="17" rx="3" fill="#2DBD6E" style="transition:width 0.7s cubic-bezier(0.34,1.56,0.64,1)"/>
+          </svg>
+          <span class="batterij-tekst" id="batterijTekst">Beantwoord de vragen voor jouw persoonlijke berekening</span>
+        </div>
+        <div class="besparing-label">Jouw geschatte besparing</div>
+        <div class="besparing-grid">
+          <div class="besparing-item">
+            <div class="besparing-value">€ <span id="calcBesparing">—</span></div>
+            <div class="besparing-unit">per jaar</div>
+          </div>
+          <div class="besparing-item">
+            <div class="besparing-value"><span id="calcTerugverdien">—</span> <span style="font-size:18px">jr</span></div>
+            <div class="besparing-unit">terugverdientijd</div>
+          </div>
+          <div class="besparing-item">
+            <div class="besparing-value"><span id="calcCO2">—</span> <span style="font-size:18px">kg</span></div>
+            <div class="besparing-unit">CO₂ besparing/jaar</div>
+          </div>
+        </div>
+        <p class="besparing-note">Indicatieve schatting op basis van gemiddelde NL stroomprijs (€0,32/kWh) en teruglevertarief (€0,05/kWh)</p>
+      </div>
+
       <button class="btn-wiz-next" onclick="showAdvies()">Bekijk jouw advies →</button>
     </div>
 
@@ -1578,9 +1683,88 @@
   function selectChoice(el, groupId, autoNext) {
     document.querySelectorAll(`#${groupId} .choice-card`).forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
+    updateCalculator();
     if (autoNext) {
       setTimeout(() => showAdvies(), 300);
     }
+  }
+
+  // ── BESPARINGSCALCULATOR ──
+  function updateCalculator() {
+    const zonnepanelen = getSelectedValue('qZonnepanelen');
+    const verbruik     = getSelectedValue('qVerbruik');
+    const doel         = getSelectedValue('qDoel');
+
+    const card = document.getElementById('besparingCard');
+    if (!zonnepanelen && !verbruik) return;
+    card.classList.add('visible');
+
+    // Verbruik in kWh
+    const kwhMap = { klein: 3000, gemiddeld: 4500, groot: 6500 };
+    const kwh = kwhMap[verbruik] || 4500;
+
+    // Besparing berekening
+    let besparing = 0;
+    let investering = 5500;
+
+    if (zonnepanelen === 'ja') {
+      const opwek = kwh * 0.7;
+      const extraZelfverbruik = opwek * 0.40;
+      besparing = Math.round(extraZelfverbruik * 0.27);
+      investering = verbruik === 'groot' ? 6800 : 5500;
+    } else if (zonnepanelen === 'gepland') {
+      const opwek = kwh * 0.60;
+      besparing = Math.round(opwek * 0.38 * 0.27);
+      investering = 5500;
+    } else {
+      // Geen panelen — dal/piek tarief arbitrage
+      besparing = Math.round(kwh * 0.12 * 0.10);
+      investering = 4800;
+    }
+
+    const terugverdientijd = besparing > 0 ? (investering / besparing).toFixed(1) : null;
+    const extraKwh = zonnepanelen !== 'nee' ? kwh * 0.7 * 0.40 : kwh * 0.12;
+    const co2 = Math.round(extraKwh * 0.41);
+
+    // Batterij progress (hoeveel vragen beantwoord)
+    const answered = [zonnepanelen, doel, verbruik].filter(Boolean).length;
+    const maxFill = 32; // px
+    const fillW = Math.round((answered / 3) * maxFill);
+    document.getElementById('batterijFill').setAttribute('width', fillW);
+
+    const teksten = [
+      'Beantwoord de vragen voor jouw persoonlijke berekening',
+      'Goed bezig! Nog 2 vragen voor een compleet beeld.',
+      'Bijna klaar! Nog 1 vraag.',
+      'Berekening compleet — dit is jouw persoonlijk overzicht.',
+    ];
+    const tekst = teksten[answered] || teksten[0];
+    document.getElementById('batterijTekst').innerHTML =
+      answered === 3 ? `<strong>${tekst}</strong>` : tekst;
+
+    // Animeer cijfers
+    if (besparing > 0) {
+      countUp('calcBesparing', besparing, 0);
+      if (terugverdientijd) countUp('calcTerugverdien', parseFloat(terugverdientijd), 1);
+      countUp('calcCO2', co2, 0);
+    }
+  }
+
+  function countUp(id, target, decimals) {
+    const el = document.getElementById(id);
+    const from = parseFloat(el.textContent.replace(/\./g, '').replace(',', '.')) || 0;
+    const duration = 700;
+    const t0 = performance.now();
+    function tick(now) {
+      const p = Math.min((now - t0) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      const val = from + (target - from) * eased;
+      el.textContent = decimals
+        ? val.toFixed(decimals)
+        : Math.round(val).toLocaleString('nl-NL');
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
   }
 
   function selectSituatie(el, type) {
