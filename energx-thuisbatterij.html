@@ -1399,6 +1399,40 @@
         </div>
       </div>
 
+      <div class="vraag-blok">
+        <span class="vraag-label">Hoeveel opslagcapaciteit wil je? <span class="q-hint">(weet je het niet? kies "Adviseer mij")</span></span>
+        <div class="choice-cards" id="qCapaciteit">
+          <div class="choice-card" data-value="klein" data-kwh="5.7" onclick="selectChoice(this,'qCapaciteit',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Klein — 5,7 kWh</div>
+              <div class="cc-sub">Dekt ~1 avond stroomverbruik · ideaal instapmodel</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="gemiddeld" data-kwh="11.4" onclick="selectChoice(this,'qCapaciteit',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Gemiddeld — 11,4 kWh</div>
+              <div class="cc-sub">Dekt ~2 avonden · geschikt voor gezin met zonnepanelen</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="groot" data-kwh="17.1" onclick="selectChoice(this,'qCapaciteit',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Groot — 17,1 kWh</div>
+              <div class="cc-sub">Maximale onafhankelijkheid · 3+ avonden autonomie</div>
+            </div>
+          </div>
+          <div class="choice-card" data-value="weet-niet" data-kwh="0" onclick="selectChoice(this,'qCapaciteit',false)">
+            <div class="cc-icon"></div>
+            <div class="cc-body">
+              <div class="cc-title">Adviseer mij</div>
+              <div class="cc-sub">Wij bepalen de beste capaciteit op basis van jouw situatie</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- BESPARINGSCALCULATOR -->
       <div class="besparing-card" id="besparingCard">
         <div class="batterij-wrap">
@@ -1704,6 +1738,7 @@
     const zonnepanelen = getSelectedValue('qZonnepanelen');
     const verbruik     = getSelectedValue('qVerbruik');
     const doelen       = getSelectedDoelen();
+    const capaciteit   = getSelectedValue('qCapaciteit');
 
     const card = document.getElementById('besparingCard');
     if (!zonnepanelen && !verbruik) return;
@@ -1713,44 +1748,51 @@
     const kwhMap = { klein: 3000, gemiddeld: 4500, groot: 6500 };
     const kwh = kwhMap[verbruik] || 4500;
 
+    // Capaciteit in kWh (voor schaling besparing)
+    const capKwh = { klein: 5.7, gemiddeld: 11.4, groot: 17.1, 'weet-niet': null }[capaciteit] || null;
+    // Schaalfactor: meer capaciteit = meer nuttig zelfverbruik (tot een max)
+    const capFactor = capKwh ? Math.min(capKwh / 5.7, 3) * 0.75 + 0.25 : 1;
+
     // Besparing berekening
     let besparing = 0;
     let investering = 5500;
 
     if (zonnepanelen === 'ja') {
       const opwek = kwh * 0.7;
-      const extraZelfverbruik = opwek * 0.40;
+      const extraZelfverbruik = Math.min(opwek * 0.40 * capFactor, opwek * 0.85);
       besparing = Math.round(extraZelfverbruik * 0.27);
-      investering = verbruik === 'groot' ? 6800 : 5500;
+      investering = capaciteit === 'groot' ? 9500 : capaciteit === 'gemiddeld' ? 7200 : 5500;
     } else if (zonnepanelen === 'gepland') {
       const opwek = kwh * 0.60;
-      besparing = Math.round(opwek * 0.38 * 0.27);
-      investering = 5500;
+      besparing = Math.round(opwek * 0.38 * capFactor * 0.27);
+      investering = capaciteit === 'groot' ? 9500 : capaciteit === 'gemiddeld' ? 7200 : 5500;
     } else {
       // Geen panelen — dal/piek tarief arbitrage
-      besparing = Math.round(kwh * 0.12 * 0.10);
-      investering = 4800;
+      besparing = Math.round(kwh * 0.12 * 0.10 * Math.min(capFactor, 1.5));
+      investering = capaciteit === 'groot' ? 8800 : capaciteit === 'gemiddeld' ? 6500 : 4800;
     }
 
     const terugverdientijd = besparing > 0 ? (investering / besparing).toFixed(1) : null;
     const extraKwh = zonnepanelen !== 'nee' ? kwh * 0.7 * 0.40 : kwh * 0.12;
     const co2 = Math.round(extraKwh * 0.41);
 
-    // Batterij progress (hoeveel vragen beantwoord)
-    const answered = [zonnepanelen, doelen.length > 0 ? 'x' : null, verbruik].filter(Boolean).length;
-    const maxFill = 32; // px
-    const fillW = Math.round((answered / 3) * maxFill);
+    // Batterij progress (hoeveel vragen beantwoord van de 4)
+    const answered = [zonnepanelen, doelen.length > 0 ? 'x' : null, verbruik, capaciteit].filter(Boolean).length;
+    const maxFill = 32;
+    const fillW = Math.round((answered / 4) * maxFill);
     document.getElementById('batterijFill').setAttribute('width', fillW);
 
-    const teksten = [
-      'Beantwoord de vragen voor jouw persoonlijke berekening',
-      'Goed bezig! Nog 2 vragen voor een compleet beeld.',
-      'Bijna klaar! Nog 1 vraag.',
-      'Berekening compleet — dit is jouw persoonlijk overzicht.',
-    ];
+    const resterend = 4 - answered;
+    const teksten = {
+      0: 'Beantwoord de vragen voor jouw persoonlijke berekening',
+      1: `Goed bezig! Nog ${resterend} vragen voor een compleet beeld.`,
+      2: `Goed bezig! Nog ${resterend} vragen voor een compleet beeld.`,
+      3: 'Bijna klaar! Nog 1 vraag.',
+      4: 'Berekening compleet — dit is jouw persoonlijk overzicht.',
+    };
     const tekst = teksten[answered] || teksten[0];
     document.getElementById('batterijTekst').innerHTML =
-      answered === 3 ? `<strong>${tekst}</strong>` : tekst;
+      answered === 4 ? `<strong>${tekst}</strong>` : tekst;
 
     // Animeer cijfers
     if (besparing > 0) {
@@ -1806,13 +1848,14 @@
     const zonnepanelen = getSelectedValue('qZonnepanelen');
     const doelen = getSelectedDoelen();
     const verbruik = getSelectedValue('qVerbruik');
+    const capaciteit = getSelectedValue('qCapaciteit');
 
     // Bepaal aanbevolen product
     let aanbevolen = 'smile5';
-    if (doelen.includes('backup') || doelen.includes('onafhankelijk') || verbruik === 'groot') {
+    if (doelen.includes('backup') || doelen.includes('onafhankelijk') || verbruik === 'groot' || capaciteit === 'gemiddeld' || capaciteit === 'groot') {
       aanbevolen = 'b3plus';
     }
-    if (zonnepanelen === 'ja' && doelen.includes('opslaan') && !doelen.includes('backup') && !doelen.includes('onafhankelijk') && verbruik !== 'groot') {
+    if (zonnepanelen === 'ja' && doelen.includes('opslaan') && !doelen.includes('backup') && !doelen.includes('onafhankelijk') && verbruik !== 'groot' && capaciteit === 'klein') {
       aanbevolen = 'smile5';
     }
 
@@ -1902,6 +1945,7 @@
       product: gekozenProduct || 'smile5',
       zonnepanelen: getSelectedValue('qZonnepanelen'),
       doelen: getSelectedDoelen(),
+      gewenste_capaciteit: getSelectedValue('qCapaciteit'),
       verbruik: getSelectedValue('qVerbruik'),
       locatie,
     };
