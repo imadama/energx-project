@@ -1092,6 +1092,85 @@
     margin-top: 16px;
     font-weight: 300;
   }
+
+  /* ── CAPACITEIT KAARTEN ── */
+  .cap-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .cap-card {
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.09);
+    border-radius: 14px;
+    padding: 16px 12px 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    user-select: none;
+  }
+
+  .cap-card:hover {
+    border-color: rgba(45,189,110,0.35);
+    background: rgba(45,189,110,0.05);
+    transform: translateY(-2px);
+  }
+
+  .cap-card.selected {
+    border-color: var(--green-400);
+    background: rgba(45,189,110,0.12);
+  }
+
+  .cap-visual {
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 90px;
+  }
+
+  .cap-svg {
+    width: 60px;
+    height: auto;
+  }
+
+  .cap-kwh {
+    font-family: var(--font-display);
+    font-size: 16px;
+    color: var(--white);
+    text-align: center;
+    line-height: 1.1;
+  }
+
+  .cap-modules {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--green-400);
+  }
+
+  .cap-card.selected .cap-modules { color: var(--green-300); }
+
+  .cap-desc {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    font-weight: 300;
+    line-height: 1.4;
+  }
+
+  .cap-card.selected .cap-desc { color: rgba(255,255,255,0.55); }
+
+  @media (max-width: 640px) {
+    .cap-cards { grid-template-columns: repeat(2, 1fr); }
+    .cap-visual { min-height: 70px; }
+  }
 </style>
 </head>
 <body>
@@ -1401,35 +1480,139 @@
 
       <div class="vraag-blok">
         <span class="vraag-label">Hoeveel opslagcapaciteit wil je? <span class="q-hint">(weet je het niet? kies "Adviseer mij")</span></span>
-        <div class="choice-cards" id="qCapaciteit">
-          <div class="choice-card" data-value="klein" data-kwh="5.7" onclick="selectChoice(this,'qCapaciteit',false)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Klein — 5,7 kWh</div>
-              <div class="cc-sub">Dekt ~1 avond stroomverbruik · ideaal instapmodel</div>
+        <div class="cap-cards" id="qCapaciteit">
+
+          <!-- 1 module -->
+          <div class="cap-card" data-value="klein" onclick="selectCapaciteit(this,'klein')">
+            <div class="cap-visual">
+              <svg viewBox="0 0 80 120" fill="none" class="cap-svg">
+                <!-- Module 1 -->
+                <rect x="8" y="20" width="64" height="92" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+                <rect x="8" y="20" width="64" height="14" rx="8" fill="rgba(45,189,110,0.15)"/>
+                <rect x="8" y="28" width="64" height="6" fill="rgba(45,189,110,0.15)"/>
+                <text x="40" y="31" font-family="sans-serif" font-size="6" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
+                <rect x="16" y="44" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="52" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="60" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="68" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="76" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="84" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <circle cx="40" cy="103" r="4" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
+                <circle cx="40" cy="103" r="1.5" fill="#2DBD6E"/>
+                <!-- Connectors boven -->
+                <rect x="26" y="14" width="8" height="8" rx="2" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+                <rect x="46" y="14" width="8" height="8" rx="2" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
+              </svg>
             </div>
+            <div class="cap-kwh">5,7 kWh</div>
+            <div class="cap-modules">1 module</div>
+            <div class="cap-desc">~1 avond stroomverbruik</div>
           </div>
-          <div class="choice-card" data-value="gemiddeld" data-kwh="11.4" onclick="selectChoice(this,'qCapaciteit',false)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Gemiddeld — 11,4 kWh</div>
-              <div class="cc-sub">Dekt ~2 avonden · geschikt voor gezin met zonnepanelen</div>
+
+          <!-- 2 modules -->
+          <div class="cap-card" data-value="gemiddeld" onclick="selectCapaciteit(this,'gemiddeld')">
+            <div class="cap-visual">
+              <svg viewBox="0 0 80 180" fill="none" class="cap-svg">
+                <!-- Module 2 (bovenste) -->
+                <rect x="8" y="2" width="64" height="84" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+                <rect x="8" y="2" width="64" height="14" rx="8" fill="rgba(45,189,110,0.15)"/>
+                <rect x="8" y="10" width="64" height="6" fill="rgba(45,189,110,0.15)"/>
+                <text x="40" y="13" font-family="sans-serif" font-size="6" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
+                <rect x="16" y="26" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="34" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="42" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="50" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="58" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <circle cx="40" cy="76" r="4" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
+                <circle cx="40" cy="76" r="1.5" fill="#2DBD6E"/>
+                <!-- Koppeling -->
+                <rect x="26" y="86" width="8" height="6" rx="2" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
+                <rect x="46" y="86" width="8" height="6" rx="2" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
+                <!-- Module 1 (onderste) -->
+                <rect x="8" y="92" width="64" height="84" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+                <rect x="8" y="92" width="64" height="14" rx="8" fill="rgba(45,189,110,0.15)"/>
+                <rect x="8" y="100" width="64" height="6" fill="rgba(45,189,110,0.15)"/>
+                <text x="40" y="103" font-family="sans-serif" font-size="6" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
+                <rect x="16" y="116" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="124" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="132" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="140" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="148" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
+                <circle cx="40" cy="166" r="4" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
+                <circle cx="40" cy="166" r="1.5" fill="#2DBD6E"/>
+              </svg>
             </div>
+            <div class="cap-kwh">11,4 kWh</div>
+            <div class="cap-modules">2 modules</div>
+            <div class="cap-desc">~2 avonden autonomie</div>
           </div>
-          <div class="choice-card" data-value="groot" data-kwh="17.1" onclick="selectChoice(this,'qCapaciteit',false)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Groot — 17,1 kWh</div>
-              <div class="cc-sub">Maximale onafhankelijkheid · 3+ avonden autonomie</div>
+
+          <!-- 3 modules -->
+          <div class="cap-card" data-value="groot" onclick="selectCapaciteit(this,'groot')">
+            <div class="cap-visual">
+              <svg viewBox="0 0 80 240" fill="none" class="cap-svg">
+                <!-- Module 3 -->
+                <rect x="8" y="2" width="64" height="72" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+                <rect x="8" y="2" width="64" height="12" rx="8" fill="rgba(45,189,110,0.15)"/>
+                <rect x="8" y="9" width="64" height="5" fill="rgba(45,189,110,0.15)"/>
+                <text x="40" y="12" font-family="sans-serif" font-size="5.5" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
+                <rect x="16" y="24" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="31" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="38" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="45" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="52" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <circle cx="40" cy="65" r="3.5" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
+                <circle cx="40" cy="65" r="1.5" fill="#2DBD6E"/>
+                <rect x="26" y="74" width="7" height="5" rx="1.5" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
+                <rect x="47" y="74" width="7" height="5" rx="1.5" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
+                <!-- Module 2 -->
+                <rect x="8" y="79" width="64" height="72" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+                <rect x="8" y="79" width="64" height="12" rx="8" fill="rgba(45,189,110,0.15)"/>
+                <rect x="8" y="86" width="64" height="5" fill="rgba(45,189,110,0.15)"/>
+                <text x="40" y="89" font-family="sans-serif" font-size="5.5" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
+                <rect x="16" y="101" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="108" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="115" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="122" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="129" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <circle cx="40" cy="142" r="3.5" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
+                <circle cx="40" cy="142" r="1.5" fill="#2DBD6E"/>
+                <rect x="26" y="151" width="7" height="5" rx="1.5" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
+                <rect x="47" y="151" width="7" height="5" rx="1.5" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
+                <!-- Module 1 -->
+                <rect x="8" y="156" width="64" height="72" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+                <rect x="8" y="156" width="64" height="12" rx="8" fill="rgba(45,189,110,0.15)"/>
+                <rect x="8" y="163" width="64" height="5" fill="rgba(45,189,110,0.15)"/>
+                <text x="40" y="166" font-family="sans-serif" font-size="5.5" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
+                <rect x="16" y="178" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="185" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="192" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="199" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <rect x="16" y="206" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
+                <circle cx="40" cy="219" r="3.5" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
+                <circle cx="40" cy="219" r="1.5" fill="#2DBD6E"/>
+              </svg>
             </div>
+            <div class="cap-kwh">17,1 kWh</div>
+            <div class="cap-modules">3 modules</div>
+            <div class="cap-desc">3+ avonden autonomie</div>
           </div>
-          <div class="choice-card" data-value="weet-niet" data-kwh="0" onclick="selectChoice(this,'qCapaciteit',false)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Adviseer mij</div>
-              <div class="cc-sub">Wij bepalen de beste capaciteit op basis van jouw situatie</div>
+
+          <!-- Adviseer mij -->
+          <div class="cap-card" data-value="weet-niet" onclick="selectCapaciteit(this,'weet-niet')">
+            <div class="cap-visual">
+              <svg viewBox="0 0 80 120" fill="none" class="cap-svg">
+                <rect x="12" y="20" width="56" height="80" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <text x="40" y="58" font-family="sans-serif" font-size="26" fill="rgba(255,255,255,0.15)" text-anchor="middle">?</text>
+                <text x="40" y="78" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.25)" text-anchor="middle" font-weight="500">ADVISEER</text>
+                <text x="40" y="88" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.25)" text-anchor="middle" font-weight="500">MIJ</text>
+              </svg>
             </div>
+            <div class="cap-kwh" style="color:rgba(255,255,255,0.5)">Weet ik niet</div>
+            <div class="cap-modules" style="color:rgba(255,255,255,0.3)">Jij adviseert</div>
+            <div class="cap-desc">Wij bepalen de beste keuze</div>
           </div>
+
         </div>
       </div>
 
@@ -1710,7 +1893,8 @@
   let gekozenProduct = null; // 'smile5' | 'b3plus'
 
   function getSelectedValue(groupId) {
-    const selected = document.querySelector(`#${groupId} .choice-card.selected`);
+    const selected = document.querySelector(`#${groupId} .choice-card.selected`)
+      || document.querySelector(`#${groupId} .cap-card.selected`);
     return selected ? selected.dataset.value : null;
   }
 
@@ -1731,6 +1915,12 @@
   function getSelectedDoelen() {
     return Array.from(document.querySelectorAll('#qDoel .choice-card.selected'))
       .map(c => c.dataset.value);
+  }
+
+  function selectCapaciteit(el) {
+    document.querySelectorAll('#qCapaciteit .cap-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    updateCalculator();
   }
 
   // ── BESPARINGSCALCULATOR ──
