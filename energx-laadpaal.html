@@ -1258,53 +1258,72 @@
   .wizard-block--comparison .verg-grid { grid-template-columns: 1fr 1.2fr 1fr; }
 
   /* Situatie-kaarten stap 2 */
-  #wizardStep2 .choice-cards {
-    flex-direction: column;
+  /* Situatie visuele kaarten */
+  .sit-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
-    display: flex;
   }
-  #wizardStep2 .choice-card {
-    min-height: 76px;
-    padding: 18px 22px;
+
+  .sit-card {
+    background: rgba(255,255,255,0.04);
+    border: 1.5px solid rgba(255,255,255,0.09);
     border-radius: 14px;
-    background: rgba(255,255,255,0.03);
-    border: 1.5px solid rgba(255,255,255,0.08);
-    font-size: 15px;
-    color: rgba(255,255,255,0.6);
+    padding: 14px 10px 12px;
     cursor: pointer;
-    transition: all 0.18s;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 8px;
     user-select: none;
   }
-  #wizardStep2 .choice-card:hover {
-    border-color: rgba(45,189,110,0.4);
-    background: rgba(45,189,110,0.06);
-    color: var(--white);
+
+  .sit-card:hover {
+    border-color: rgba(45,189,110,0.35);
+    background: rgba(45,189,110,0.05);
+    transform: translateY(-2px);
   }
-  #wizardStep2 .choice-card.selected {
+
+  .sit-card.selected {
     border-color: var(--green-400);
-    background: rgba(45,189,110,0.13);
+    background: rgba(45,189,110,0.12);
+  }
+
+  .sit-visual {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sit-svg {
+    width: 100%;
+    max-width: 120px;
+    height: auto;
+  }
+
+  .sit-title {
+    font-size: 13px;
+    font-weight: 600;
     color: var(--white);
+    text-align: center;
+    line-height: 1.3;
   }
-  #wizardStep2 .cc-icon {
-    width: 18px; height: 18px;
-    border-radius: 50%;
-    border: 1.5px solid rgba(255,255,255,0.2);
-    flex-shrink: 0;
-    transition: all 0.18s;
+
+  .sit-desc {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    font-weight: 300;
+    line-height: 1.4;
   }
-  #wizardStep2 .choice-card.selected .cc-icon {
-    background: var(--green-400);
-    border-color: var(--green-400);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath d='M2 5l2.5 2.5L8 3' stroke='%23090F0C' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
+
+  .sit-card.selected .sit-desc { color: rgba(255,255,255,0.55); }
+
+  @media (max-width: 600px) {
+    .sit-cards { grid-template-columns: 1fr; }
+    .sit-svg { max-width: 160px; }
   }
-  #wizardStep2 .cc-body { flex: 1; }
-  #wizardStep2 .cc-title { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
-  #wizardStep2 .cc-desc { font-size: 13px; color: rgba(255,255,255,0.38); font-weight: 300; }
 
   /* Wizard navigatie */
   .wizard-nav {
@@ -1586,28 +1605,108 @@
       <h2 class="wizard-heading">Hoe ziet jouw situatie eruit?</h2>
       <p class="wizard-subhead">Dit bepaalt de installatiekosten. Kies de situatie die het best bij jou past.</p>
 
-      <div class="choice-cards" id="qSituatie">
-        <div class="choice-card" data-value="direct" onclick="selectSituatie(this, 'direct')">
-          <div class="cc-icon"></div>
-          <div class="cc-body">
-            <div class="cc-title">Direct achter de meterkast</div>
-            <div class="cc-desc">Laadpaal komt vlak naast de meterkast — geen lange kabelroute nodig</div>
+      <div class="sit-cards" id="qSituatie">
+
+        <!-- Direct achter meterkast -->
+        <div class="sit-card" data-value="direct" onclick="selectSituatie(this, 'direct')">
+          <div class="sit-visual">
+            <svg viewBox="0 0 110 76" fill="none" class="sit-svg">
+              <!-- Ground -->
+              <rect x="0" y="57" width="110" height="19" fill="rgba(255,255,255,0.025)"/>
+              <line x1="0" y1="57" x2="110" y2="57" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <!-- House (no crawl space) -->
+              <rect x="5" y="10" width="38" height="47" rx="3" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"/>
+              <!-- Meterkast on interior right side -->
+              <rect x="30" y="18" width="11" height="20" rx="2" fill="rgba(45,189,110,0.12)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
+              <line x1="33" y1="22" x2="38" y2="22" stroke="#2DBD6E" stroke-width="0.9"/>
+              <line x1="33" y1="25" x2="38" y2="25" stroke="#2DBD6E" stroke-width="0.9"/>
+              <line x1="33" y1="28" x2="38" y2="28" stroke="#2DBD6E" stroke-width="0.9"/>
+              <line x1="33" y1="31" x2="38" y2="31" stroke="#2DBD6E" stroke-width="0.9"/>
+              <!-- Short cable (~1m) direct through wall -->
+              <line x1="43" y1="28" x2="60" y2="28" stroke="#2DBD6E" stroke-width="2" stroke-dasharray="3.5 2.5" stroke-linecap="round"/>
+              <circle cx="43" cy="28" r="2" fill="#2DBD6E"/>
+              <circle cx="60" cy="28" r="2" fill="#2DBD6E"/>
+              <text x="52" y="24" font-size="5" fill="rgba(45,189,110,0.7)" text-anchor="middle" font-weight="600">~1m</text>
+              <!-- Charger directly next to house -->
+              <rect x="60" y="12" width="12" height="45" rx="3" fill="rgba(45,189,110,0.15)" stroke="#2DBD6E" stroke-width="1.5"/>
+              <rect x="62" y="17" width="8" height="7" rx="1.5" fill="rgba(45,189,110,0.4)"/>
+              <path d="M65.5 28L62.5 34H66.5L63.5 40" stroke="#2DBD6E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
+          <div class="sit-title">Direct achter de meterkast</div>
+          <div class="sit-desc">Laadpaal vlak naast de meterkast, geen lange kabelroute</div>
         </div>
-        <div class="choice-card" data-value="kruip-gevel" onclick="selectSituatie(this, 'kruip-gevel')">
-          <div class="cc-icon"></div>
-          <div class="cc-body">
-            <div class="cc-title">Kruipruimte & direct tegen de gevel</div>
-            <div class="cc-desc">Kabel loopt via de kruipruimte naar de buitenmuur</div>
+
+        <!-- Kruipruimte + gevel -->
+        <div class="sit-card" data-value="kruip-gevel" onclick="selectSituatie(this, 'kruip-gevel')">
+          <div class="sit-visual">
+            <svg viewBox="0 0 110 76" fill="none" class="sit-svg">
+              <!-- Ground -->
+              <rect x="0" y="57" width="110" height="19" fill="rgba(255,255,255,0.025)"/>
+              <line x1="0" y1="57" x2="110" y2="57" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <!-- Crawl space (below floor, above ground) -->
+              <rect x="5" y="46" width="38" height="11" fill="rgba(45,189,110,0.04)" stroke="rgba(45,189,110,0.18)" stroke-width="1" stroke-dasharray="3 2"/>
+              <text x="24" y="53.5" font-size="4.5" fill="rgba(45,189,110,0.45)" text-anchor="middle">kruipruimte</text>
+              <!-- House living area -->
+              <rect x="5" y="8" width="38" height="38" rx="3" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"/>
+              <!-- Meterkast -->
+              <rect x="30" y="14" width="11" height="20" rx="2" fill="rgba(45,189,110,0.12)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
+              <line x1="33" y1="18" x2="38" y2="18" stroke="#2DBD6E" stroke-width="0.9"/>
+              <line x1="33" y1="21" x2="38" y2="21" stroke="#2DBD6E" stroke-width="0.9"/>
+              <line x1="33" y1="24" x2="38" y2="24" stroke="#2DBD6E" stroke-width="0.9"/>
+              <line x1="33" y1="27" x2="38" y2="27" stroke="#2DBD6E" stroke-width="0.9"/>
+              <!-- Cable: down to crawl space, through, up gevel -->
+              <polyline points="36,24 36,50 43,50 43,16" stroke="#2DBD6E" stroke-width="1.8" stroke-dasharray="3 2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              <circle cx="36" cy="24" r="1.8" fill="#2DBD6E"/>
+              <circle cx="43" cy="16" r="1.8" fill="#2DBD6E"/>
+              <!-- Charger directly against gevel -->
+              <rect x="43" y="8" width="12" height="49" rx="3" fill="rgba(45,189,110,0.15)" stroke="#2DBD6E" stroke-width="1.5"/>
+              <rect x="45" y="13" width="8" height="7" rx="1.5" fill="rgba(45,189,110,0.4)"/>
+              <path d="M50 26L47 32H51L48 38" stroke="#2DBD6E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
+          <div class="sit-title">Kruipruimte & direct tegen de gevel</div>
+          <div class="sit-desc">Kabel via kruipruimte naar de buitenmuur</div>
         </div>
-        <div class="choice-card" data-value="kruip-graaf" onclick="selectSituatie(this, 'kruip-graaf')">
-          <div class="cc-icon"></div>
-          <div class="cc-body">
-            <div class="cc-title">Kruipruimte met graaf- en straatwerk</div>
-            <div class="cc-desc">Kabel moet worden ingegraven naar de laadpaal op de oprit of parkeerplaats</div>
+
+        <!-- Kruipruimte + graafwerk -->
+        <div class="sit-card" data-value="kruip-graaf" onclick="selectSituatie(this, 'kruip-graaf')">
+          <div class="sit-visual">
+            <svg viewBox="0 0 110 76" fill="none" class="sit-svg">
+              <!-- Ground -->
+              <rect x="0" y="57" width="110" height="19" fill="rgba(255,255,255,0.025)"/>
+              <line x1="0" y1="57" x2="110" y2="57" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+              <!-- Crawl space -->
+              <rect x="5" y="46" width="33" height="11" fill="rgba(45,189,110,0.04)" stroke="rgba(45,189,110,0.18)" stroke-width="1" stroke-dasharray="3 2"/>
+              <text x="21" y="53.5" font-size="4.5" fill="rgba(45,189,110,0.45)" text-anchor="middle">kruipruimte</text>
+              <!-- House living area -->
+              <rect x="5" y="8" width="33" height="38" rx="3" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.14)" stroke-width="1.5"/>
+              <!-- Meterkast -->
+              <rect x="24" y="14" width="11" height="20" rx="2" fill="rgba(45,189,110,0.12)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
+              <line x1="27" y1="18" x2="32" y2="18" stroke="#2DBD6E" stroke-width="0.9"/>
+              <line x1="27" y1="21" x2="32" y2="21" stroke="#2DBD6E" stroke-width="0.9"/>
+              <line x1="27" y1="24" x2="32" y2="24" stroke="#2DBD6E" stroke-width="0.9"/>
+              <line x1="27" y1="27" x2="32" y2="27" stroke="#2DBD6E" stroke-width="0.9"/>
+              <!-- Cable: down to crawl, exit underground, far to charger -->
+              <line x1="30" y1="24" x2="30" y2="50" stroke="#2DBD6E" stroke-width="1.8" stroke-dasharray="3 2" stroke-linecap="round"/>
+              <!-- Underground cable (below ground) -->
+              <line x1="30" y1="65" x2="90" y2="65" stroke="#2DBD6E" stroke-width="1.8" stroke-dasharray="3 2" stroke-linecap="round"/>
+              <line x1="30" y1="50" x2="30" y2="65" stroke="#2DBD6E" stroke-width="1.8" stroke-dasharray="3 2" stroke-linecap="round"/>
+              <line x1="90" y1="65" x2="90" y2="38" stroke="#2DBD6E" stroke-width="1.8" stroke-dasharray="3 2" stroke-linecap="round"/>
+              <!-- Underground label -->
+              <text x="60" y="72" font-size="4.5" fill="rgba(45,189,110,0.45)" text-anchor="middle">ingegraven kabel</text>
+              <circle cx="30" cy="24" r="1.8" fill="#2DBD6E"/>
+              <circle cx="90" cy="38" r="1.8" fill="#2DBD6E"/>
+              <!-- Charger (on driveway, far from house) -->
+              <rect x="90" y="16" width="12" height="41" rx="3" fill="rgba(45,189,110,0.15)" stroke="#2DBD6E" stroke-width="1.5"/>
+              <rect x="92" y="21" width="8" height="7" rx="1.5" fill="rgba(45,189,110,0.4)"/>
+              <path d="M96.5 33L93.5 39H97.5L94.5 45" stroke="#2DBD6E" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
           </div>
+          <div class="sit-title">Kruipruimte met graaf- en straatwerk</div>
+          <div class="sit-desc">Kabel ingegraven naar laadpaal op de oprit</div>
         </div>
+
       </div>
 
       <div class="cond-field" id="condDirect"></div>
@@ -2035,7 +2134,7 @@
   }
 
   function selectSituatie(el, type) {
-    document.getElementById('qSituatie').querySelectorAll('.choice-card').forEach(c => c.classList.remove('selected'));
+    document.getElementById('qSituatie').querySelectorAll('.sit-card').forEach(c => c.classList.remove('selected'));
     el.classList.add('selected');
     document.getElementById('condDirect').classList.remove('visible');
     document.getElementById('condKruipGevel').classList.remove('visible');
@@ -2047,7 +2146,7 @@
 
   async function submitForm() {
     // Lees situatie
-    const situatieEl = document.querySelector('#qSituatie .choice-card.selected');
+    const situatieEl = document.querySelector('#qSituatie .sit-card.selected');
     const situatieRaw = situatieEl ? situatieEl.dataset.value : null;
 
     // Mapping wizard → API waarden
