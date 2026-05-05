@@ -200,10 +200,10 @@
   .form-section { min-width: 100%; width: 100%; flex-shrink: 0; box-sizing: border-box; padding: 32px; padding-bottom: 36px; }
   .form-success { display: none; padding: 40px; text-align: center; }
   .form-section-title { font-family: var(--font-display); font-size: 22px; color: var(--white); margin-bottom: 6px; }
-  .form-section-sub { font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 28px; font-weight: 300; }
+  .form-section-sub { font-size: 14px; color: rgba(255,255,255,0.72); margin-bottom: 28px; font-weight: 300; }
 
   .choice-group { margin-bottom: 22px; }
-  .choice-label { display: block; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); margin-bottom: 10px; letter-spacing: 0.02em; }
+  .choice-label { display: block; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.82); margin-bottom: 10px; letter-spacing: 0.02em; }
   .choice-cards { display: flex; flex-direction: column; gap: 8px; }
   .choice-cards.horizontal { flex-direction: row; flex-wrap: wrap; }
 
@@ -211,19 +211,19 @@
     background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
     border-radius: 12px; padding: 14px 16px; cursor: pointer;
     transition: all 0.2s; display: flex; align-items: center; gap: 12px;
-    font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 300; user-select: none;
+    font-size: 14px; color: rgba(255,255,255,0.82); font-weight: 400; user-select: none;
   }
-  .choice-card:hover { border-color: rgba(45,189,110,0.3); color: rgba(255,255,255,0.85); }
+  .choice-card:hover { border-color: rgba(45,189,110,0.3); color: rgba(255,255,255,0.95); }
   .choice-card.selected { border-color: var(--green-400); background: rgba(45,189,110,0.1); color: var(--white); }
   .choice-card .cc-icon { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.2); flex-shrink: 0; position: relative; transition: all 0.2s; }
   .choice-card.selected .cc-icon { border-color: var(--green-400); background: var(--green-400); }
   .choice-card.selected .cc-icon::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--night); position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); }
   .choice-card .cc-body { flex: 1; }
   .choice-card .cc-title { font-size: 14px; font-weight: 500; color: inherit; }
-  .choice-card .cc-sub { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 3px; font-weight: 300; }
-  .choice-card.selected .cc-sub { color: rgba(255,255,255,0.6); }
-  .choice-card .cc-desc { font-size: 12px; color: rgba(255,255,255,0.3); margin-top: 2px; font-weight: 300; }
-  .choice-card.selected .cc-desc { color: rgba(255,255,255,0.5); }
+  .choice-card .cc-sub { font-size: 12px; color: rgba(255,255,255,0.62); margin-top: 3px; font-weight: 300; }
+  .choice-card.selected .cc-sub { color: rgba(255,255,255,0.78); }
+  .choice-card .cc-desc { font-size: 12px; color: rgba(255,255,255,0.58); margin-top: 2px; font-weight: 300; }
+  .choice-card.selected .cc-desc { color: rgba(255,255,255,0.72); }
 
   .form-group { margin-bottom: 14px; }
   .form-label { display: block; font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75); margin-bottom: 7px; letter-spacing: 0.05em; text-transform: uppercase; }
@@ -238,8 +238,8 @@
   .contact-card-icon { width: 38px; height: 38px; border-radius: 10px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s; }
   .contact-card.selected .contact-card-icon { background: rgba(45,189,110,0.2); }
   .contact-card-title { font-size: 14px; font-weight: 600; color: white; margin-bottom: 2px; }
-  .contact-card-sub { font-size: 11px; color: rgba(255,255,255,0.45); }
-  .contact-card.selected .contact-card-sub { color: rgba(255,255,255,0.68); }
+  .contact-card-sub { font-size: 11px; color: rgba(255,255,255,0.68); }
+  .contact-card.selected .contact-card-sub { color: rgba(255,255,255,0.85); }
   @media (max-width: 640px) { .contact-choice-cards { grid-template-columns: 1fr; } }
   .form-select option { background: var(--night); }
   .form-select:focus { border-color: var(--green-400); }
@@ -248,8 +248,8 @@
   .form-nav { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.06); }
   .btn-next { background: var(--green-400); color: var(--night); border: none; padding: 12px 24px; border-radius: 100px; font-family: var(--font-body); font-size: 14px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
   .btn-next:hover { background: var(--green-300); }
-  .btn-back { background: transparent; color: rgba(255,255,255,0.4); border: 1px solid rgba(255,255,255,0.1); padding: 12px 20px; border-radius: 100px; font-family: var(--font-body); font-size: 14px; cursor: pointer; transition: all 0.2s; }
-  .btn-back:hover { color: var(--white); border-color: rgba(255,255,255,0.3); }
+  .btn-back { background: transparent; color: rgba(255,255,255,0.72); border: 1px solid rgba(255,255,255,0.22); padding: 12px 20px; border-radius: 100px; font-family: var(--font-body); font-size: 14px; cursor: pointer; transition: all 0.2s; }
+  .btn-back:hover { color: var(--white); border-color: rgba(255,255,255,0.45); }
 
   .form-submit { width: 100%; padding: 15px; background: var(--green-400); color: var(--night); border: none; border-radius: 12px; font-family: var(--font-body); font-size: 16px; font-weight: 600; cursor: pointer; transition: background 0.2s, transform 0.15s; }
   .form-submit:hover { background: var(--green-300); transform: translateY(-1px); }
@@ -269,7 +269,7 @@
   .form-success { min-width: 100%; width: 100%; flex-shrink: 0; box-sizing: border-box; padding: 40px; text-align: center; }
   .success-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(45,189,110,0.15); border: 2px solid var(--green-400); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
   .success-title { font-family: var(--font-display); font-size: 24px; color: var(--white); margin-bottom: 10px; }
-  .success-sub { font-size: 15px; color: rgba(255,255,255,0.4); font-weight: 300; line-height: 1.7; }
+  .success-sub { font-size: 15px; color: rgba(255,255,255,0.72); font-weight: 300; line-height: 1.7; }
 
   /* ── FADE ANIMATIONS ── */
   .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
