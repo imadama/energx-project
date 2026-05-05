@@ -1230,7 +1230,25 @@
     width: 100%;
     flex-shrink: 0;
     box-sizing: border-box;
+    padding-bottom: 4px;
   }
+
+  .wizard-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.45);
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 400;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 20px;
+    transition: color 0.18s;
+  }
+  .wizard-back:hover { color: rgba(255,255,255,0.85); }
   .wizard-block--success {
     text-align: center;
     padding: 40px 0 24px;
@@ -1732,6 +1750,10 @@
 
     <!-- BLOK 2: Vergelijking — verschijnt inline na 4 antwoorden -->
     <div class="wizard-block wizard-block--comparison" id="vergelijking">
+      <button class="wizard-back" onclick="goToSlide(0)">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Terug
+      </button>
       <div class="wizard-step-label">Jouw persoonlijk advies</div>
       <h2 class="wizard-heading">Kies jouw laadpaal</h2>
       <p class="wizard-subhead">Op basis van jouw antwoorden — klik op een kaart om door te gaan.</p>
@@ -1763,6 +1785,10 @@
 
     <!-- BLOK 3: Stap 2 — installatiesituatie -->
     <div class="wizard-block" id="wizardStep2">
+      <button class="wizard-back" onclick="goToSlide(1)">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Terug
+      </button>
       <div class="wizard-step-label">Stap 2 van 3 — Installatie</div>
       <h2 class="wizard-heading">Hoe ziet jouw situatie eruit?</h2>
       <p class="wizard-subhead">Dit bepaalt de installatiekosten. Kies de situatie die het best bij jou past.</p>
@@ -1898,6 +1924,10 @@
 
     <!-- BLOK 4: Stap 3 — contactgegevens -->
     <div class="wizard-block" id="wizardStep3">
+      <button class="wizard-back" onclick="goToSlide(2)">
+        <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Terug
+      </button>
       <div class="wizard-step-label">Stap 3 van 3 — Jouw gegevens</div>
       <h2 class="wizard-heading">Bijna klaar</h2>
       <p class="wizard-subhead">Vul je gegevens in zodat we je persoonlijk kunnen bereiken.</p>
@@ -2264,9 +2294,9 @@
     const inner = track.parentElement;
     track.style.transform = `translateX(-${index * 100}%)`;
 
-    // Animate inner height to match target slide
+    // Animate inner height to match target slide (+ buffer for margins/padding)
     const target = document.getElementById(SLIDE_IDS[index]);
-    inner.style.height = target.scrollHeight + 'px';
+    inner.style.height = (target.scrollHeight + 48) + 'px';
 
     // Update progress bar
     const fill = document.getElementById('wizardProgressFill');
@@ -2396,7 +2426,7 @@
   window.addEventListener('load', () => {
     const inner = document.getElementById('wizardSlides').parentElement;
     const first = document.getElementById('wizardStep1');
-    inner.style.height = first.scrollHeight + 'px';
+    inner.style.height = (first.scrollHeight + 48) + 'px';
   });
 
   // Scroll animations
