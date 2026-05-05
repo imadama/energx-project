@@ -191,12 +191,14 @@
   .form-step-item.active .step-name, .form-step-item.done .step-name { color: var(--white); }
   .step-desc { font-size: 12px; color: rgba(255,255,255,0.2); font-weight: 300; }
 
-  .form-card { background: var(--green-700); border: 1px solid rgba(45,189,110,0.2); border-radius: 20px; overflow: hidden; }
+  .form-card { background: var(--green-700); border: 1px solid rgba(45,189,110,0.2); border-radius: 20px; overflow: hidden; transition: height 0.42s cubic-bezier(0.4, 0, 0.2, 1); }
   .progress-bar { height: 3px; background: rgba(255,255,255,0.06); }
   .progress-fill { height: 100%; background: linear-gradient(90deg, var(--green-600), var(--green-400)); transition: width 0.4s ease; }
 
-  .form-section { display: none; padding: 32px; }
-  .form-section.active { display: block; }
+  .form-slides { display: flex; flex-direction: row; transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform; }
+
+  .form-section { min-width: 100%; width: 100%; flex-shrink: 0; box-sizing: border-box; padding: 32px; padding-bottom: 36px; }
+  .form-success { display: none; padding: 40px; text-align: center; }
   .form-section-title { font-family: var(--font-display); font-size: 22px; color: var(--white); margin-bottom: 6px; }
   .form-section-sub { font-size: 14px; color: rgba(255,255,255,0.35); margin-bottom: 28px; font-weight: 300; }
 
@@ -264,8 +266,7 @@
   .foto-upload-title { font-size: 12px; font-weight: 600; color: var(--white); line-height: 1.3; }
   .foto-upload-sub { font-size: 11px; color: var(--gray-400); font-weight: 300; line-height: 1.4; }
 
-  .form-success { display: none; padding: 40px; text-align: center; }
-  .form-success.visible { display: block; }
+  .form-success { min-width: 100%; width: 100%; flex-shrink: 0; box-sizing: border-box; padding: 40px; text-align: center; }
   .success-icon { width: 56px; height: 56px; border-radius: 50%; background: rgba(45,189,110,0.15); border: 2px solid var(--green-400); display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; }
   .success-title { font-family: var(--font-display); font-size: 24px; color: var(--white); margin-bottom: 10px; }
   .success-sub { font-size: 15px; color: rgba(255,255,255,0.4); font-weight: 300; line-height: 1.7; }
@@ -581,8 +582,10 @@
           <div class="progress-fill" id="progressFill" style="width: 33%"></div>
         </div>
 
+        <div class="form-slides" id="formSlides">
+
         <!-- STAP 1: Wensen & voorkeur -->
-        <div class="form-section active" id="step1">
+        <div class="form-section" id="step1">
           <div class="form-section-title">Wat zijn jouw wensen?</div>
           <div class="form-section-sub">Selecteer wat het best bij jouw situatie past.</div>
 
@@ -670,7 +673,7 @@
           </div>
 
           <div class="form-nav">
-            <button class="btn-next" onclick="nextStep(2)">Volgende stap →</button>
+            <button class="btn-next" onclick="goToSlide(1)">Volgende stap →</button>
           </div>
         </div>
 
@@ -812,8 +815,8 @@
           </div>
 
           <div class="form-nav">
-            <button class="btn-back" onclick="nextStep(1)">← Terug</button>
-            <button class="btn-next" onclick="nextStep(3)">Volgende stap →</button>
+            <button class="btn-back" onclick="goToSlide(0)">← Terug</button>
+            <button class="btn-next" onclick="goToSlide(2)">Volgende stap →</button>
           </div>
         </div>
 
@@ -910,7 +913,7 @@
           </div>
 
           <div class="form-nav" style="flex-direction: column; gap: 10px; margin-top: 20px;">
-            <button class="btn-back" onclick="nextStep(2)" style="align-self: flex-start; padding: 10px 18px; font-size: 14px;">← Terug</button>
+            <button class="btn-back" onclick="goToSlide(1)" style="align-self: flex-start; padding: 10px 18px; font-size: 14px;">← Terug</button>
             <button class="form-submit" onclick="submitForm()">Stuur mijn offerte aanvraag →</button>
           </div>
           <p class="form-privacy">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
@@ -927,6 +930,7 @@
           <p class="success-sub">We nemen zo snel mogelijk contact met je op met een offerte op maat.<br>Gemiddeld binnen 1 werkdag.</p>
         </div>
 
+        </div><!-- /form-slides -->
       </div>
     </div>
   </div>
@@ -988,21 +992,28 @@
     Array.from(select.options).forEach(opt => { opt.selected = opt.value === value; });
   }
 
-  let currentStep = 1;
+  const FORM_SLIDE_IDS = ['step1', 'step2', 'step3', 'formSuccess'];
+  const FORM_SLIDE_PCTS = [33, 66, 100, 100];
+  let currentSlide = 0;
 
-  function nextStep(step) {
-    document.getElementById('step' + currentStep).classList.remove('active');
+  function goToSlide(index) {
+    currentSlide = index;
+    const track = document.getElementById('formSlides');
+    const card = document.querySelector('.form-card');
+    track.style.transform = `translateX(-${index * 100}%)`;
+    const target = document.getElementById(FORM_SLIDE_IDS[index]);
+    card.style.height = (target.scrollHeight + 56) + 'px';
+    const stepNum = index + 1;
     document.querySelectorAll('.form-step-item').forEach(el => {
       const s = parseInt(el.dataset.step);
       el.classList.remove('active', 'done');
-      if (s < step) el.classList.add('done');
-      if (s === step) el.classList.add('active');
+      if (s < stepNum) el.classList.add('done');
+      if (s === stepNum) el.classList.add('active');
     });
-    document.getElementById('step' + step).classList.add('active');
-    currentStep = step;
-    const pct = step === 1 ? 33 : step === 2 ? 66 : 100;
-    document.getElementById('progressFill').style.width = pct + '%';
-    document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('progressFill').style.width = FORM_SLIDE_PCTS[index] + '%';
+    setTimeout(() => {
+      document.querySelector('.form-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
   }
 
   function selectChoice(el, groupId, multi) {
@@ -1185,10 +1196,8 @@
     const bestandsnaam = 'offerte-aanvraag-warmtepomp-energx.pdf';
     doc.save(bestandsnaam);
 
-    document.getElementById('step3').classList.remove('active');
-    document.getElementById('formSuccess').classList.add('visible');
     document.querySelectorAll('.form-step-item').forEach(el => el.classList.add('done'));
-    document.getElementById('progressFill').style.width = '100%';
+    goToSlide(3);
   }
 
   // Auto-scroll carousel
@@ -1224,6 +1233,13 @@
       document.querySelector('.nav-hamburger').classList.remove('open');
       document.querySelector('.nav-links').classList.remove('open');
     });
+  });
+
+  // Init form height to first slide
+  window.addEventListener('load', () => {
+    const card = document.querySelector('.form-card');
+    const first = document.getElementById('step1');
+    card.style.height = (first.scrollHeight + 56) + 'px';
   });
 </script>
 </body>

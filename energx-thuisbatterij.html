@@ -472,6 +472,17 @@
   .wizard-inner {
     max-width: 720px;
     margin: 0 auto;
+    overflow: hidden;
+    transition: height 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wizard-slides {
+    display: flex;
+    flex-direction: row;
+    transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
   }
 
   .wizard-progress {
@@ -489,7 +500,12 @@
     transition: width 0.5s ease;
   }
 
-  .wizard-block { animation: fadeUp 0.35s ease; }
+  .wizard-block {
+    min-width: 100%; width: 100%;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    padding-bottom: 4px;
+  }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(16px); }
@@ -1384,6 +1400,8 @@
       <div class="wizard-progress-fill" id="wizardProgressFill" style="width:8%"></div>
     </div>
 
+    <div class="wizard-slides" id="wizardSlides">
+
     <!-- BLOK 1: Stap 1 — jouw situatie -->
     <div class="wizard-block" id="wizardStep1">
       <div class="wizard-step-label">Stap 1 van 3 — Jouw situatie</div>
@@ -1648,7 +1666,7 @@
     </div>
 
     <!-- BLOK 2: Advies / vergelijking -->
-    <div class="wizard-block wizard-block--comparison" id="wizardAdvies" style="display:none">
+    <div class="wizard-block wizard-block--comparison" id="wizardAdvies">
       <div class="verg-eyebrow">Jouw persoonlijk advies</div>
       <h2 class="wizard-heading" style="margin-bottom:8px;">Dit adviseren wij voor jou</h2>
       <p class="wizard-subhead">Op basis van jouw wensen raden we dit aan — kies en ga verder.</p>
@@ -1657,11 +1675,11 @@
         <!-- Gevuld door JS -->
       </div>
 
-      <button class="btn-wiz-back" onclick="showBlock('wizardStep1', 8)">← Pas aan</button>
+      <button class="btn-wiz-back" onclick="goToSlide(0)">← Pas aan</button>
     </div>
 
     <!-- BLOK 3: Stap 2 — installatie -->
-    <div class="wizard-block" id="wizardStep2" style="display:none">
+    <div class="wizard-block" id="wizardStep2">
       <div class="wizard-step-label">Stap 2 van 3 — Installatie</div>
       <h2 class="wizard-heading">Waar komt de batterij?</h2>
       <p class="wizard-subhead">Vertel ons iets over de installatielocatie zodat onze installateur goed voorbereid komt.</p>
@@ -1717,13 +1735,13 @@
       </div>
 
       <div style="margin-top:24px;">
-        <button class="btn-wiz-back" onclick="showBlock('wizardAdvies', 55)">← Terug</button>
-        <button class="btn-wiz-next" onclick="showBlock('wizardStep3', 75)">Volgende stap →</button>
+        <button class="btn-wiz-back" onclick="goToSlide(1)">← Terug</button>
+        <button class="btn-wiz-next" onclick="goToSlide(3)">Volgende stap →</button>
       </div>
     </div>
 
     <!-- BLOK 4: Stap 3 — contactgegevens -->
-    <div class="wizard-block" id="wizardStep3" style="display:none">
+    <div class="wizard-block" id="wizardStep3">
       <div class="wizard-step-label">Stap 3 van 3 — Jouw gegevens</div>
       <h2 class="wizard-heading">Bijna klaar</h2>
       <p class="wizard-subhead">Vul je gegevens in zodat we je persoonlijk kunnen bereiken.</p>
@@ -1805,12 +1823,12 @@
       <p style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;margin-top:14px;font-weight:300;">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
 
       <div style="margin-top:16px;">
-        <button class="btn-wiz-back" onclick="showBlock('wizardStep2', 55)">← Terug</button>
+        <button class="btn-wiz-back" onclick="goToSlide(2)">← Terug</button>
       </div>
     </div>
 
     <!-- BLOK 5: Succes -->
-    <div class="wizard-block wizard-block--success" id="formSuccess" style="display:none">
+    <div class="wizard-block wizard-block--success" id="formSuccess">
       <div class="success-icon">
         <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
           <path d="M6 14l5.5 5.5L22 8" stroke="#2DBD6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1820,6 +1838,7 @@
       <p class="success-sub">Je offerte aanvraag is binnen. Een lokale installateur neemt binnen 1 werkdag contact met je op.<br>Vragen? Mail ons op <a href="mailto:info@energx.nl" style="color:var(--green-400);">info@energx.nl</a></p>
     </div>
 
+    </div><!-- /wizard-slides -->
   </div>
 </section>
 
@@ -2022,15 +2041,22 @@
     if (card) card.classList.add('selected');
   }
 
-  function showBlock(id, progress) {
-    document.querySelectorAll('.wizard-block').forEach(b => b.style.display = 'none');
-    const block = document.getElementById(id);
-    block.style.display = 'block';
-    block.style.animation = 'none';
-    block.offsetHeight;
-    block.style.animation = '';
-    document.getElementById('wizardProgressFill').style.width = (progress || 8) + '%';
-    document.getElementById('wizard-sectie').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const SLIDE_IDS = ['wizardStep1', 'wizardAdvies', 'wizardStep2', 'wizardStep3', 'formSuccess'];
+  const SLIDE_PCTS = [8, 40, 55, 75, 100];
+  let currentSlide = 0;
+
+  function goToSlide(index) {
+    currentSlide = index;
+    const track = document.getElementById('wizardSlides');
+    const inner = track.parentElement;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    const target = document.getElementById(SLIDE_IDS[index]);
+    inner.style.height = (target.scrollHeight + 48) + 'px';
+    const fill = document.getElementById('wizardProgressFill');
+    if (fill) fill.style.width = SLIDE_PCTS[index] + '%';
+    setTimeout(() => {
+      document.getElementById('wizard-sectie').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 60);
   }
 
   // ── ADVIES LOGICA ──
@@ -2051,12 +2077,12 @@
 
     gekozenProduct = aanbevolen;
     renderVergelijking(aanbevolen);
-    showBlock('wizardAdvies', 40);
+    goToSlide(1);
   }
 
   function kiesProduct(productId) {
     gekozenProduct = productId;
-    showBlock('wizardStep2', 55);
+    goToSlide(2);
   }
 
   function renderVergelijking(aanbevolen) {
@@ -2168,7 +2194,7 @@
       });
 
       if (resp.ok) {
-        showBlock('formSuccess', 100);
+        goToSlide(4);
       } else {
         throw new Error('API error');
       }
@@ -2178,6 +2204,13 @@
       alert('Er ging iets mis. Probeer het opnieuw of mail ons op info@energx.nl');
     }
   }
+
+  // Init wizard height to first slide
+  window.addEventListener('load', () => {
+    const inner = document.getElementById('wizardSlides').parentElement;
+    const first = document.getElementById('wizardStep1');
+    inner.style.height = (first.scrollHeight + 48) + 'px';
+  });
 </script>
 </body>
 </html>
