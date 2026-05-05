@@ -908,6 +908,8 @@
 
   .form-input::placeholder { color: rgba(255,255,255,0.45); }
   .form-input:focus { border-color: var(--green-400); background: rgba(255,255,255,0.14); }
+  .form-input.input-error { border-color: #FF6B6B !important; }
+  .form-error-msg { font-size: 13px; color: #FF8080; text-align: center; margin-top: 10px; min-height: 18px; font-weight: 300; }
 
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
@@ -1820,7 +1822,8 @@
       </div>
 
       <button class="form-submit" onclick="submitForm()">Stuur mijn offerte aanvraag →</button>
-      <p style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;margin-top:14px;font-weight:300;">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
+      <p class="form-error-msg" id="formErrorMsg"></p>
+      <p style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;margin-top:4px;font-weight:300;">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
 
       <div style="margin-top:16px;">
         <button class="btn-wiz-back" onclick="goToSlide(2)">← Terug</button>
@@ -2143,6 +2146,18 @@
 
   // ── SUBMIT ──
   async function submitForm() {
+    const errMsg = document.getElementById('formErrorMsg');
+    errMsg.textContent = '';
+
+    // Client-side validatie
+    const voornaamEl = document.getElementById('inputVoornaam');
+    const emailEl = document.getElementById('inputEmail');
+    [voornaamEl, emailEl].forEach(el => el.classList.toggle('input-error', !el.value.trim()));
+    if (!voornaamEl.value.trim() || !emailEl.value.trim()) {
+      errMsg.textContent = 'Vul je naam en e-mailadres in om door te gaan.';
+      return;
+    }
+
     const selectedCard = document.querySelector('.contact-card.selected');
     const commPref = selectedCard ? selectedCard.dataset.type : 'email';
 
@@ -2201,7 +2216,7 @@
     } catch (e) {
       btn.textContent = origText;
       btn.disabled = false;
-      alert('Er ging iets mis. Probeer het opnieuw of mail ons op info@energx.nl');
+      document.getElementById('formErrorMsg').textContent = 'Er ging iets mis. Probeer het opnieuw of mail info@energx.nl';
     }
   }
 

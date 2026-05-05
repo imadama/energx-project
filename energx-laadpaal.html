@@ -787,6 +787,8 @@
 
   .form-input::placeholder { color: rgba(255,255,255,0.45); }
   .form-input:focus, .form-select:focus { border-color: var(--green-400); background: rgba(255,255,255,0.14); }
+  .form-input.input-error { border-color: #FF6B6B !important; }
+  .form-error-msg { font-size: 13px; color: #FF8080; text-align: center; margin-top: 10px; min-height: 18px; font-weight: 300; }
   .form-select option { background: var(--night); }
 
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -2006,7 +2008,8 @@
       </div>
 
       <button class="form-submit" onclick="submitForm()" style="width:100%;min-height:54px;border-radius:100px;font-size:16px;font-weight:700;margin-top:20px;">Stuur mijn offerte aanvraag →</button>
-      <p style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;margin-top:14px;font-weight:300;">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
+      <p class="form-error-msg" id="formErrorMsg"></p>
+      <p style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;margin-top:4px;font-weight:300;">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
     </div>
 
     <!-- BLOK 5: Succes -->
@@ -2342,6 +2345,18 @@
   }
 
   async function submitForm() {
+    const errMsg = document.getElementById('formErrorMsg');
+    errMsg.textContent = '';
+
+    // Client-side validatie — highlight lege verplichte velden
+    const voornaamEl = document.getElementById('inputVoornaam');
+    const emailEl = document.getElementById('inputEmail');
+    [voornaamEl, emailEl].forEach(el => el.classList.toggle('input-error', !el.value.trim()));
+    if (!voornaamEl.value.trim() || !emailEl.value.trim()) {
+      errMsg.textContent = 'Vul je naam en e-mailadres in om door te gaan.';
+      return;
+    }
+
     // Lees situatie
     const situatieEl = document.querySelector('#qSituatie .sit-card.selected');
     const situatieRaw = situatieEl ? situatieEl.dataset.value : null;
@@ -2411,12 +2426,12 @@
         if (fill) fill.style.width = '100%';
       } else {
         const msgs = data.errors ? Object.values(data.errors).flat().join(' ') : (data.message || 'Er is iets misgegaan.');
-        alert('Fout: ' + msgs);
+        document.getElementById('formErrorMsg').textContent = msgs;
         btn.textContent = origText;
         btn.disabled = false;
       }
     } catch (err) {
-      alert('Verbindingsfout. Probeer het opnieuw.');
+      document.getElementById('formErrorMsg').textContent = 'Verbindingsfout. Probeer het opnieuw of mail info@energx.nl';
       btn.textContent = origText;
       btn.disabled = false;
     }
