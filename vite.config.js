@@ -13,6 +13,7 @@ export default defineConfig({
         'blog-installatie': resolve(__dirname, 'blog/laadpaal-installatie-dag.html'),
         warmtepomp: resolve(__dirname, 'energx-warmtepomp.html'),
         thuisbatterij: resolve(__dirname, 'energx-thuisbatterij.html'),
+        'blog-thuisbatterij-kopen': resolve(__dirname, 'blog-thuisbatterij-kopen.html'),
       },
     },
   },
