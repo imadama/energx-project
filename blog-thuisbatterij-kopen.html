@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thuisbatterij kopen: Kies de juiste oplossing voor jouw zonnepanelen — Energx</title>
+<meta name="description" content="Bereken of een thuisbatterij voor jouw zonnepanelen loont! Lees hoe je de juiste batterij kiest, subsidies, en waarom je nu moet handelen (salderingsregeling eindigt 2027).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --green-900: #0B3320; --green-800: #0F4A2A; --green-700: #155E34;
+    --green-600: #1A7A42; --green-500: #22A058; --green-400: #2DBD6E;
+    --green-300: #5FD496; --green-100: #D4F2E2; --green-50: #EDF9F3;
+    --night: #090F0C; --night-2: #0E1A12;
+    --white: #FAFCFB; --gray-50: #F5F9F6; --gray-100: #F0F4F1;
+    --gray-200: #DCE5DE; --gray-400: #8FA896; --gray-600: #4A6152;
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'Outfit', sans-serif;
+    --max: 1200px; --radius: 16px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--white); color: var(--night); font-size: 16px; line-height: 1.7; overflow-x: hidden; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 0 2rem; height: 68px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(250,252,251,0.92); backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-logo-icon { width: 34px; height: 34px; }
+  .nav-logo-text { font-family: var(--font-display); font-size: 22px; color: var(--green-800); letter-spacing: -0.3px; }
+  .nav-logo-text span { color: var(--green-400); }
+  .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
+  .nav-links a { text-decoration: none; font-size: 15px; color: var(--gray-600); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green-800); }
+  .nav-cta { background: var(--green-800); color: var(--white) !important; padding: 9px 20px; border-radius: 100px; font-size: 14px; font-weight: 500 !important; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--green-600) !important; }
+  .nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; }
+  .nav-hamburger span { display: block; width: 22px; height: 2px; background: var(--green-800); border-radius: 2px; transition: all 0.25s; }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  @media (max-width: 768px) {
+    .nav-hamburger { display: flex; }
+    .nav-links { display: none; position: fixed; top: 68px; left: 0; right: 0; background: var(--white); border-bottom: 1px solid var(--gray-200); padding: 1.5rem 2rem; flex-direction: column; align-items: flex-start; gap: 1.2rem; z-index: 99; }
+    .nav-links.open { display: flex; }
+  }
+
+  /* ── ARTIKEL HERO ── */
+  .artikel-hero {
+    padding-top: 68px;
+    background: linear-gradient(160deg, var(--green-50) 0%, var(--white) 60%);
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .artikel-hero-inner {
+    max-width: 800px; margin: 0 auto; padding: 60px 6vw 48px;
+  }
+  .artikel-breadcrumb {
+    display: flex; gap: 8px; align-items: center;
+    font-size: 13px; color: var(--gray-600); margin-bottom: 1.5rem;
+  }
+  .artikel-breadcrumb a { color: var(--green-600); text-decoration: none; }
+  .artikel-breadcrumb a:hover { text-decoration: underline; }
+  .artikel-breadcrumb span { color: var(--gray-400); }
+  .artikel-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(15,74,42,0.07); border: 1px solid rgba(15,74,42,0.18);
+    color: var(--green-700); font-size: 13px; font-weight: 500;
+    padding: 5px 14px; border-radius: 100px; margin-bottom: 1.2rem;
+  }
+  .artikel-titel {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 4.5vw, 48px);
+    color: var(--green-900); line-height: 1.1;
+    letter-spacing: -1px; margin-bottom: 1.2rem;
+  }
+  .artikel-intro {
+    font-size: 18px; color: var(--gray-600);
+    font-weight: 300; line-height: 1.7; margin-bottom: 2rem;
+  }
+  .artikel-meta {
+    display: flex; align-items: center; gap: 1.5rem;
+    font-size: 13px; color: var(--gray-400); padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-200);
+    flex-wrap: wrap;
+  }
+  .artikel-meta-item { display: flex; align-items: center; gap: 6px; }
+  .urgentie-banner {
+    margin-top: 2rem;
+    background: rgba(255, 165, 0, 0.08);
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    border-radius: 12px; padding: 14px 20px;
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 14px; color: #7A5000; font-weight: 400; line-height: 1.5;
+  }
+  .urgentie-banner strong { font-weight: 600; }
+
+  /* ── ARTIKEL BODY ── */
+  .artikel-body {
+    max-width: 800px; margin: 0 auto; padding: 56px 6vw 80px;
+  }
+
+  /* Typography */
+  .artikel-body h2 {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 32px);
+    color: var(--green-900); letter-spacing: -0.4px;
+    margin: 3rem 0 1.2rem; line-height: 1.15;
+    padding-top: 1rem;
+    border-top: 2px solid var(--green-100);
+  }
+  .artikel-body h2:first-child { margin-top: 0; border-top: none; padding-top: 0; }
+  .artikel-body h3 {
+    font-family: var(--font-display);
+    font-size: 20px; color: var(--green-800);
+    margin: 2rem 0 0.8rem; letter-spacing: -0.2px;
+  }
+  .artikel-body p { margin-bottom: 1.2rem; color: var(--night); }
+  .artikel-body p:last-child { margin-bottom: 0; }
+  .artikel-body strong { font-weight: 600; color: var(--green-900); }
+  .artikel-body a { color: var(--green-600); text-decoration: underline; text-underline-offset: 3px; }
+  .artikel-body a:hover { color: var(--green-800); }
+
+  /* Lijsten */
+  .artikel-body ul, .artikel-body ol {
+    padding-left: 1.4rem; margin-bottom: 1.2rem;
+  }
+  .artikel-body li { margin-bottom: 0.5rem; color: var(--night); }
+
+  /* Highlight box */
+  .highlight-box {
+    background: var(--green-50);
+    border: 1px solid var(--green-100);
+    border-left: 4px solid var(--green-400);
+    border-radius: 12px; padding: 20px 24px;
+    margin: 2rem 0; font-size: 15px;
+  }
+  .highlight-box strong { color: var(--green-800); }
+
+  /* Kost tabel */
+  .kosten-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin: 1.5rem 0;
+  }
+  .kosten-card {
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: 12px; padding: 20px;
+  }
+  .kosten-card-label { font-size: 12px; font-weight: 600; color: var(--gray-400); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+  .kosten-card-value { font-family: var(--font-display); font-size: 28px; color: var(--green-800); letter-spacing: -0.5px; }
+  .kosten-card-sub { font-size: 13px; color: var(--gray-600); margin-top: 4px; font-weight: 300; }
+
+  /* Checklist */
+  .checklist { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .checklist li {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 16px 0; border-bottom: 1px solid var(--gray-100);
+  }
+  .checklist li:last-child { border-bottom: none; }
+  .checklist-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--green-800); color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 600; flex-shrink: 0; margin-top: 2px;
+  }
+  .checklist-body { flex: 1; }
+  .checklist-body strong { display: block; font-size: 16px; color: var(--green-900); margin-bottom: 4px; }
+  .checklist-body span { font-size: 14px; color: var(--gray-600); font-weight: 300; line-height: 1.5; }
+
+  /* FAQ */
+  .faq-sectie { margin-top: 1rem; }
+  .faq-item {
+    border: 1px solid var(--gray-200);
+    border-radius: 12px; margin-bottom: 10px; overflow: hidden;
+  }
+  .faq-vraag {
+    width: 100%; text-align: left; padding: 18px 22px;
+    background: var(--gray-50); border: none; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: var(--font-body); font-size: 15px; font-weight: 500;
+    color: var(--green-900); gap: 16px; transition: background 0.2s;
+  }
+  .faq-vraag:hover { background: var(--green-50); }
+  .faq-vraag.open { background: var(--green-50); color: var(--green-800); }
+  .faq-icon {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--green-100); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: transform 0.2s, background 0.2s;
+    font-size: 14px; color: var(--green-700);
+  }
+  .faq-vraag.open .faq-icon { transform: rotate(45deg); background: var(--green-400); color: var(--white); }
+  .faq-antwoord { display: none; padding: 0 22px 18px; font-size: 15px; color: var(--gray-600); line-height: 1.7; font-weight: 300; }
+  .faq-antwoord.open { display: block; }
+
+  /* CTA blok */
+  .artikel-cta {
+    background: linear-gradient(135deg, var(--green-800) 0%, var(--green-900) 100%);
+    border-radius: 20px; padding: 40px; margin: 3rem 0;
+    text-align: center; color: var(--white);
+  }
+  .artikel-cta h3 { font-family: var(--font-display); font-size: 26px; margin-bottom: 12px; letter-spacing: -0.3px; }
+  .artikel-cta p { color: rgba(255,255,255,0.72); font-size: 15px; margin-bottom: 24px; font-weight: 300; }
+  .cta-btn {
+    display: inline-block;
+    background: var(--green-400); color: var(--night);
+    padding: 14px 32px; border-radius: 100px;
+    font-size: 16px; font-weight: 600; text-decoration: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .cta-btn:hover { background: var(--green-300); transform: translateY(-2px); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--green-900); padding: 60px 6vw 32px; color: rgba(255,255,255,0.58); }
+  .footer-inner { max-width: var(--max); margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 28px; }
+  .footer-brand { display: flex; flex-direction: column; gap: 14px; }
+  .footer-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .footer-logo-text { font-family: var(--font-display); font-size: 20px; color: var(--white); }
+  .footer-logo-text span { color: var(--green-400); }
+  .footer-tagline { font-size: 14px; line-height: 1.6; max-width: 260px; font-weight: 300; }
+  .footer-col h4 { font-size: 13px; font-weight: 600; color: var(--white); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col ul a { text-decoration: none; font-size: 14px; color: rgba(255,255,255,0.58); font-weight: 300; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--green-400); }
+  .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; font-size: 13px; }
+  .footer-bottom a { color: rgba(255,255,255,0.4); text-decoration: none; }
+  @media (max-width: 768px) {
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .kosten-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .footer-top { grid-template-columns: 1fr; }
+    .artikel-cta { padding: 28px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <svg class="nav-logo-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="64" height="64" rx="16" fill="#0F4A2A"/>
+      <path d="M32 10L48 21V43L32 54L16 43V21L32 10Z" stroke="#2DBD6E" stroke-width="2.4" fill="none"/>
+      <path d="M32 20V44M22 26L42 38M22 38L42 26" stroke="#2DBD6E" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="32" cy="32" r="5" fill="#2DBD6E"/>
+    </svg>
+    <span class="nav-logo-text">Energ<span>x</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="energx-laadpaal.html">Laadpaal</a></li>
+    <li><a href="energx-thuisbatterij.html">Thuisbatterij</a></li>
+    <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
+    <li><a class="nav-cta" href="energx-thuisbatterij.html#wizard-sectie">Gratis offerte</a></li>
+  </ul>
+  <button class="nav-hamburger" aria-label="Menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ARTIKEL HERO -->
+<header class="artikel-hero">
+  <div class="artikel-hero-inner">
+    <div class="artikel-breadcrumb">
+      <a href="index.html">Home</a>
+      <span>›</span>
+      <a href="#">Blog</a>
+      <span>›</span>
+      <span>Thuisbatterij kopen</span>
+    </div>
+
+    <div class="artikel-tag">Thuisbatterij</div>
+
+    <h1 class="artikel-titel">Thuisbatterij kopen: Kies de juiste oplossing voor jouw zonnepanelen</h1>
+
+    <p class="artikel-intro">
+      Heb je zonnepanelen maar merk je dat je overdag veel stroom teruglevert die je 's avonds toch weer van het net afneemt? Een thuisbatterij lost dat op — en met de naderende verandering in de salderingsregeling is er nooit een beter moment geweest om te investeren.
+    </p>
+
+    <div class="artikel-meta">
+      <span class="artikel-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" stroke="#8FA896" stroke-width="1.5"/><path d="M3 10h18M8 2v4M16 2v4" stroke="#8FA896" stroke-width="1.5" stroke-linecap="round"/></svg>
+        6 mei 2026
+      </span>
+      <span class="artikel-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#8FA896" stroke-width="1.5"/><path d="M12 7v5l3 3" stroke="#8FA896" stroke-width="1.5" stroke-linecap="round"/></svg>
+        8 minuten leestijd
+      </span>
+      <span class="artikel-meta-item">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M20 7H4a2 2 0 00-2 2v9a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2zM12 2v5" stroke="#8FA896" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Door Energx Redactie
+      </span>
+    </div>
+
+    <div class="urgentie-banner">
+      <span style="font-size:20px;">⚠️</span>
+      <div><strong>Salderingsregeling eindigt in januari 2027.</strong> Daarna ontvang je aanzienlijk minder vergoeding voor stroom die je teruglevert. Hoe eerder je een thuisbatterij installeert, hoe meer je bespaart.</div>
+    </div>
+  </div>
+</header>
+
+<!-- ARTIKEL INHOUD -->
+<article class="artikel-body">
+
+  <h2>Hoe werkt een thuisbatterij met jouw zonnepanelen?</h2>
+
+  <p>
+    Je zonnepanelen produceren overdag stroom — maar jij gebruikt die stroom niet altijd op het moment dat hij wordt opgewekt. Zonder batterij gaat dat overschot het elektriciteitsnet op. Met een thuisbatterij sla je die energie op en gebruik je hem wanneer jij dat wilt: 's avonds, 's nachts of op bewolkte dagen.
+  </p>
+
+  <p>
+    De thuisbatterij werkt samen met je omvormer (of hybride omvormer) en de slimme meter. Zodra je zonnepanelen meer opwekken dan je op dat moment verbruikt, laadt de batterij op. Pas als de batterij vol is, levert de overgebleven stroom terug aan het net.
+  </p>
+
+  <h3>Laagvoltage vs. hoogvoltage — wat is het verschil?</h3>
+
+  <p>
+    Er zijn twee soorten thuisbatterijen op de markt, en het is belangrijk om te weten welke bij jouw situatie past:
+  </p>
+
+  <ul>
+    <li><strong>Laagvoltage (48V)</strong> — Goedkoper, eenvoudiger te installeren en compatibel met de meeste bestaande omvormers. Geschikt voor huishoudens met een gemiddeld verbruik en een eenvoudige installatie. De Alpha ESS SMILE-B3 Plus is hiervan een goed voorbeeld.</li>
+    <li><strong>Hoogvoltage (200–500V)</strong> — Efficiënter bij grotere systemen, minder stroomverlies bij het laden en ontladen. Ideaal als je nieuw zonnepanelen koopt én een batterij in één keer wilt installeren. De Alpha ESS SMILE5 is een populaire hybride keuze.</li>
+  </ul>
+
+  <div class="highlight-box">
+    <strong>Vuistregel:</strong> Heb je al zonnepanelen met een bestaande omvormer? Kies dan waarschijnlijk voor een laagvoltage batterij. Installeer je alles nieuw? Een hybride omvormer met hoogvoltage batterij is efficiënter en toekomstbestendiger.
+  </div>
+
+  <p>
+    Een gemiddeld gezin van 4 personen heeft <strong>6–10 kWh</strong> per dag nodig. Eén thuisbatterij met een capaciteit van 5–10 kWh dekt dan het grootste deel van de avond- en nachtbehoefte af met de zonne-energie die overdag is opgeslagen.
+  </p>
+
+
+  <h2>Hoeveel kost een thuisbatterij in 2025 en loont het?</h2>
+
+  <p>
+    De prijs van thuisbatterijen is de afgelopen jaren sterk gedaald. Toch is het een investering die je weloverwogen wil doen. Wat mag je verwachten?
+  </p>
+
+  <div class="kosten-grid">
+    <div class="kosten-card">
+      <div class="kosten-card-label">Aanschafprijs (incl. installatie)</div>
+      <div class="kosten-card-value">€5.000–€12.000</div>
+      <div class="kosten-card-sub">Afhankelijk van capaciteit en merk</div>
+    </div>
+    <div class="kosten-card">
+      <div class="kosten-card-label">Gemiddelde terugverdientijd</div>
+      <div class="kosten-card-value">6–10 jaar</div>
+      <div class="kosten-card-sub">Eerder als stroomprijs stijgt</div>
+    </div>
+    <div class="kosten-card">
+      <div class="kosten-card-label">Prijs per kWh batterijcapaciteit</div>
+      <div class="kosten-card-value">€800–€1.400</div>
+      <div class="kosten-card-sub">Na eventuele subsidie</div>
+    </div>
+    <div class="kosten-card">
+      <div class="kosten-card-label">Jaarlijkse besparing (gemiddeld)</div>
+      <div class="kosten-card-value">€600–€1.200</div>
+      <div class="kosten-card-sub">Bij €0,32/kWh stroomprijs</div>
+    </div>
+  </div>
+
+  <h3>Welke subsidies zijn beschikbaar?</h3>
+
+  <p>
+    De Nederlandse overheid stimuleert de aanschaf van thuisbatterijen op twee manieren:
+  </p>
+
+  <ul>
+    <li><strong>0% btw op zonnepanelen én batterij</strong> — Als je een thuisbatterij samen met zonnepanelen koopt (of ze tegelijk installeert), betaal je geen btw over de combinatie. Dit scheelt al snel €600–€1.500.</li>
+    <li><strong>ISDE-subsidie</strong> — De Investeringssubsidie Duurzame Energie geldt hoofdzakelijk voor warmtepompen, maar sommige gecombineerde installaties komen ook in aanmerking. Vraag je installateur naar de actuele voorwaarden.</li>
+  </ul>
+
+  <div class="highlight-box">
+    <strong>Let op:</strong> Subsidieregels veranderen regelmatig. Vraag altijd een offerte aan bij een gecertificeerde installateur die op de hoogte is van de meest actuele regelgeving in jouw gemeente of provincie.
+  </div>
+
+
+  <h2>Waarom je nú een thuisbatterij koopt (salderingsregeling eindigt 2027)</h2>
+
+  <p>
+    Tot nu toe kon je alle stroom die je terugleverde aan het net, volledig aftrekken van je stroomrekening — een vergoeding die gelijk stond aan de gewone stroomprijs. Dat noemen we de salderingsregeling.
+  </p>
+
+  <p>
+    <strong>Maar dat verandert in januari 2027.</strong> Vanaf dat moment ontvang je nog maar een klein deel van de stroomprijs als vergoeding voor teruggeleverde stroom — vergelijkbaar met het teruglevertarief van energiebedrijven, dat gemiddeld <strong>slechts €0,04–€0,09 per kWh</strong> bedraagt in plaats van de huidige marktprijs van €0,28–€0,34.
+  </p>
+
+  <p>
+    Concreet betekent dit: als je nu per jaar 2.000 kWh teruglevert, ontvang je daarvoor nu nog zo'n €560. Na 2027 ontvang je voor diezelfde stroom nog maar €80–€180. Dat is een verschil van <strong>€380–€480 per jaar</strong> dat je misloopt — tenzij je die stroom opslaat in een thuisbatterij en zelf gebruikt.
+  </p>
+
+  <div class="highlight-box">
+    <strong>Elke maand dat je wacht kost geld.</strong> Hoe eerder je een thuisbatterij installeert, hoe meer kwh je zelf gebruikt in plaats van goedkoop teruglevert, en hoe sneller je investering terugverdiend is.
+  </div>
+
+  <p>
+    Bovendien: installateurs hebben het druk. Naarmate 2027 dichterbij komt, neemt de vraag flink toe. Wachten tot de laatste maanden voor de deadline betekent langere wachttijden en mogelijk hogere prijzen.
+  </p>
+
+
+  <h2>Checklist: 5 dingen om te overwegen voordat je een thuisbatterij koopt</h2>
+
+  <ul class="checklist">
+    <li>
+      <div class="checklist-num">1</div>
+      <div class="checklist-body">
+        <strong>Hoeveel capaciteit heb je nodig?</strong>
+        <span>Bereken je gemiddelde dagverbruik (staat op je energierekening) en vergelijk dat met wat je zonnepanelen gemiddeld opwekken. Kies een batterijcapaciteit die jouw avond- en nachtbehoefte kan dekken — voor de meeste gezinnen is 5–10 kWh voldoende.</span>
+      </div>
+    </li>
+    <li>
+      <div class="checklist-num">2</div>
+      <div class="checklist-body">
+        <strong>Is de batterij compatibel met jouw omvormer?</strong>
+        <span>Niet elke batterij werkt met elke omvormer. Laagvoltage batterijen zijn breder compatibel, maar bij een hoogvoltage systeem heb je doorgaans een hybride omvormer van hetzelfde merk nodig. Laat dit altijd controleren door een installateur.</span>
+      </div>
+    </li>
+    <li>
+      <div class="checklist-num">3</div>
+      <div class="checklist-body">
+        <strong>Wat zijn de garantie en verwachte levensduur?</strong>
+        <span>Een goede thuisbatterij gaat 10–15 jaar mee. Kijk naar de fabrieksgarantie (minimaal 10 jaar of 4.000 laadcycli), de restcapaciteit aan het einde van de garantieperiode (minimaal 70%) en de reputatie van de fabrikant.</span>
+      </div>
+    </li>
+    <li>
+      <div class="checklist-num">4</div>
+      <div class="checklist-body">
+        <strong>Kies een gecertificeerde lokale installateur</strong>
+        <span>Een foutieve installatie kan je garantie doen vervallen of zelfs gevaarlijk zijn. Kies voor een installateur met erkende certificeringen (zoals NL-techniek), die ervaring heeft met jouw type batterij en omvormer, en die ook na de installatie bereikbaar is voor vragen.</span>
+      </div>
+    </li>
+    <li>
+      <div class="checklist-num">5</div>
+      <div class="checklist-body">
+        <strong>Denk aan toekomstbestendigheid</strong>
+        <span>Wil je later uitbreiden? Kies dan voor een stapelbare batterij of een systeem met uitbreidingsmodules. Heb je een elektrische auto of ben je van plan er een te kopen? Dan is een V2H-geschikte (Vehicle-to-Home) oplossing de moeite waard om te overwegen.</span>
+      </div>
+    </li>
+  </ul>
+
+
+  <div class="artikel-cta">
+    <h3>Benieuwd welke thuisbatterij bij jou past?</h3>
+    <p>Ontvang binnen 1 werkdag een persoonlijk advies en offerte van een lokale, gecertificeerde installateur in jouw regio — geheel vrijblijvend.</p>
+    <a class="cta-btn" href="energx-thuisbatterij.html#wizard-sectie">Vraag gratis offerte aan →</a>
+  </div>
+
+
+  <h2>Veelgestelde vragen over thuisbatterijen</h2>
+
+  <div class="faq-sectie">
+
+    <div class="faq-item">
+      <button class="faq-vraag" onclick="toggleFaq(this)">
+        Wat is de terugverdientijd van een thuisbatterij?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-antwoord">
+        Gemiddeld 6–10 jaar, afhankelijk van je stroomtarief, hoeveel je terugleverde en de capaciteit van de batterij. Na de salderingswijziging van 2027 wordt de terugverdientijd voor nieuwe kopers zonder batterij flink langer — wat de investering nu juist aantrekkelijker maakt.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-vraag" onclick="toggleFaq(this)">
+        Is een thuisbatterij compatibel met mijn bestaande zonnepanelen?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-antwoord">
+        Ja, in de meeste gevallen wel. Zolang je een compatibele omvormer hebt of bereid bent die te vervangen of bij te plaatsen. Laagvoltage batterijen (48V) zijn het breedst compatibel. Een installateur kan binnen een uur bepalen welk systeem bij jouw setup past.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-vraag" onclick="toggleFaq(this)">
+        Wat kost een thuisbatterij na de 0% btw-regeling?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-antwoord">
+        Als je een thuisbatterij tegelijk met zonnepanelen aanschaft (of laat installeren), geldt 0% btw op de volledige combinatie. Dit scheelt doorgaans €600–€1.500. De prijs per kWh batterijcapaciteit ligt dan tussen de €800 en €1.400, exclusief installatie.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-vraag" onclick="toggleFaq(this)">
+        Wat gebeurt er na januari 2027 met de salderingsregeling?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-antwoord">
+        Na 2027 ontvang je nog maar een laag teruglevertarief (doorgaans €0,04–€0,09 per kWh) voor stroom die je teruglevert. In plaats van de huidige volledige verrekening tegen de marktprijs. Hoe meer stroom je zelf opslaat en gebruikt, hoe minder je dit voelt.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-vraag" onclick="toggleFaq(this)">
+        Hoe kies je een betrouwbare installateur?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-antwoord">
+        Let op: erkende certificeringen (NL-techniek of fabrikantscertificaat), aantoonbare ervaring met het type batterij dat je wilt, duidelijke garantieafspraken op materiaal én arbeid, en bereikbaarheid na de installatie. Energx koppelt je uitsluitend aan gecertificeerde lokale installateurs.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-vraag" onclick="toggleFaq(this)">
+        Hoeveel kWh batterij heb ik nodig voor mijn huishouden?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-antwoord">
+        Een gezin van 4 personen verbruikt gemiddeld 8–12 kWh per dag. Je wilt idealiter het avond- en nachtgebruik dekken met opgeslagen zonne-energie — dat is doorgaans 4–8 kWh. Een batterij van 5–10 kWh is voor de meeste huishoudens dan ook een goede uitgangspositie.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-vraag" onclick="toggleFaq(this)">
+        Wat is het verschil tussen laag- en hoogvoltage thuisbatterijen?
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-antwoord">
+        Laagvoltage (48V) batterijen zijn goedkoper, eenvoudiger te installeren en compatibel met de meeste bestaande omvormers. Hoogvoltage (200–500V) systemen zijn efficiënter — minder energieverlies bij laden en ontladen — maar vereisen een specifieke hybride omvormer. Voor nieuwe installaties is hoogvoltage vaak de betere keuze op lange termijn.
+      </div>
+    </div>
+
+  </div>
+
+</article>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a class="footer-logo" href="index.html">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <rect width="28" height="28" rx="7" fill="#155E34"/>
+            <path d="M14 5L22 10V18L14 23L6 18V10L14 5Z" stroke="#2DBD6E" stroke-width="1.3" fill="none"/>
+            <circle cx="14" cy="14" r="2" fill="#2DBD6E"/>
+          </svg>
+          <span class="footer-logo-text">Energ<span>x</span></span>
+        </a>
+        <p class="footer-tagline">Duurzame energie voor thuis — via lokale, gecertificeerde installateurs.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Producten</h4>
+        <ul>
+          <li><a href="energx-laadpaal.html">Laadpaal</a></li>
+          <li><a href="energx-thuisbatterij.html">Thuisbatterij</a></li>
+          <li><a href="energx-warmtepomp.html">Warmtepomp</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Informatie</h4>
+        <ul>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Over Energx</a></li>
+          <li><a href="#">Hoe het werkt</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:info@energx.nl">info@energx.nl</a></li>
+          <li><a href="#">Veelgestelde vragen</a></li>
+          <li><a href="#">Installateur worden</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Energx — Alle rechten voorbehouden</span>
+      <div style="display:flex;gap:1.5rem;">
+        <a href="#">Privacybeleid</a>
+        <a href="#">Algemene voorwaarden</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    const antwoord = btn.nextElementSibling;
+    const isOpen = btn.classList.contains('open');
+    document.querySelectorAll('.faq-vraag.open').forEach(b => {
+      b.classList.remove('open');
+      b.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      btn.classList.add('open');
+      antwoord.classList.add('open');
+    }
+  }
+
+  function toggleMenu() {
+    document.querySelector('.nav-hamburger').classList.toggle('open');
+    document.querySelector('.nav-links').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.querySelector('.nav-hamburger').classList.remove('open');
+      document.querySelector('.nav-links').classList.remove('open');
+    });
+  });
+</script>
+</body>
+</html>
