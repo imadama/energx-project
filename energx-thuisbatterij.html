@@ -523,6 +523,7 @@
   .wizard-slides {
     display: flex;
     flex-direction: row;
+    align-items: flex-start;
     transition: transform 0.42s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
   }
@@ -695,6 +696,8 @@
     margin-right: 8px;
   }
   .btn-wiz-back:hover { color: var(--white); border-color: rgba(255,255,255,0.45); }
+
+  .wiz-nav { display: flex; align-items: center; gap: 10px; margin-top: 24px; }
 
   /* Conditionele velden stap 2 */
   .cond-field {
@@ -1285,6 +1288,259 @@
   </div>
 </div>
 
+<section id="wizard-sectie" class="wizard-sectie">
+  <div class="wizard-inner">
+
+    <div class="wizard-progress">
+      <div class="wizard-progress-fill" id="wizardProgressFill" style="width:8%"></div>
+    </div>
+
+    <div class="wizard-slides" id="wizardSlides">
+
+    <!-- SLIDE 1: Zonnepanelen -->
+    <div class="wizard-block" id="q1Zonnepanelen">
+      <div class="wizard-step-label">Vraag 1 van 4</div>
+      <h2 class="wizard-heading">Heb je zonnepanelen?</h2>
+      <p class="wizard-subhead">Dit bepaalt welk type thuisbatterij het beste bij jou past.</p>
+      <div class="choice-cards" id="qZonnepanelen">
+        <div class="choice-card" data-value="ja" onclick="pickChoice(this,'qZonnepanelen',1)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Ja, ik heb zonnepanelen</div>
+            <div class="cc-sub">Ik wil mijn opgewekte stroom opslaan</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="gepland" onclick="pickChoice(this,'qZonnepanelen',1)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Nog niet, maar ik plan ze binnenkort</div>
+            <div class="cc-sub">Ik wil alvast klaarstaan voor opslag</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="nee" onclick="pickChoice(this,'qZonnepanelen',1)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Nee, (nog) geen zonnepanelen</div>
+            <div class="cc-sub">Ik wil goedkope nachtstroom opslaan of back-up</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: Doelen -->
+    <div class="wizard-block" id="q2Doelen">
+      <div class="wizard-step-label">Vraag 2 van 4</div>
+      <h2 class="wizard-heading">Wat zijn je doelen?</h2>
+      <p class="wizard-subhead">Je kunt meerdere opties kiezen.</p>
+      <div class="choice-cards" id="qDoel">
+        <div class="choice-card" data-value="opslaan" onclick="toggleDoel(this)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Zelfopgewekte stroom opslaan</div>
+            <div class="cc-sub">Maximaal profiteren van mijn zonnepanelen</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="besparen" onclick="toggleDoel(this)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Energierekening verlagen</div>
+            <div class="cc-sub">Minder afhankelijk van dure netprijzen</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="backup" onclick="toggleDoel(this)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Back-up stroom bij stroomuitval</div>
+            <div class="cc-sub">Altijd stroom, ook als het net uitvalt</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="onafhankelijk" onclick="toggleDoel(this)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Maximale onafhankelijkheid</div>
+            <div class="cc-sub">Zo min mogelijk van het stroomnet afhankelijk zijn</div>
+          </div>
+        </div>
+      </div>
+      <div class="wiz-nav">
+        <button class="btn-wiz-back" onclick="goToSlide(0)">← Terug</button>
+        <button class="btn-wiz-next" onclick="goToSlide(2)">Volgende →</button>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: Verbruik -->
+    <div class="wizard-block" id="q3Verbruik">
+      <div class="wizard-step-label">Vraag 3 van 4</div>
+      <h2 class="wizard-heading">Hoe groot is je jaarlijks stroomverbruik?</h2>
+      <p class="wizard-subhead">Dit staat op je energierekening.</p>
+      <div class="choice-cards" id="qVerbruik">
+        <div class="choice-card" data-value="klein" onclick="pickChoice(this,'qVerbruik',3)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Klein — &lt; 3.500 kWh</div>
+            <div class="cc-sub">Kleiner huishouden of weinig verbruik</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="gemiddeld" onclick="pickChoice(this,'qVerbruik',3)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Gemiddeld — 3.500–5.500 kWh</div>
+            <div class="cc-sub">Doorsnee huishouden</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="groot" onclick="pickChoice(this,'qVerbruik',3)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Groot — &gt; 5.500 kWh</div>
+            <div class="cc-sub">Groter huishouden of laadpaal thuis</div>
+          </div>
+        </div>
+      </div>
+      <div class="wiz-nav">
+        <button class="btn-wiz-back" onclick="goToSlide(1)">← Terug</button>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: Capaciteit -->
+    <div class="wizard-block" id="q4Capaciteit">
+      <div class="wizard-step-label">Vraag 4 van 4</div>
+      <h2 class="wizard-heading">Hoeveel opslagcapaciteit wil je?</h2>
+      <p class="wizard-subhead">Weet je het niet? Kies "Adviseer mij" en wij helpen je.</p>
+      <div class="choice-cards" id="qCapaciteit">
+        <div class="choice-card" data-value="klein" onclick="pickChoice(this,'qCapaciteit',4)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">5,7 kWh — 1 module</div>
+            <div class="cc-sub">~1 avond stroomverbruik</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="gemiddeld" onclick="pickChoice(this,'qCapaciteit',4)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">11,4 kWh — 2 modules</div>
+            <div class="cc-sub">~2 avonden autonomie</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="groot" onclick="pickChoice(this,'qCapaciteit',4)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">17,1 kWh — 3 modules</div>
+            <div class="cc-sub">Maximale autonomie</div>
+          </div>
+        </div>
+        <div class="choice-card" data-value="weet-niet" onclick="pickChoice(this,'qCapaciteit',4)">
+          <div class="cc-icon"></div>
+          <div class="cc-body">
+            <div class="cc-title">Weet ik niet — adviseer mij</div>
+            <div class="cc-sub">Wij bepalen de beste keuze voor jou</div>
+          </div>
+        </div>
+      </div>
+      <div class="wiz-nav">
+        <button class="btn-wiz-back" onclick="goToSlide(2)">← Terug</button>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: Contactgegevens -->
+    <div class="wizard-block" id="contactForm">
+      <div class="wizard-step-label">Jouw gegevens</div>
+      <h2 class="wizard-heading">Bijna klaar</h2>
+      <p class="wizard-subhead">Vul je gegevens in zodat we je persoonlijk kunnen bereiken.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div class="form-group">
+          <label class="form-label">Voornaam</label>
+          <input type="text" class="form-input" id="inputVoornaam" placeholder="Jan">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Achternaam</label>
+          <input type="text" class="form-input" id="inputAchternaam" placeholder="de Vries">
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+        <div class="form-group">
+          <label class="form-label">Postcode</label>
+          <input type="text" class="form-input" id="inputPostcode" placeholder="1234 AB">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Huisnummer</label>
+          <input type="text" class="form-input" id="inputHuisnummer" placeholder="12">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Telefoonnummer</label>
+        <input type="tel" class="form-input" id="inputTelefoon" placeholder="06 12 34 56 78">
+      </div>
+      <div class="form-group">
+        <label class="form-label">E-mailadres</label>
+        <input type="email" class="form-input" id="inputEmail" placeholder="jan@email.nl">
+      </div>
+
+      <div class="form-group" style="margin-top:8px;">
+        <label class="form-label" style="font-size:11px;margin-bottom:12px;">Hoe nemen wij het liefst contact op?</label>
+        <div class="contact-choice-cards">
+          <div class="contact-card" data-type="whatsapp" onclick="selectContact('whatsapp')">
+            <div class="contact-card-icon">
+              <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+                <path d="M11 2C6.03 2 2 6.03 2 11c0 1.6.42 3.1 1.15 4.4L2 20l4.73-1.12A8.96 8.96 0 0011 20c4.97 0 9-4.03 9-9s-4.03-9-9-9z" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+                <path d="M8 8.5c.2.5.8 1.7 1.4 2.3.6.6 1.8 1.2 2.3 1.4l.8-.8c.2-.2.5-.2.7-.1.5.2 1 .5 1.5.7.2.1.3.3.3.5v1.5c0 .3-.2.5-.5.5C9.8 14.5 7.5 12.2 7.5 9.5c0-.3.2-.5.5-.5h1.5c.2 0 .4.1.5.3.2.5.5 1 .7 1.5.1.2.1.5-.1.7l-.6.5z" stroke="#2DBD6E" stroke-width="1.2" fill="none"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-card-title">WhatsApp</div>
+              <div class="contact-card-sub">Snel &amp; persoonlijk</div>
+            </div>
+          </div>
+          <div class="contact-card" data-type="bellen" onclick="selectContact('bellen')">
+            <div class="contact-card-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                <path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2C7.61 21 3 16.39 3 6a2 2 0 012-2z" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-card-title">Bellen</div>
+              <div class="contact-card-sub">Direct antwoord</div>
+            </div>
+          </div>
+          <div class="contact-card" data-type="email" onclick="selectContact('email')">
+            <div class="contact-card-icon">
+              <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
+                <rect x="3" y="5" width="16" height="12" rx="2" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
+                <path d="M3 8l8 5 8-5" stroke="#2DBD6E" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div>
+              <div class="contact-card-title">E-mail</div>
+              <div class="contact-card-sub">Overzichtelijk</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="form-submit" onclick="submitForm()" style="width:100%;min-height:54px;border-radius:100px;font-size:16px;font-weight:700;margin-top:20px;">Stuur mijn offerte aanvraag →</button>
+      <p class="form-error-msg" id="formErrorMsg"></p>
+      <p style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;margin-top:4px;font-weight:300;">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
+      <div class="wiz-nav" style="margin-top:16px;">
+        <button class="btn-wiz-back" onclick="goToSlide(3)">← Terug</button>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: Succes -->
+    <div class="wizard-block wizard-block--success" id="formSuccess">
+      <div class="success-icon">
+        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+          <path d="M6 14l5.5 5.5L22 8" stroke="#2DBD6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="success-title">Aanvraag ontvangen!</div>
+      <p class="success-sub">Je offerte is onderweg naar je mailbox.<br>Binnen enkele minuten ontvang je een persoonlijk voorstel.</p>
+    </div>
+
+    </div><!-- /wizard-slides -->
+  </div>
+</section>
+
+
 <!-- VOORDELEN -->
 <section class="voordelen">
   <div class="container">
@@ -1366,455 +1622,6 @@
 </section>
 
 <!-- WIZARD -->
-<section id="wizard-sectie" class="wizard-sectie">
-  <div class="wizard-inner">
-
-    <div class="wizard-progress">
-      <div class="wizard-progress-fill" id="wizardProgressFill" style="width:8%"></div>
-    </div>
-
-    <div class="wizard-slides" id="wizardSlides">
-
-    <!-- BLOK 1: Stap 1 — jouw situatie -->
-    <div class="wizard-block" id="wizardStep1">
-      <div class="wizard-step-label">Stap 1 van 3 — Jouw situatie</div>
-      <h2 class="wizard-heading">Wat is jouw situatie?</h2>
-      <p class="wizard-subhead">Beantwoord 3 vragen — wij adviseren de beste batterij voor jou.</p>
-
-      <div class="vraag-blok">
-        <span class="vraag-label">Heb je zonnepanelen?</span>
-        <div class="choice-cards" id="qZonnepanelen">
-          <div class="choice-card" data-value="ja" onclick="selectChoice(this,'qZonnepanelen',false)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Ja, ik heb zonnepanelen</div>
-              <div class="cc-sub">Ik wil mijn opgewekte stroom opslaan</div>
-            </div>
-          </div>
-          <div class="choice-card" data-value="gepland" onclick="selectChoice(this,'qZonnepanelen',false)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Nog niet, maar ik plan ze binnenkort</div>
-              <div class="cc-sub">Ik wil alvast klaarstaan voor opslag</div>
-            </div>
-          </div>
-          <div class="choice-card" data-value="nee" onclick="selectChoice(this,'qZonnepanelen',false)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Nee, (nog) geen zonnepanelen</div>
-              <div class="cc-sub">Ik wil goedkope nachtstroom opslaan of back-up</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="vraag-blok">
-        <span class="vraag-label">Wat zijn je doelen? <span class="q-hint">(meerdere keuzes mogelijk)</span></span>
-        <div class="choice-cards" id="qDoel">
-          <div class="choice-card" data-value="opslaan" onclick="toggleDoel(this)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Zelfopgewekte stroom opslaan</div>
-              <div class="cc-sub">Maximaal profiteren van mijn zonnepanelen</div>
-            </div>
-          </div>
-          <div class="choice-card" data-value="besparen" onclick="toggleDoel(this)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Energierekening verlagen</div>
-              <div class="cc-sub">Minder afhankelijk van dure netprijzen</div>
-            </div>
-          </div>
-          <div class="choice-card" data-value="backup" onclick="toggleDoel(this)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Back-up stroom bij stroomuitval</div>
-              <div class="cc-sub">Altijd stroom, ook als het net uitvalt</div>
-            </div>
-          </div>
-          <div class="choice-card" data-value="onafhankelijk" onclick="toggleDoel(this)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Maximale onafhankelijkheid</div>
-              <div class="cc-sub">Zo min mogelijk van het stroomnet afhankelijk zijn</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="vraag-blok">
-        <span class="vraag-label">Hoe groot is je jaarlijks stroomverbruik? <span class="q-hint">(staat op je energierekening)</span></span>
-        <div class="choice-cards horizontal" id="qVerbruik">
-          <div class="choice-card" data-value="klein" onclick="selectChoice(this,'qVerbruik',false)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Klein</div>
-              <div class="cc-sub">&lt; 3.500 kWh</div>
-            </div>
-          </div>
-          <div class="choice-card" data-value="gemiddeld" onclick="selectChoice(this,'qVerbruik',false)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Gemiddeld</div>
-              <div class="cc-sub">3.500–5.500 kWh</div>
-            </div>
-          </div>
-          <div class="choice-card" data-value="groot" onclick="selectChoice(this,'qVerbruik',false)">
-            <div class="cc-icon"></div>
-            <div class="cc-body">
-              <div class="cc-title">Groot</div>
-              <div class="cc-sub">&gt; 5.500 kWh</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="vraag-blok">
-        <span class="vraag-label">Hoeveel opslagcapaciteit wil je? <span class="q-hint">(weet je het niet? kies "Adviseer mij")</span></span>
-        <div class="cap-cards" id="qCapaciteit">
-
-          <!-- 1 module -->
-          <div class="cap-card" data-value="klein" onclick="selectCapaciteit(this,'klein')">
-            <div class="cap-visual">
-              <svg viewBox="0 0 80 120" fill="none" class="cap-svg">
-                <!-- Module 1 -->
-                <rect x="8" y="20" width="64" height="92" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-                <rect x="8" y="20" width="64" height="14" rx="8" fill="rgba(45,189,110,0.15)"/>
-                <rect x="8" y="28" width="64" height="6" fill="rgba(45,189,110,0.15)"/>
-                <text x="40" y="31" font-family="sans-serif" font-size="6" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
-                <rect x="16" y="44" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="52" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="60" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="68" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="76" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="84" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <circle cx="40" cy="103" r="4" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
-                <circle cx="40" cy="103" r="1.5" fill="#2DBD6E"/>
-                <!-- Connectors boven -->
-                <rect x="26" y="14" width="8" height="8" rx="2" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-                <rect x="46" y="14" width="8" height="8" rx="2" fill="rgba(255,255,255,0.1)" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-              </svg>
-            </div>
-            <div class="cap-kwh">5,7 kWh</div>
-            <div class="cap-modules">1 module</div>
-            <div class="cap-desc">~1 avond stroomverbruik</div>
-          </div>
-
-          <!-- 2 modules -->
-          <div class="cap-card" data-value="gemiddeld" onclick="selectCapaciteit(this,'gemiddeld')">
-            <div class="cap-visual">
-              <svg viewBox="0 0 80 180" fill="none" class="cap-svg">
-                <!-- Module 2 (bovenste) -->
-                <rect x="8" y="2" width="64" height="84" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-                <rect x="8" y="2" width="64" height="14" rx="8" fill="rgba(45,189,110,0.15)"/>
-                <rect x="8" y="10" width="64" height="6" fill="rgba(45,189,110,0.15)"/>
-                <text x="40" y="13" font-family="sans-serif" font-size="6" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
-                <rect x="16" y="26" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="34" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="42" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="50" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="58" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <circle cx="40" cy="76" r="4" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
-                <circle cx="40" cy="76" r="1.5" fill="#2DBD6E"/>
-                <!-- Koppeling -->
-                <rect x="26" y="86" width="8" height="6" rx="2" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
-                <rect x="46" y="86" width="8" height="6" rx="2" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
-                <!-- Module 1 (onderste) -->
-                <rect x="8" y="92" width="64" height="84" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-                <rect x="8" y="92" width="64" height="14" rx="8" fill="rgba(45,189,110,0.15)"/>
-                <rect x="8" y="100" width="64" height="6" fill="rgba(45,189,110,0.15)"/>
-                <text x="40" y="103" font-family="sans-serif" font-size="6" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
-                <rect x="16" y="116" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="124" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="132" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="140" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="148" width="48" height="3" rx="1.5" fill="rgba(255,255,255,0.07)"/>
-                <circle cx="40" cy="166" r="4" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
-                <circle cx="40" cy="166" r="1.5" fill="#2DBD6E"/>
-              </svg>
-            </div>
-            <div class="cap-kwh">11,4 kWh</div>
-            <div class="cap-modules">2 modules</div>
-            <div class="cap-desc">~2 avonden autonomie</div>
-          </div>
-
-          <!-- 3 modules -->
-          <div class="cap-card" data-value="groot" onclick="selectCapaciteit(this,'groot')">
-            <div class="cap-visual">
-              <svg viewBox="0 0 80 240" fill="none" class="cap-svg">
-                <!-- Module 3 -->
-                <rect x="8" y="2" width="64" height="72" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-                <rect x="8" y="2" width="64" height="12" rx="8" fill="rgba(45,189,110,0.15)"/>
-                <rect x="8" y="9" width="64" height="5" fill="rgba(45,189,110,0.15)"/>
-                <text x="40" y="12" font-family="sans-serif" font-size="5.5" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
-                <rect x="16" y="24" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="31" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="38" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="45" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="52" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <circle cx="40" cy="65" r="3.5" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
-                <circle cx="40" cy="65" r="1.5" fill="#2DBD6E"/>
-                <rect x="26" y="74" width="7" height="5" rx="1.5" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
-                <rect x="47" y="74" width="7" height="5" rx="1.5" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
-                <!-- Module 2 -->
-                <rect x="8" y="79" width="64" height="72" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-                <rect x="8" y="79" width="64" height="12" rx="8" fill="rgba(45,189,110,0.15)"/>
-                <rect x="8" y="86" width="64" height="5" fill="rgba(45,189,110,0.15)"/>
-                <text x="40" y="89" font-family="sans-serif" font-size="5.5" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
-                <rect x="16" y="101" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="108" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="115" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="122" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="129" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <circle cx="40" cy="142" r="3.5" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
-                <circle cx="40" cy="142" r="1.5" fill="#2DBD6E"/>
-                <rect x="26" y="151" width="7" height="5" rx="1.5" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
-                <rect x="47" y="151" width="7" height="5" rx="1.5" fill="rgba(45,189,110,0.25)" stroke="rgba(45,189,110,0.4)" stroke-width="1"/>
-                <!-- Module 1 -->
-                <rect x="8" y="156" width="64" height="72" rx="8" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
-                <rect x="8" y="156" width="64" height="12" rx="8" fill="rgba(45,189,110,0.15)"/>
-                <rect x="8" y="163" width="64" height="5" fill="rgba(45,189,110,0.15)"/>
-                <text x="40" y="166" font-family="sans-serif" font-size="5.5" fill="#2DBD6E" text-anchor="middle" font-weight="600">ALPHA ESS</text>
-                <rect x="16" y="178" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="185" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="192" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="199" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <rect x="16" y="206" width="48" height="2.5" rx="1.2" fill="rgba(255,255,255,0.07)"/>
-                <circle cx="40" cy="219" r="3.5" fill="rgba(45,189,110,0.2)" stroke="#2DBD6E" stroke-width="1"/>
-                <circle cx="40" cy="219" r="1.5" fill="#2DBD6E"/>
-              </svg>
-            </div>
-            <div class="cap-kwh">17,1 kWh</div>
-            <div class="cap-modules">3 modules</div>
-            <div class="cap-desc">3+ avonden autonomie</div>
-          </div>
-
-          <!-- Adviseer mij -->
-          <div class="cap-card" data-value="weet-niet" onclick="selectCapaciteit(this,'weet-niet')">
-            <div class="cap-visual">
-              <svg viewBox="0 0 80 120" fill="none" class="cap-svg">
-                <rect x="12" y="20" width="56" height="80" rx="8" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5" stroke-dasharray="4 3"/>
-                <text x="40" y="58" font-family="sans-serif" font-size="26" fill="rgba(255,255,255,0.15)" text-anchor="middle">?</text>
-                <text x="40" y="78" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.25)" text-anchor="middle" font-weight="500">ADVISEER</text>
-                <text x="40" y="88" font-family="sans-serif" font-size="7" fill="rgba(255,255,255,0.25)" text-anchor="middle" font-weight="500">MIJ</text>
-              </svg>
-            </div>
-            <div class="cap-kwh" style="color:rgba(255,255,255,0.5)">Weet ik niet</div>
-            <div class="cap-modules" style="color:rgba(255,255,255,0.3)">Jij adviseert</div>
-            <div class="cap-desc">Wij bepalen de beste keuze</div>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- BESPARINGSCALCULATOR -->
-      <div class="besparing-card" id="besparingCard">
-        <div class="batterij-wrap">
-          <svg width="44" height="22" viewBox="0 0 44 22" fill="none" style="flex-shrink:0">
-            <rect x="1" y="1" width="37" height="20" rx="4" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" fill="none"/>
-            <rect x="38" y="7" width="5" height="8" rx="2" fill="rgba(255,255,255,0.15)"/>
-            <rect id="batterijFill" x="2.5" y="2.5" width="0" height="17" rx="3" fill="#2DBD6E" style="transition:width 0.7s cubic-bezier(0.34,1.56,0.64,1)"/>
-          </svg>
-          <span class="batterij-tekst" id="batterijTekst">Beantwoord de vragen voor jouw persoonlijke berekening</span>
-        </div>
-        <div class="besparing-label">Jouw geschatte besparing</div>
-        <div class="besparing-grid">
-          <div class="besparing-item">
-            <div class="besparing-value">€ <span id="calcBesparing">—</span></div>
-            <div class="besparing-unit">per jaar</div>
-          </div>
-          <div class="besparing-item">
-            <div class="besparing-value"><span id="calcTerugverdien">—</span> <span style="font-size:18px">jr</span></div>
-            <div class="besparing-unit">terugverdientijd</div>
-          </div>
-          <div class="besparing-item">
-            <div class="besparing-value"><span id="calcCO2">—</span> <span style="font-size:18px">kg</span></div>
-            <div class="besparing-unit">CO₂ besparing/jaar</div>
-          </div>
-        </div>
-        <p class="besparing-note">Indicatieve schatting op basis van gemiddelde NL stroomprijs (€0,32/kWh) en teruglevertarief (€0,05/kWh)</p>
-      </div>
-
-      <button class="btn-wiz-next" onclick="showAdvies()">Bekijk jouw advies →</button>
-    </div>
-
-    <!-- BLOK 2: Advies / vergelijking -->
-    <div class="wizard-block wizard-block--comparison" id="wizardAdvies">
-      <div class="verg-eyebrow">Jouw persoonlijk advies</div>
-      <h2 class="wizard-heading" style="margin-bottom:8px;">Dit adviseren wij voor jou</h2>
-      <p class="wizard-subhead">Op basis van jouw wensen raden we dit aan — kies en ga verder.</p>
-
-      <div class="verg-grid" id="vergGrid">
-        <!-- Gevuld door JS -->
-      </div>
-
-      <button class="btn-wiz-back" onclick="goToSlide(0)">← Pas aan</button>
-    </div>
-
-    <!-- BLOK 3: Stap 2 — installatie -->
-    <div class="wizard-block" id="wizardStep2">
-      <div class="wizard-step-label">Stap 2 van 3 — Installatie</div>
-      <h2 class="wizard-heading">Waar komt de batterij?</h2>
-      <p class="wizard-subhead">Vertel ons iets over de installatielocatie zodat onze installateur goed voorbereid komt.</p>
-
-      <div class="vraag-blok">
-        <span class="vraag-label">Waar wil je de batterij plaatsen?</span>
-        <div class="situatie-cards" id="qLocatie">
-          <div class="situatie-card" data-value="garage" onclick="selectSituatie(this,'garage')">
-            <div class="situatie-card-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <rect x="2" y="10" width="20" height="12" rx="2" stroke="#2DBD6E" stroke-width="1.5" fill="none"/>
-                <path d="M2 10L12 3l10 7" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <rect x="9" y="15" width="6" height="7" rx="1" stroke="#2DBD6E" stroke-width="1.3" fill="none"/>
-              </svg>
-            </div>
-            <div class="situatie-card-body">
-              <div class="situatie-card-title">Garage of bijkeuken</div>
-              <div class="situatie-card-sub">Binnenshuis, droog en beschermd — ideaal voor wandmontage</div>
-            </div>
-          </div>
-          <div class="situatie-card" data-value="kelder" onclick="selectSituatie(this,'kelder')">
-            <div class="situatie-card-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="3" width="18" height="18" rx="2" stroke="#2DBD6E" stroke-width="1.5" fill="none"/>
-                <path d="M3 12h18M12 3v18" stroke="#2DBD6E" stroke-width="1.3" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="situatie-card-body">
-              <div class="situatie-card-title">Kelder of technische ruimte</div>
-              <div class="situatie-card-sub">Grotere ruimte, ook geschikt voor meerdere modules</div>
-            </div>
-          </div>
-          <div class="situatie-card" data-value="buiten" onclick="selectSituatie(this,'buiten')">
-            <div class="situatie-card-icon">
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="9" stroke="#2DBD6E" stroke-width="1.5" fill="none"/>
-                <path d="M12 7v5l3 3" stroke="#2DBD6E" stroke-width="1.5" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div class="situatie-card-body">
-              <div class="situatie-card-title">Buitenopstelling</div>
-              <div class="situatie-card-sub">Speciale behuizing nodig — we bespreken de opties</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cond-field" id="condAfstand">
-        <div class="form-group">
-          <span class="cond-label">Hoeveel meter is de afstand van de meterkast naar de batterijlocatie?</span>
-          <input type="number" class="form-input" id="inputAfstand" placeholder="bijv. 5" min="0" step="1">
-        </div>
-      </div>
-
-      <div style="margin-top:24px;">
-        <button class="btn-wiz-back" onclick="goToSlide(1)">← Terug</button>
-        <button class="btn-wiz-next" onclick="goToSlide(3)">Volgende stap →</button>
-      </div>
-    </div>
-
-    <!-- BLOK 4: Stap 3 — contactgegevens -->
-    <div class="wizard-block" id="wizardStep3">
-      <div class="wizard-step-label">Stap 3 van 3 — Jouw gegevens</div>
-      <h2 class="wizard-heading">Bijna klaar</h2>
-      <p class="wizard-subhead">Vul je gegevens in zodat we je persoonlijk kunnen bereiken.</p>
-
-      <div class="form-row" style="margin-bottom:16px;">
-        <div class="form-group">
-          <label class="form-label">Voornaam</label>
-          <input type="text" class="form-input" id="inputVoornaam" placeholder="Jan">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Achternaam</label>
-          <input type="text" class="form-input" id="inputAchternaam" placeholder="de Vries">
-        </div>
-      </div>
-
-      <div class="form-row" style="margin-bottom:16px;">
-        <div class="form-group">
-          <label class="form-label">Postcode</label>
-          <input type="text" class="form-input" id="inputPostcode" placeholder="1234 AB">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Huisnummer</label>
-          <input type="text" class="form-input" id="inputHuisnummer" placeholder="12">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Telefoonnummer</label>
-        <input type="tel" class="form-input" id="inputTelefoon" placeholder="06 12 34 56 78">
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">E-mailadres</label>
-        <input type="email" class="form-input" id="inputEmail" placeholder="jan@email.nl">
-      </div>
-
-      <div class="form-group" style="margin-top:8px;">
-        <label class="form-label" style="font-size:11px;margin-bottom:12px;">Hoe nemen wij het liefst contact op?</label>
-        <div class="contact-choice-cards">
-          <div class="contact-card" data-type="whatsapp" onclick="selectContact('whatsapp')">
-            <div class="contact-card-icon">
-              <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
-                <path d="M11 2C6.03 2 2 6.03 2 11c0 1.6.42 3.1 1.15 4.4L2 20l4.73-1.12A8.96 8.96 0 0011 20c4.97 0 9-4.03 9-9s-4.03-9-9-9z" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
-                <path d="M8 8.5c.2.5.8 1.7 1.4 2.3.6.6 1.8 1.2 2.3 1.4l.8-.8c.2-.2.5-.2.7-.1.5.2 1 .5 1.5.7.2.1.3.3.3.5v1.5c0 .3-.2.5-.5.5C9.8 14.5 7.5 12.2 7.5 9.5c0-.3.2-.5.5-.5h1.5c.2 0 .4.1.5.3.2.5.5 1 .7 1.5.1.2.1.5-.1.7l-.6.5z" stroke="#2DBD6E" stroke-width="1.2" fill="none"/>
-              </svg>
-            </div>
-            <div>
-              <div class="contact-card-title">WhatsApp</div>
-              <div class="contact-card-sub">Snel & persoonlijk</div>
-            </div>
-          </div>
-          <div class="contact-card" data-type="bellen" onclick="selectContact('bellen')">
-            <div class="contact-card-icon">
-              <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
-                <path d="M6.5 3C6.5 3 5 3 4 4.5c-1 1.5-1 3.5 0 5.5s2.5 4 4.5 6 4 3.5 6 4.5 4 1 5.5 0c1.5-1 1.5-2.5 1.5-2.5l-3-3s-1 0-1.5.5L16 16c-1.5-.5-4-2.5-5.5-4S8.5 8 8 6.5l1.5-1.5C10 4.5 10 3.5 10 3.5L7 .5S6.5 3 6.5 3z" stroke="#2DBD6E" stroke-width="1.3" fill="none" stroke-linejoin="round"/>
-              </svg>
-            </div>
-            <div>
-              <div class="contact-card-title">Bellen</div>
-              <div class="contact-card-sub">Direct antwoord</div>
-            </div>
-          </div>
-          <div class="contact-card" data-type="email" onclick="selectContact('email')">
-            <div class="contact-card-icon">
-              <svg width="20" height="20" viewBox="0 0 22 22" fill="none">
-                <rect x="3" y="5" width="16" height="12" rx="2" stroke="#2DBD6E" stroke-width="1.4" fill="none"/>
-                <path d="M3 8l8 5 8-5" stroke="#2DBD6E" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>
-            </div>
-            <div>
-              <div class="contact-card-title">E-mail</div>
-              <div class="contact-card-sub">Overzichtelijk</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <button class="form-submit" onclick="submitForm()">Stuur mijn offerte aanvraag →</button>
-      <p class="form-error-msg" id="formErrorMsg"></p>
-      <p style="font-size:12px;color:rgba(255,255,255,0.25);text-align:center;margin-top:4px;font-weight:300;">Jouw gegevens worden veilig verwerkt en niet gedeeld met derden.</p>
-
-      <div style="margin-top:16px;">
-        <button class="btn-wiz-back" onclick="goToSlide(2)">← Terug</button>
-      </div>
-    </div>
-
-    <!-- BLOK 5: Succes -->
-    <div class="wizard-block wizard-block--success" id="formSuccess">
-      <div class="success-icon">
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
-          <path d="M6 14l5.5 5.5L22 8" stroke="#2DBD6E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </div>
-      <div class="success-title">Aanvraag ontvangen!</div>
-      <p class="success-sub">Je offerte aanvraag is binnen. Een lokale installateur neemt binnen 1 werkdag contact met je op.<br>Vragen? Mail ons op <a href="mailto:info@energx.nl" style="color:var(--green-400);">info@energx.nl</a></p>
-    </div>
-
-    </div><!-- /wizard-slides -->
-  </div>
-</section>
 
 <!-- MERKEN -->
 <section class="merken">
@@ -1957,141 +1764,9 @@
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
   // ── WIZARD STATE ──
-  let gekozenProduct = null; // 'smile5' | 'b3plus'
-
-  function getSelectedValue(groupId) {
-    const selected = document.querySelector(`#${groupId} .choice-card.selected`)
-      || document.querySelector(`#${groupId} .cap-card.selected`);
-    return selected ? selected.dataset.value : null;
-  }
-
-  function selectChoice(el, groupId, autoNext) {
-    document.querySelectorAll(`#${groupId} .choice-card`).forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    updateCalculator();
-    if (autoNext) {
-      setTimeout(() => showAdvies(), 300);
-    }
-  }
-
-  function toggleDoel(el) {
-    el.classList.toggle('selected');
-    updateCalculator();
-  }
-
-  function getSelectedDoelen() {
-    return Array.from(document.querySelectorAll('#qDoel .choice-card.selected'))
-      .map(c => c.dataset.value);
-  }
-
-  function selectCapaciteit(el) {
-    document.querySelectorAll('#qCapaciteit .cap-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    updateCalculator();
-  }
-
-  // ── BESPARINGSCALCULATOR ──
-  function updateCalculator() {
-    const zonnepanelen = getSelectedValue('qZonnepanelen');
-    const verbruik     = getSelectedValue('qVerbruik');
-    const doelen       = getSelectedDoelen();
-    const capaciteit   = getSelectedValue('qCapaciteit');
-
-    const card = document.getElementById('besparingCard');
-    if (!zonnepanelen && !verbruik) return;
-    card.classList.add('visible');
-
-    // Verbruik in kWh
-    const kwhMap = { klein: 3000, gemiddeld: 4500, groot: 6500 };
-    const kwh = kwhMap[verbruik] || 4500;
-
-    // Capaciteit in kWh (voor schaling besparing)
-    const capKwh = { klein: 5.7, gemiddeld: 11.4, groot: 17.1, 'weet-niet': null }[capaciteit] || null;
-    // Schaalfactor: meer capaciteit = meer nuttig zelfverbruik (tot een max)
-    const capFactor = capKwh ? Math.min(capKwh / 5.7, 3) * 0.75 + 0.25 : 1;
-
-    // Besparing berekening
-    let besparing = 0;
-    let investering = 5500;
-
-    if (zonnepanelen === 'ja') {
-      const opwek = kwh * 0.7;
-      const extraZelfverbruik = Math.min(opwek * 0.40 * capFactor, opwek * 0.85);
-      besparing = Math.round(extraZelfverbruik * 0.27);
-      investering = capaciteit === 'groot' ? 9500 : capaciteit === 'gemiddeld' ? 7200 : 5500;
-    } else if (zonnepanelen === 'gepland') {
-      const opwek = kwh * 0.60;
-      besparing = Math.round(opwek * 0.38 * capFactor * 0.27);
-      investering = capaciteit === 'groot' ? 9500 : capaciteit === 'gemiddeld' ? 7200 : 5500;
-    } else {
-      // Geen panelen — dal/piek tarief arbitrage
-      besparing = Math.round(kwh * 0.12 * 0.10 * Math.min(capFactor, 1.5));
-      investering = capaciteit === 'groot' ? 8800 : capaciteit === 'gemiddeld' ? 6500 : 4800;
-    }
-
-    const terugverdientijd = besparing > 0 ? (investering / besparing).toFixed(1) : null;
-    const extraKwh = zonnepanelen !== 'nee' ? kwh * 0.7 * 0.40 : kwh * 0.12;
-    const co2 = Math.round(extraKwh * 0.41);
-
-    // Batterij progress (hoeveel vragen beantwoord van de 4)
-    const answered = [zonnepanelen, doelen.length > 0 ? 'x' : null, verbruik, capaciteit].filter(Boolean).length;
-    const maxFill = 32;
-    const fillW = Math.round((answered / 4) * maxFill);
-    document.getElementById('batterijFill').setAttribute('width', fillW);
-
-    const resterend = 4 - answered;
-    const teksten = {
-      0: 'Beantwoord de vragen voor jouw persoonlijke berekening',
-      1: `Goed bezig! Nog ${resterend} vragen voor een compleet beeld.`,
-      2: `Goed bezig! Nog ${resterend} vragen voor een compleet beeld.`,
-      3: 'Bijna klaar! Nog 1 vraag.',
-      4: 'Berekening compleet — dit is jouw persoonlijk overzicht.',
-    };
-    const tekst = teksten[answered] || teksten[0];
-    document.getElementById('batterijTekst').innerHTML =
-      answered === 4 ? `<strong>${tekst}</strong>` : tekst;
-
-    // Animeer cijfers
-    if (besparing > 0) {
-      countUp('calcBesparing', besparing, 0);
-      if (terugverdientijd) countUp('calcTerugverdien', parseFloat(terugverdientijd), 1);
-      countUp('calcCO2', co2, 0);
-    }
-  }
-
-  function countUp(id, target, decimals) {
-    const el = document.getElementById(id);
-    const from = parseFloat(el.textContent.replace(/\./g, '').replace(',', '.')) || 0;
-    const duration = 700;
-    const t0 = performance.now();
-    function tick(now) {
-      const p = Math.min((now - t0) / duration, 1);
-      const eased = 1 - Math.pow(1 - p, 3);
-      const val = from + (target - from) * eased;
-      el.textContent = decimals
-        ? val.toFixed(decimals)
-        : Math.round(val).toLocaleString('nl-NL');
-      if (p < 1) requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
-  }
-
-  function selectSituatie(el, type) {
-    document.querySelectorAll('#qLocatie .situatie-card').forEach(c => c.classList.remove('selected'));
-    el.classList.add('selected');
-    const afstand = document.getElementById('condAfstand');
-    afstand.classList.toggle('visible', type === 'buiten');
-  }
-
-  function selectContact(type) {
-    document.querySelectorAll('.contact-card').forEach(c => c.classList.remove('selected'));
-    const card = document.querySelector(`.contact-card[data-type="${type}"]`);
-    if (card) card.classList.add('selected');
-  }
-
-  const SLIDE_IDS = ['wizardStep1', 'wizardAdvies', 'wizardStep2', 'wizardStep3', 'formSuccess'];
-  const SLIDE_PCTS = [8, 40, 55, 75, 100];
   let currentSlide = 0;
+  const SLIDE_IDS  = ['q1Zonnepanelen', 'q2Doelen', 'q3Verbruik', 'q4Capaciteit', 'contactForm', 'formSuccess'];
+  const SLIDE_PCTS = [8, 28, 48, 68, 86, 100];
 
   function goToSlide(index) {
     currentSlide = index;
@@ -2102,91 +1777,32 @@
     inner.style.height = (target.scrollHeight + 48) + 'px';
     const fill = document.getElementById('wizardProgressFill');
     if (fill) fill.style.width = SLIDE_PCTS[index] + '%';
-    setTimeout(() => {
-      document.getElementById('wizard-sectie').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 60);
+    document.getElementById('wizard-sectie').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 
-  // ── ADVIES LOGICA ──
-  function showAdvies() {
-    const zonnepanelen = getSelectedValue('qZonnepanelen');
-    const doelen = getSelectedDoelen();
-    const verbruik = getSelectedValue('qVerbruik');
-    const capaciteit = getSelectedValue('qCapaciteit');
-
-    // Bepaal aanbevolen product
-    let aanbevolen = 'smile5';
-    if (doelen.includes('backup') || doelen.includes('onafhankelijk') || verbruik === 'groot' || capaciteit === 'gemiddeld' || capaciteit === 'groot') {
-      aanbevolen = 'b3plus';
-    }
-    if (zonnepanelen === 'ja' && doelen.includes('opslaan') && !doelen.includes('backup') && !doelen.includes('onafhankelijk') && verbruik !== 'groot' && capaciteit === 'klein') {
-      aanbevolen = 'smile5';
-    }
-
-    gekozenProduct = aanbevolen;
-    renderVergelijking(aanbevolen);
-    goToSlide(1);
+  function pickChoice(el, groupId, nextSlide) {
+    document.querySelectorAll(`#${groupId} .choice-card`).forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    setTimeout(() => goToSlide(nextSlide), 300);
   }
 
-  function kiesProduct(productId) {
-    gekozenProduct = productId;
-    goToSlide(2);
+  function toggleDoel(el) {
+    el.classList.toggle('selected');
   }
 
-  function renderVergelijking(aanbevolen) {
-    const producten = {
-      smile5: {
-        naam: 'SMILE5',
-        capaciteit: '5,7 kWh — uitbreidbaar',
-        checks: [
-          { ok: true,  txt: 'Hybride omvormer inbegrepen' },
-          { ok: true,  txt: 'Ideaal met nieuwe zonnepanelen' },
-          { ok: true,  txt: '97,7% rendement' },
-          { ok: true,  txt: 'Tot 10 kWh uitbreidbaar' },
-          { ok: false, txt: 'Vereist geen bestaande omvormer' },
-        ],
-      },
-      b3plus: {
-        naam: 'SMILE-B3 Plus',
-        capaciteit: '5,7–17,1 kWh stapelbaar',
-        checks: [
-          { ok: true,  txt: 'Koppelt aan bestaande omvormer' },
-          { ok: true,  txt: 'EPS back-up bij stroomuitval' },
-          { ok: true,  txt: 'Tot 3 modules stapelbaar' },
-          { ok: true,  txt: 'Maximale onafhankelijkheid' },
-          { ok: true,  txt: 'Flexibel uitbreidbaar' },
-        ],
-      },
-    };
+  function getSelectedValue(groupId) {
+    const sel = document.querySelector(`#${groupId} .choice-card.selected`);
+    return sel ? sel.dataset.value : null;
+  }
 
-    const fotos = { smile5: '/images/alpha-smile5.jpg', b3plus: '/images/alpha-b3plus.jpg' };
-    const volgorde = aanbevolen === 'smile5' ? ['smile5', 'b3plus'] : ['b3plus', 'smile5'];
+  function getSelectedDoelen() {
+    return Array.from(document.querySelectorAll('#qDoel .choice-card.selected')).map(c => c.dataset.value);
+  }
 
-    const html = volgorde.map((id, i) => {
-      const p = producten[id];
-      const isAanbevolen = id === aanbevolen;
-      const badge = isAanbevolen ? `<div class="verg-top-badge">⭐ Aanbevolen voor jou</div>` : '';
-      const checks = p.checks.map(c =>
-        `<div class="verg-check ${c.ok ? 'ok' : 'nok'}">
-          <div class="verg-ci">${c.ok ? '✓' : '✕'}</div>
-          ${c.txt}
-        </div>`
-      ).join('');
-      return `
-        <div class="verg-card ${isAanbevolen ? 'aanbevolen' : ''}">
-          ${badge}
-          <img class="verg-img" src="${fotos[id]}" alt="Alpha ESS ${p.naam}">
-          <div class="verg-brand">Alpha ESS</div>
-          <div class="verg-naam">${p.naam}</div>
-          <div class="verg-capacity">${p.capaciteit}</div>
-          <div class="verg-checks">${checks}</div>
-          <button class="verg-btn" onclick="kiesProduct('${id}')">
-            ${isAanbevolen ? 'Dit wil ik — offerte aanvragen →' : 'Toch deze kiezen'}
-          </button>
-        </div>`;
-    }).join('');
-
-    document.getElementById('vergGrid').innerHTML = html;
+  function selectContact(type) {
+    document.querySelectorAll('.contact-card').forEach(c => c.classList.remove('selected'));
+    const card = document.querySelector(`.contact-card[data-type="${type}"]`);
+    if (card) card.classList.add('selected');
   }
 
   // ── SUBMIT ──
@@ -2194,9 +1810,8 @@
     const errMsg = document.getElementById('formErrorMsg');
     errMsg.textContent = '';
 
-    // Client-side validatie
     const voornaamEl = document.getElementById('inputVoornaam');
-    const emailEl = document.getElementById('inputEmail');
+    const emailEl    = document.getElementById('inputEmail');
     [voornaamEl, emailEl].forEach(el => el.classList.toggle('input-error', !el.value.trim()));
     if (!voornaamEl.value.trim() || !emailEl.value.trim()) {
       errMsg.textContent = 'Vul je naam en e-mailadres in om door te gaan.';
@@ -2206,71 +1821,67 @@
     const selectedCard = document.querySelector('.contact-card.selected');
     const commPref = selectedCard ? selectedCard.dataset.type : 'email';
 
-    const voornaam = document.getElementById('inputVoornaam').value.trim();
+    const voornaam   = voornaamEl.value.trim();
     const achternaam = document.getElementById('inputAchternaam').value.trim();
-    const postcode = document.getElementById('inputPostcode').value.trim();
+    const postcode   = document.getElementById('inputPostcode').value.trim();
     const huisnummer = document.getElementById('inputHuisnummer').value.trim();
-    const phone = document.getElementById('inputTelefoon').value.trim() || undefined;
-    const email = document.getElementById('inputEmail').value.trim();
-
-    const locatieEl = document.querySelector('#qLocatie .situatie-card.selected');
-    const locatie = locatieEl ? locatieEl.dataset.value : null;
-    const afstand = document.getElementById('inputAfstand').value;
+    const phone      = document.getElementById('inputTelefoon').value.trim() || undefined;
+    const email      = emailEl.value.trim();
 
     const details = {
-      product: gekozenProduct || 'smile5',
       zonnepanelen: getSelectedValue('qZonnepanelen'),
-      doelen: getSelectedDoelen(),
-      gewenste_capaciteit: getSelectedValue('qCapaciteit'),
-      verbruik: getSelectedValue('qVerbruik'),
-      locatie,
+      doelen:       getSelectedDoelen(),
+      verbruik:     getSelectedValue('qVerbruik'),
+      capaciteit:   getSelectedValue('qCapaciteit'),
     };
-    if (afstand) details.afstand_meter = parseInt(afstand, 10);
 
-    const btn = document.querySelector('#wizardStep3 .form-submit');
+    const btn = document.querySelector('#contactForm .form-submit');
     const origText = btn.textContent;
     btn.textContent = 'Even geduld...';
     btn.disabled = true;
 
     const payload = {
       customer: {
-        name: `${voornaam} ${achternaam}`.trim(),
+        name:        `${voornaam} ${achternaam}`.trim(),
         email,
         phone,
-        postalcode: postcode || undefined,
+        postalcode:  postcode   || undefined,
         housenumber: huisnummer || undefined,
-        country: 'NL',
+        country:     'NL',
       },
       communicationPreference: commPref,
-      offerTemplateId: `thuisbatterij-${details.product}`,
+      offerTemplateId: 'thuisbatterij',
       details,
     };
 
     try {
       const resp = await fetch('https://crm.energx.nl/api/v1/offer', {
-        method: 'POST',
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body:    JSON.stringify(payload),
       });
-
       if (resp.ok) {
-        goToSlide(4);
+        goToSlide(5);
       } else {
         throw new Error('API error');
       }
-    } catch (e) {
+    } catch {
       btn.textContent = origText;
       btn.disabled = false;
       document.getElementById('formErrorMsg').textContent = 'Er ging iets mis. Probeer het opnieuw of mail info@energx.nl';
     }
   }
 
-  // Init wizard height to first slide
+  // Init wizard hoogte
+  (function() {
+    const inner = document.getElementById('wizardSlides').parentElement;
+    const first = document.getElementById('q1Zonnepanelen');
+    if (inner && first) inner.style.height = (first.scrollHeight + 48) + 'px';
+  })();
   window.addEventListener('load', () => {
     const inner = document.getElementById('wizardSlides').parentElement;
-    const first = document.getElementById('wizardStep1');
-    inner.style.height = (first.scrollHeight + 48) + 'px';
+    const first = document.getElementById('q1Zonnepanelen');
+    if (inner && first) inner.style.height = (first.scrollHeight + 48) + 'px';
   });
 </script>
-</body>
-</html>
+</body></html>
