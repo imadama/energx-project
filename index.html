@@ -27,8 +27,33 @@
   "name": "Energx",
   "url": "https://energx.nl",
   "logo": "https://energx.nl/energx-logo.png",
-  "description": "Energx regelt jouw laadpaal, warmtepomp of thuisbatterij via gecertificeerde lokale installateurs.",
-  "areaServed": { "@type": "Country", "name": "Nederland" },
+  "description": "Energx koppelt huiseigenaren aan erkende installateurs voor thuisbatterijen, warmtepompen en laadpalen.",
+  "foundingDate": "2022",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Zonnebaan 54",
+    "postalCode": "3542 EG",
+    "addressLocality": "Utrecht",
+    "addressCountry": "NL"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "customer service",
+    "email": "info@energx.nl",
+    "telephone": "+31685023112",
+    "availableLanguage": ["Dutch"],
+    "hoursAvailable": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+      "opens": "09:00",
+      "closes": "20:00"
+    }
+  },
+  "areaServed": [
+    { "@type": "AdministrativeArea", "name": "Zuid-Holland" },
+    { "@type": "AdministrativeArea", "name": "Utrecht" },
+    { "@type": "AdministrativeArea", "name": "Noord-Brabant" }
+  ],
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Duurzame energie installaties",
@@ -1302,13 +1327,16 @@
         <div class="footer-col-title">Contact</div>
         <ul>
           <li><a href="mailto:info@energx.nl">info@energx.nl</a></li>
+          <li><a href="tel:+31685023112">06-850 23 112</a></li>
+          <li style="font-size:13px; color:var(--gray-400); margin-top:4px;">Ma–vr 9:00–20:00</li>
+          <li style="font-size:13px; color:var(--gray-400);">Zonnebaan 54, Utrecht</li>
           <li><a href="#">Privacybeleid</a></li>
           <li><a href="#">Algemene voorwaarden</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2025 Energx.nl — Alle rechten voorbehouden</span>
+      <span>© 2026 Energx — KvK: 92124232 — Zonnebaan 54, 3542 EG Utrecht</span>
       <span class="footer-green">Duurzaam gebouwd ♻</span>
     </div>
   </div>
