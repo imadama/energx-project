@@ -23,22 +23,50 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Service",
-  "name": "Warmtepomp installatie",
-  "description": "Warmtepomp laten installeren via gecertificeerde lokale vakmannen. Remeha en Hitachi warmtepompen, inclusief ISDE-subsidie aanvraag.",
-  "url": "https://energx.nl/energx-warmtepomp.html",
-  "provider": {
-    "@type": "Organization",
-    "name": "Energx",
-    "url": "https://energx.nl"
-  },
-  "areaServed": { "@type": "Country", "name": "Nederland" },
-  "serviceType": "Warmtepomp installatie",
-  "offers": {
-    "@type": "Offer",
-    "priceCurrency": "EUR",
-    "description": "Gratis offerte inclusief ISDE-subsidie aanvraag"
-  }
+  "@graph": [
+    {
+      "@type": "Service",
+      "name": "Warmtepomp installatie",
+      "description": "Warmtepomp laten installeren via gecertificeerde lokale vakmannen. Remeha en Hitachi warmtepompen, inclusief ISDE-subsidie aanvraag.",
+      "url": "https://energx.nl/energx-warmtepomp.html",
+      "provider": { "@type": "Organization", "name": "Energx", "url": "https://energx.nl" },
+      "areaServed": { "@type": "Country", "name": "Nederland" },
+      "serviceType": "Warmtepomp installatie",
+      "priceRange": "€5.000 - €12.000",
+      "aggregateRating": { "@type": "AggregateRating", "ratingValue": "4.9", "reviewCount": "500" },
+      "offers": { "@type": "Offer", "priceCurrency": "EUR", "description": "Gratis offerte inclusief ISDE-subsidie aanvraag tot €4.000" }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Wat kost een warmtepomp laten installeren?",
+          "acceptedAnswer": { "@type": "Answer", "text": "De kosten voor een warmtepomp installatie liggen in 2025 gemiddeld tussen €5.000 en €12.000 all-in. Met ISDE-subsidie tot €4.000 dalen de netto kosten naar €3.000–€8.000." }
+        },
+        {
+          "@type": "Question",
+          "name": "Welke subsidie is er voor een warmtepomp in 2025?",
+          "acceptedAnswer": { "@type": "Answer", "text": "De ISDE-subsidie vergoedt in 2025 tot €4.000 voor een hybride of elektrische lucht-water warmtepomp. Energx regelt de ISDE-aanvraag voor je." }
+        },
+        {
+          "@type": "Question",
+          "name": "Heb ik vloerverwarming nodig voor een warmtepomp?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Niet per se. Een hybride warmtepomp van Remeha werkt ook prima met bestaande radiatoren. Een volledig elektrische warmtepomp presteert optimaal bij lagetemperatuurverwarming." }
+        },
+        {
+          "@type": "Question",
+          "name": "Hybride of volledig elektrische warmtepomp — wat is beter?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Een hybride warmtepomp is ideaal voor slecht geïsoleerde woningen (label D of lager). Een volledig elektrische warmtepomp is het slimst voor goed geïsoleerde woningen (label B of hoger)." }
+        },
+        {
+          "@type": "Question",
+          "name": "Hoe lang duurt een warmtepomp installatie?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Een hybride warmtepomp is doorgaans in 1 dag geïnstalleerd. Een volledig elektrische installatie duurt 1 à 2 dagen." }
+        }
+      ]
+    }
+  ]
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -968,6 +996,35 @@
 
         </div><!-- /form-slides -->
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ SECTIE -->
+<section style="background:var(--gray-100); padding:72px 2rem;">
+  <div style="max-width:760px; margin:0 auto;">
+    <h2 class="section-title" style="color:var(--green-900); text-align:center; margin-bottom:2.5rem;">Veelgestelde vragen over<br>warmtepomp installatie</h2>
+    <div style="display:flex; flex-direction:column; gap:0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--gray-200);">
+      <details style="background:var(--white); border-bottom:1px solid var(--gray-200);">
+        <summary style="padding:1.25rem 1.5rem; font-weight:500; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:16px; color:var(--night);">Wat kost een warmtepomp laten installeren?<span style="color:var(--green-400); font-size:20px; flex-shrink:0;">+</span></summary>
+        <p style="padding:0 1.5rem 1.25rem; color:var(--gray-600); line-height:1.75; font-size:15px;">De kosten voor een warmtepomp installatie liggen in 2025 gemiddeld tussen <strong>€5.000 en €12.000 all-in</strong>, afhankelijk van het type (hybride of volledig elektrisch), het merk en de woning. Met ISDE-subsidie tot €4.000 dalen de netto kosten naar €3.000–€8.000. Onze installateurs geven je een vaste offerte zonder verborgen kosten.</p>
+      </details>
+      <details style="background:var(--white); border-bottom:1px solid var(--gray-200);">
+        <summary style="padding:1.25rem 1.5rem; font-weight:500; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:16px; color:var(--night);">Welke subsidie is er voor een warmtepomp in 2025?<span style="color:var(--green-400); font-size:20px; flex-shrink:0;">+</span></summary>
+        <p style="padding:0 1.5rem 1.25rem; color:var(--gray-600); line-height:1.75; font-size:15px;">De ISDE-subsidie (Investeringssubsidie Duurzame Energie) vergoedt in 2025 <strong>tot €4.000</strong> voor een warmtepomp. De regeling geldt voor hybride en elektrische lucht-water warmtepompen. Energx regelt de ISDE-aanvraag voor je — je hoeft er zelf niets voor te doen.</p>
+      </details>
+      <details style="background:var(--white); border-bottom:1px solid var(--gray-200);">
+        <summary style="padding:1.25rem 1.5rem; font-weight:500; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:16px; color:var(--night);">Heb ik vloerverwarming nodig voor een warmtepomp?<span style="color:var(--green-400); font-size:20px; flex-shrink:0;">+</span></summary>
+        <p style="padding:0 1.5rem 1.25rem; color:var(--gray-600); line-height:1.75; font-size:15px;">Niet per se. Een <strong>hybride warmtepomp van Remeha</strong> werkt ook prima met bestaande radiatoren. Een volledig elektrische warmtepomp presteert optimaal bij lagetemperatuurverwarming via vloerverwarming of grotere radiatoren. Onze adviseurs beoordelen gratis welk type bij jouw woning past.</p>
+      </details>
+      <details style="background:var(--white); border-bottom:1px solid var(--gray-200);">
+        <summary style="padding:1.25rem 1.5rem; font-weight:500; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:16px; color:var(--night);">Hybride of volledig elektrische warmtepomp — wat is beter?<span style="color:var(--green-400); font-size:20px; flex-shrink:0;">+</span></summary>
+        <p style="padding:0 1.5rem 1.25rem; color:var(--gray-600); line-height:1.75; font-size:15px;">Een <strong>hybride warmtepomp</strong> werkt samen met je bestaande cv-ketel en is ideaal voor slecht geïsoleerde woningen (label D of lager). Een <strong>volledig elektrische warmtepomp</strong> is het slimst voor goed geïsoleerde woningen (label B of hoger) en stoot geen CO₂ uit. Bij twijfel: kies hybride en bespaar direct op je energierekening.</p>
+      </details>
+      <details style="background:var(--white);">
+        <summary style="padding:1.25rem 1.5rem; font-weight:500; cursor:pointer; list-style:none; display:flex; justify-content:space-between; align-items:center; font-size:16px; color:var(--night);">Hoe lang duurt een warmtepomp installatie?<span style="color:var(--green-400); font-size:20px; flex-shrink:0;">+</span></summary>
+        <p style="padding:0 1.5rem 1.25rem; color:var(--gray-600); line-height:1.75; font-size:15px;">Een hybride warmtepomp is doorgaans in <strong>1 dag geïnstalleerd</strong>. Een volledig elektrische installatie duurt 1 à 2 dagen, afhankelijk van de woning en de leidinglengte. Na installatie regelt Energx de afmelding bij de netbeheerder en de ISDE-subsidie aanvraag.</p>
+      </details>
     </div>
   </div>
 </section>
