@@ -1,3 +1,9 @@
 node_modules/
 dist/
 .DS_Store
+.env
+.env.local
+
+ai-agent-build/
+screenshots/
+test_blog.md
