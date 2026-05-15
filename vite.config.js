@@ -14,6 +14,8 @@ export default defineConfig({
         warmtepomp: resolve(__dirname, 'energx-warmtepomp.html'),
         thuisbatterij: resolve(__dirname, 'energx-thuisbatterij.html'),
         'blog-thuisbatterij-kopen': resolve(__dirname, 'blog-thuisbatterij-kopen.html'),
+        'privacybeleid': resolve(__dirname, 'privacybeleid.html'),
+        'algemene-voorwaarden': resolve(__dirname, 'algemene-voorwaarden.html'),
       },
     },
   },
