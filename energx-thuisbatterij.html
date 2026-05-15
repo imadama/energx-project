@@ -1745,6 +1745,8 @@
 </footer>
 
 <script>
+  const ENERGX_API_KEY = 'VERVANG_MET_API_SLEUTEL'; // CRM → API-sleutels
+
   // ── HAMBURGER ──
   function toggleMenu() {
     document.querySelector('.nav-hamburger').classList.toggle('open');
@@ -1857,7 +1859,7 @@
     try {
       const resp = await fetch('https://crm.energx.nl/api/v1/offer', {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-Api-Key': ENERGX_API_KEY },
         body:    JSON.stringify(payload),
       });
       if (resp.ok) {

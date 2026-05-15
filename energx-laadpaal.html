@@ -2249,6 +2249,8 @@
 </footer>
 
 <script>
+  const ENERGX_API_KEY = 'VERVANG_MET_API_SLEUTEL'; // CRM → API-sleutels
+
   // Auto-scroll carousel
   const carousel = document.getElementById('fotoCarousel');
   if (carousel) {
@@ -2487,7 +2489,7 @@
     try {
       const resp = await fetch('https://crm.energx.nl/api/v1/offer', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-Api-Key': ENERGX_API_KEY },
         body: JSON.stringify(payload),
       });
 
