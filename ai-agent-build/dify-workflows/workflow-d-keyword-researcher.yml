@@ -1,0 +1,438 @@
+# Dify DSL — Workflow D: Keyword Researcher (proactief)
+#
+# Doel: voor een seed-thema (bijv. "thuisbatterij") automatisch de beste
+# content-kansen identificeren, gecombineerd uit SERP-data, GSC quick-wins
+# en Google Trends momentum.
+#
+# Voorvereisten:
+#   1. FastAPI energx-audit service draait met /gsc/queries en /trends/keyword endpoints
+#   2. Serper.dev API-key actief in Dify
+#   3. GSC service account JSON geconfigureerd in de FastAPI .env
+#   4. Custom tool energx_audit geregistreerd
+#
+# Architectuur:
+#   Input: seed-thema (1 woord/zin)
+#   1. Serper-zoekopdracht → top 10 SERP + related_searches + PAA
+#   2. Code-node: extract gerelateerde keywords uit Serper response
+#   3. Energx KB → tone-of-voice + SEO-richtlijnen + bekende clusters
+#   4. FastAPI /gsc/queries → eigen rankings (focus op pos 11-30)
+#   5. FastAPI /trends/keyword → trend-direction per top-3 keywords
+#   6. Gemini synthese: cluster per intent, rang op (volume × trend × eigen-positie)
+#   Output: top 5-10 keywords met prioriteit + intent + rationale
+
+app:
+  description: |
+    Proactieve keyword research voor Energx. Geef een seed-thema, krijg de
+    top content-kansen terug — gerangschikt op zoekvolume, eigen GSC-positie
+    en Google Trends momentum.
+  icon: 🎯
+  icon_background: '#E4FFB8'
+  mode: workflow
+  name: Keyword Researcher Energx
+  use_icon_as_answer_icon: false
+
+kind: app
+version: 0.1.5
+
+workflow:
+  features:
+    file_upload:
+      enabled: false
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+
+  graph:
+    edges:
+    - id: start-to-serper
+      source: start
+      target: serper_seed
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: serper-to-extract
+      source: serper_seed
+      target: extract_keywords
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: extract-to-gsc
+      source: extract_keywords
+      target: gsc_queries
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: extract-to-trends
+      source: extract_keywords
+      target: trends
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: extract-to-kb
+      source: extract_keywords
+      target: kb_retrieval
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: gsc-to-synthesis
+      source: gsc_queries
+      target: synthesis
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: trends-to-synthesis
+      source: trends
+      target: synthesis
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: kb-to-synthesis
+      source: kb_retrieval
+      target: synthesis
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: synthesis-to-end
+      source: synthesis
+      target: end
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+
+    nodes:
+
+    # ---------- START ----------
+    - id: start
+      type: custom
+      data:
+        type: start
+        title: Start
+        variables:
+        - variable: seed_thema
+          type: text-input
+          label: Seed-thema
+          required: true
+          max_length: 100
+          hint: 'Bijv. "thuisbatterij", "warmtepomp", "salderingsregeling"'
+        - variable: regio
+          type: text-input
+          label: Regio focus (optioneel)
+          required: false
+          default: ''
+          hint: 'Bijv. "Zuid-Holland", "Rotterdam" — leeg = generiek NL'
+      position:
+        x: 80
+        y: 280
+
+    # ---------- SERPER (seed) ----------
+    - id: serper_seed
+      type: custom
+      data:
+        type: tool
+        title: Serper seed-search
+        desc: Top 10 SERP + related_searches + PAA voor seed-thema
+        provider_id: serper
+        provider_name: serper
+        provider_type: builtin
+        tool_name: serper
+        tool_parameters:
+          query:
+            type: mixed
+            value: '{{#start.seed_thema#}} {{#start.regio#}}'
+          gl:
+            type: constant
+            value: 'nl'
+          hl:
+            type: constant
+            value: 'nl'
+      position:
+        x: 360
+        y: 280
+
+    # ---------- EXTRACT KEYWORDS ----------
+    - id: extract_keywords
+      type: custom
+      data:
+        type: code
+        title: Extract gerelateerde keywords
+        desc: Haal related_searches + PAA uit Serper response
+        code_language: python3
+        code: |
+          def main(serper_result: str, seed_thema: str) -> dict:
+              import json
+              try:
+                  data = json.loads(serper_result) if isinstance(serper_result, str) else serper_result
+              except Exception:
+                  data = {}
+
+              related = []
+              if isinstance(data, dict):
+                  # Related searches
+                  for r in data.get('relatedSearches', []):
+                      q = r.get('query') if isinstance(r, dict) else r
+                      if q and q.lower() != seed_thema.lower():
+                          related.append(q)
+                  # People also ask
+                  for p in data.get('peopleAlsoAsk', []):
+                      q = p.get('question') if isinstance(p, dict) else p
+                      if q:
+                          related.append(q)
+                  # Organic top titels als extra signaal
+                  organic_titles = []
+                  for o in data.get('organic', [])[:5]:
+                      t = o.get('title') if isinstance(o, dict) else None
+                      if t:
+                          organic_titles.append(t)
+              else:
+                  organic_titles = []
+
+              # Dedupe + limiteer
+              seen = set()
+              unique_related = []
+              for kw in related:
+                  norm = kw.lower().strip()
+                  if norm and norm not in seen:
+                      seen.add(norm)
+                      unique_related.append(kw)
+
+              return {
+                  'seed': seed_thema,
+                  'related_keywords': unique_related[:20],
+                  'top_3_for_trends': unique_related[:3],
+                  'organic_titles': organic_titles,
+                  'total_found': len(unique_related),
+              }
+        variables:
+        - variable: serper_result
+          value_selector: ['serper_seed', 'text']
+        - variable: seed_thema
+          value_selector: ['start', 'seed_thema']
+        outputs:
+          seed:
+            type: string
+          related_keywords:
+            type: array[string]
+          top_3_for_trends:
+            type: array[string]
+          organic_titles:
+            type: array[string]
+          total_found:
+            type: number
+      position:
+        x: 640
+        y: 280
+
+    # ---------- GSC QUERIES ----------
+    - id: gsc_queries
+      type: custom
+      data:
+        type: tool
+        title: GSC eigen rankings
+        desc: Wat ranked Energx zelf al voor (focus op pos 11-30)
+        provider_id: energx_audit
+        provider_name: energx_audit
+        provider_type: api
+        tool_name: gsc_queries_gsc_queries_post
+        tool_parameters:
+          days:
+            type: constant
+            value: 90
+          limit:
+            type: constant
+            value: 200
+      position:
+        x: 920
+        y: 120
+
+    # ---------- TRENDS ----------
+    - id: trends
+      type: custom
+      data:
+        type: tool
+        title: Google Trends
+        desc: Trend-direction voor top-3 keywords
+        provider_id: energx_audit
+        provider_name: energx_audit
+        provider_type: api
+        tool_name: trends_keyword_trends_keyword_post
+        tool_parameters:
+          keywords:
+            type: mixed
+            value: '{{#extract_keywords.top_3_for_trends#}}'
+          timeframe:
+            type: constant
+            value: 'today 12-m'
+          geo:
+            type: constant
+            value: 'NL'
+      position:
+        x: 920
+        y: 280
+
+    # ---------- KB RETRIEVAL ----------
+    - id: kb_retrieval
+      type: custom
+      data:
+        type: knowledge-retrieval
+        title: Energx KB context
+        desc: Cluster-strategie + tone uit Doc D
+        query_variable_selector: ['start', 'seed_thema']
+        dataset_ids: []  # NOTE: vul handmatig met Energx KB dataset_id
+        retrieval_mode: multiple
+        multiple_retrieval_config:
+          top_k: 4
+          score_threshold_enabled: false
+          score_threshold: 0.5
+          reranking_mode: weighted_score
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_provider_name: ollama
+              embedding_model_name: nomic-embed-text
+              vector_weight: 0.7
+      position:
+        x: 920
+        y: 440
+
+    # ---------- SYNTHESIS ----------
+    - id: synthesis
+      type: custom
+      data:
+        type: llm
+        title: Kansen-synthese
+        desc: Combineer alle signalen tot top 5-10 content-kansen
+        model:
+          provider: langgenius/gemini/gemini
+          name: gemini-2.5-flash
+          mode: chat
+          completion_params:
+            temperature: 0.4
+            max_tokens: 4000
+        prompt_template:
+        - role: system
+          text: |
+            Je bent een senior SEO-strateeg voor Energx.
+            Energx is NL-bemiddelaar (Utrecht, sinds 2022) voor thuisbatterijen,
+            warmtepompen (lucht-water monobloc) en laadpalen.
+            Kernregio's: Zuid-Holland, Utrecht, Noord-Brabant.
+
+            Je krijgt 4 databronnen:
+            1. SEED + gerelateerde keywords uit Serper SERP + PAA
+            2. GSC-data van Energx zelf (welke queries ranken al, waar)
+            3. Google Trends: direction (rising/stable/falling) voor top-3 keywords
+            4. Energx KB-context: cluster-strategie + tone-of-voice + SEO-regels
+
+            ## TAAK
+
+            Lever een prioriteits-lijst van top 5-10 content-kansen, gerangschikt
+            op een combinatie van:
+            - **Eigen positie** (pos 11-30 in GSC = quick win, hoge prio)
+            - **Trend-direction** (rising = hoge prio, falling = lage prio)
+            - **Intent match** (commercieel vs informationeel)
+            - **Cluster-fit** (past in bestaande Energx-clusters: Thuisbatterij/
+              Warmtepomp/Laadpaal/Saldering)
+            - **Lokale relevantie** (kernregio's hebben extra waarde)
+
+            ## OUTPUT (markdown)
+
+            # Keyword Researcher rapport: [seed-thema]
+
+            ## Top 5 quick wins (deze maand)
+            [Per kans: keyword, waarom prio, intent, geschatte content-type, regio-tag]
+
+            ### 1. [keyword]
+            **Intent:** [informationeel/commercieel/lokaal]
+            **Waarom prio:**
+            - GSC: [pos X — quick win] / [nog niet ranken — opportunity]
+            - Trend: [rising/stable, %-change indien beschikbaar]
+            - Cluster: [Thuisbatterij/Warmtepomp/Laadpaal/Saldering/Cross]
+            **Voorgesteld content-type:** [blog-artikel / locatie-pagina / FAQ-update / pillar-update]
+            **Geschat doel-woordaantal:** [N]
+            **Voorbeeld H1:** "[suggestie]"
+
+            ## Medium-term kansen (komende 2 maanden)
+            [Tabel: keyword | intent | cluster | rationale]
+
+            ## Trending opportunities (uit Google Trends rising-data)
+            [Keywords met "rising" direction, ook als de eigen positie nog 0 is —
+            kunnen quick first-mover wins zijn]
+
+            ## Voor de Brief Generator
+            **Volgende stap:** voer deze top 3 keywords in de Brief Generator:
+            1. [keyword]
+            2. [keyword]
+            3. [keyword]
+
+            ## REGELS
+
+            - Spreek lezer aan met je-vorm
+            - Geen "we moeten" — wel concrete actie-instructies
+            - Verwijs naar bestaande Energx-clusters uit KB Doc D sectie 14
+            - Geen verzonnen zoekvolumes (we hebben geen exact volume-data)
+            - Trend-direction signaal heeft hoog gewicht maar is relatief, niet absoluut
+            - Bij regio-input: prioriteer lokale keywords binnen die regio
+        - role: user
+          text: |
+            Seed-thema: {{#start.seed_thema#}}
+            Regio focus: {{#start.regio#}}
+
+            ## Gerelateerde keywords uit Serper SERP + PAA:
+            {{#extract_keywords.related_keywords#}}
+
+            ## Organic top titels (signaal voor concurrentie):
+            {{#extract_keywords.organic_titles#}}
+
+            ## GSC eigen rankings (laatste 90 dagen):
+            {{#gsc_queries.queries#}}
+
+            ## Google Trends data:
+            {{#trends.keywords#}}
+
+            ## Energx Knowledge Base context:
+        memory:
+          window:
+            enabled: false
+            size: 0
+        context:
+          enabled: true
+          variable_selector: ['kb_retrieval', 'result']
+        vision:
+          enabled: false
+      position:
+        x: 1200
+        y: 280
+
+    # ---------- END ----------
+    - id: end
+      type: custom
+      data:
+        type: end
+        title: End
+        outputs:
+        - variable: keyword_report
+          value_selector: ['synthesis', 'text']
+          value_type: string
+        - variable: seed_thema
+          value_selector: ['start', 'seed_thema']
+          value_type: string
+        - variable: keywords_found
+          value_selector: ['extract_keywords', 'total_found']
+          value_type: number
+      position:
+        x: 1480
+        y: 280
+
+    viewport:
+      x: 0
+      y: 0
+      zoom: 0.7

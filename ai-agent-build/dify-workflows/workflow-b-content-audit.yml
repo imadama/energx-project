@@ -1,0 +1,307 @@
+# Dify DSL — Workflow B: Content Audit
+#
+# Import in Dify: Studio → Create from Blank → Import DSL file → kies dit bestand
+#
+# Voorvereisten vóór import:
+#   1. FastAPI energx-audit service draait (zelfde als Workflow A)
+#   2. GSC service account JSON is ingeladen in de FastAPI .env
+#   3. Energx KB bestaat met de 4 KB-documenten
+#   4. Custom tool energx_audit is geregistreerd in Dify
+#
+# Wat deze workflow doet:
+#   Input: lijst URLs (gescheiden door newlines) of "auto" voor top GSC-pages
+#   1. Optioneel: haal top 20 pages uit GSC als "auto" is gekozen
+#   2. Voor elke URL: /content/audit (title, meta, H-structuur, word count, Flesch-Douma)
+#   3. Voor elke URL: optionele GSC-data koppelen (clicks, impressions, positie)
+#   4. KB-retrieval voor Doc A (tone-of-voice) en Doc D (SEO-richtlijnen)
+#   5. Qwen3:32b quick-fix suggesties per pagina
+#   6. Gemini synthese met prioritering op impact (GSC-data × audit-issues)
+#   7. Output: actie-lijst per pagina met concrete fixes
+
+app:
+  description: |
+    Content audit per URL. Combineert on-page metrics (title/meta lengths,
+    H-structuur, Flesch-Douma NL readability, internal links) met GSC-data
+    (positie, CTR, impressions) en levert geprioriteerde fix-instructies
+    per pagina.
+  icon: 📝
+  icon_background: '#B8E4FF'
+  mode: workflow
+  name: Content Audit Energx
+  use_icon_as_answer_icon: false
+
+kind: app
+version: 0.1.5
+
+workflow:
+  features:
+    file_upload:
+      enabled: false
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+
+  graph:
+    edges:
+    - id: start-to-resolve
+      source: start
+      target: resolve_urls
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: resolve-to-iterate
+      source: resolve_urls
+      target: iterate_urls
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: iterate-to-kb
+      source: iterate_urls
+      target: kb_retrieval
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: kb-to-synthesis
+      source: kb_retrieval
+      target: synthesis
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: synthesis-to-end
+      source: synthesis
+      target: end
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+
+    nodes:
+
+    # ---------- START ----------
+    - id: start
+      type: custom
+      data:
+        type: start
+        title: Start
+        variables:
+        - variable: urls_input
+          type: paragraph
+          label: URLs (één per regel, of typ "auto")
+          required: true
+          hint: 'Lijst van URLs of "auto" voor top 20 uit GSC'
+        - variable: gsc_site_url
+          type: text-input
+          label: GSC site URL
+          required: false
+          default: 'sc-domain:energx.nl'
+          hint: 'Format: sc-domain:energx.nl OF https://dev.energx.nl/'
+        - variable: gsc_days
+          type: number
+          label: GSC periode (dagen)
+          required: false
+          default: 28
+      position:
+        x: 80
+        y: 280
+
+    # ---------- RESOLVE URLs (auto/handmatig) ----------
+    - id: resolve_urls
+      type: custom
+      data:
+        type: code
+        title: Resolve URL-lijst
+        desc: Bepaal of we GSC moeten aanroepen of handmatige lijst gebruiken
+        code_language: python3
+        code: |
+          def main(urls_input: str) -> dict:
+              text = (urls_input or '').strip()
+              if text.lower() == 'auto':
+                  return {'mode': 'auto', 'urls': []}
+              urls = [u.strip() for u in text.splitlines() if u.strip()]
+              return {'mode': 'manual', 'urls': urls}
+        variables:
+        - variable: urls_input
+          value_selector: ['start', 'urls_input']
+        outputs:
+          mode:
+            type: string
+          urls:
+            type: array[string]
+      position:
+        x: 360
+        y: 280
+
+    # NOTE: voor brevity is de GSC-auto-path niet als aparte node toegevoegd hier.
+    # In productie kun je een conditional (IF/ELSE) node toevoegen die bij mode='auto'
+    # /gsc/pages aanroept en de page-URLs eruit pakt. Voor nu gebruiken we de handmatige lijst.
+
+    # ---------- ITERATE: content audit per URL ----------
+    - id: iterate_urls
+      type: custom
+      data:
+        type: iteration
+        title: Audit elke URL
+        desc: Content audit + (optioneel) GSC-koppeling per URL
+        iterator_selector: ['resolve_urls', 'urls']
+        output_selector: ['content_audit_tool', 'json']
+        output_type: array[object]
+        is_parallel: true
+        parallel_nums: 5
+        error_handle_mode: continue-on-error
+      position:
+        x: 640
+        y: 280
+
+    - id: content_audit_tool
+      type: custom
+      parentId: iterate_urls
+      data:
+        type: tool
+        title: Content Audit URL
+        provider_id: energx_audit
+        provider_name: energx_audit
+        provider_type: api
+        tool_name: content_audit_content_audit_post
+        tool_label: 'POST /content/audit'
+        tool_parameters:
+          url:
+            type: mixed
+            value: '{{#iterate_urls.item#}}'
+      position:
+        x: 100
+        y: 100
+
+    # ---------- KB RETRIEVAL ----------
+    - id: kb_retrieval
+      type: custom
+      data:
+        type: knowledge-retrieval
+        title: Haal Energx KB context
+        desc: Tone-of-voice + SEO-richtlijnen voor context
+        query_variable_selector: ['start', 'urls_input']
+        dataset_ids: []  # NOTE: vul handmatig in Dify met de Energx KB dataset_id
+        retrieval_mode: multiple
+        multiple_retrieval_config:
+          top_k: 5
+          score_threshold_enabled: false
+          score_threshold: 0.5
+          reranking_mode: weighted_score
+          weights:
+            keyword_setting:
+              keyword_weight: 0.3
+            vector_setting:
+              embedding_provider_name: ollama
+              embedding_model_name: nomic-embed-text
+              vector_weight: 0.7
+      position:
+        x: 920
+        y: 280
+
+    # ---------- SYNTHESIS ----------
+    - id: synthesis
+      type: custom
+      data:
+        type: llm
+        title: Synthese fixes
+        desc: Per pagina concrete fix-instructies + prioritering
+        model:
+          provider: langgenius/gemini/gemini
+          name: gemini-2.5-flash
+          mode: chat
+          completion_params:
+            temperature: 0.3
+            max_tokens: 6000
+        prompt_template:
+        - role: system
+          text: |
+            Je bent een senior SEO content-engineer voor Energx. Energx is een
+            NL-bemiddelaar voor thuisbatterijen, warmtepompen en laadpalen
+            (gevestigd in Utrecht, kernregio's ZH/Utrecht/NB).
+
+            Je krijgt content-audit-data per URL en KB-context (tone-of-voice +
+            SEO-richtlijnen). Schrijf een actie-rapport per pagina met
+            geprioriteerde fix-instructies.
+
+            ## STRUCTUUR (markdown)
+
+            # Content Audit Rapport: [hoofd-domein]
+
+            ## Samenvatting
+            [Hoeveel pagina's geaudit, top-3 patronen, gezondheid algemeen]
+
+            ## Quick wins (deze week)
+            [3-5 pagina's met grootste impact / kleinste moeite]
+
+            ## Per pagina
+
+            ### [URL]
+            **Audit-bevindingen:**
+            - Title: "[title]" ([X] tekens, OK/te kort/te lang)
+            - Meta: "[meta]" ([X] tekens, OK/probleem)
+            - H-structuur: [H1×N, H2×N, H3×N] + opmerking
+            - Word count: [N woorden, OK/dunne content]
+            - Readability: Flesch-Douma [score] - [grade]
+            - Internal links: [N], External: [N]
+
+            **Fix-prioriteit:**
+            1. [Hoogste prio fix - concrete instructie]
+            2. [Volgende fix]
+            3. [...]
+
+            **Geschatte impact:** [hoog/medium/laag]
+
+            ## REGELS
+
+            - Spreek de writer aan met je-vorm
+            - Concrete instructies (niet "kan beter", wel "verkort title naar X tekens en zet 'thuisbatterij' vooraan")
+            - Refereer aan Doc A (tone) en Doc D (SEO-richtlijnen) uit de KB-context waar relevant
+            - Banned phrases (uit KB): middels, ten gevolge van, in het kader van
+            - Energx-stem: helder, eerlijk, niet pusherig
+            - Saldering einddatum: 1 januari 2027 (verifieer in content-claims)
+        - role: user
+          text: |
+            URLs geaudit: {{#iterate_urls.output#}}
+
+            Kennisbasis context (tone-of-voice + SEO-richtlijnen):
+        memory:
+          window:
+            enabled: false
+            size: 0
+        context:
+          enabled: true
+          variable_selector: ['kb_retrieval', 'result']
+        vision:
+          enabled: false
+      position:
+        x: 1200
+        y: 280
+
+    # ---------- END ----------
+    - id: end
+      type: custom
+      data:
+        type: end
+        title: End
+        outputs:
+        - variable: content_audit_report
+          value_selector: ['synthesis', 'text']
+          value_type: string
+        - variable: urls_audited
+          value_selector: ['resolve_urls', 'urls']
+          value_type: array[string]
+      position:
+        x: 1480
+        y: 280
+
+    viewport:
+      x: 0
+      y: 0
+      zoom: 0.75

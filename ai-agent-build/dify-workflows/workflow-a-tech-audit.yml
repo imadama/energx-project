@@ -1,0 +1,389 @@
+# Dify DSL — Workflow A: Technical Site Audit
+#
+# Import in Dify: Studio → Create from Blank → Import DSL file → kies dit bestand
+#
+# Voorvereisten vóór import:
+#   1. FastAPI energx-audit service draait en is bereikbaar van Dify uit
+#      (bijv. http://energx-audit:8080 binnen Docker network)
+#   2. In Dify: Tools → Custom Tools → "Add via OpenAPI"
+#      Schema URL: http://<jouw-host>:8080/openapi.json
+#      Authentication: API Key in Authorization header → "Bearer <jouw-API_KEY>"
+#   3. Tool naam in Dify: energx_audit (zodat de tool-references in deze YAML kloppen)
+#   4. Gemini API key actief, of switch naar qwen3:32b in de synthese-node
+#
+# Wat deze workflow doet:
+#   Input: domein (bijv. https://dev.energx.nl)
+#   1. Haal sitemap.xml op via FastAPI /sitemap/parse
+#   2. Voor de eerste 20 URLs: roep /technical/audit aan in parallel
+#   3. Aggregeer alle issues per type + severity
+#   4. Claude/Gemini synthese: prioriteer en groepeer issues, schrijf bevindings-rapport
+#   5. Output: markdown technisch audit-rapport
+#
+# Verwachte runtime: 2-5 minuten afhankelijk van site-grootte
+
+app:
+  description: |
+    Technische SEO-audit van een Energx-domein. Crawlt sitemap, analyseert
+    elke URL op status code, HTTPS, canonical, robots, schema, alt-tags en
+    broken links. Levert een markdown-rapport met geprioriteerde bevindingen.
+  icon: 🔍
+  icon_background: '#FFE4B8'
+  mode: workflow
+  name: Tech Audit Energx
+  use_icon_as_answer_icon: false
+
+kind: app
+version: 0.1.5
+
+workflow:
+  features:
+    file_upload:
+      allowed_file_extensions: []
+      allowed_file_types: []
+      allowed_file_upload_methods: []
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+
+  graph:
+    edges:
+    - id: start-to-sitemap
+      source: start
+      target: sitemap
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: sitemap-to-limit
+      source: sitemap
+      target: limit_urls
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: limit-to-iterate
+      source: limit_urls
+      target: iterate_urls
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: iterate-to-aggregate
+      source: iterate_urls
+      target: aggregate_issues
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: aggregate-to-synthesis
+      source: aggregate_issues
+      target: synthesis
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+    - id: synthesis-to-end
+      source: synthesis
+      target: end
+      sourceHandle: source
+      targetHandle: target
+      type: custom
+
+    nodes:
+
+    # ---------- START ----------
+    - id: start
+      type: custom
+      data:
+        type: start
+        title: Start
+        desc: Input van de gebruiker
+        variables:
+        - variable: domein
+          type: text-input
+          label: Domein
+          required: true
+          max_length: 200
+          options: []
+          hint: 'Bijv. https://dev.energx.nl (zonder trailing slash)'
+        - variable: max_urls
+          type: number
+          label: Maximum URLs om te auditen
+          required: false
+          default: 20
+          hint: 'Hoger is grondiger, maar trager. Default 20.'
+      position:
+        x: 80
+        y: 280
+
+    # ---------- SITEMAP ----------
+    - id: sitemap
+      type: custom
+      data:
+        type: tool
+        title: Haal Sitemap
+        desc: Parse sitemap.xml via FastAPI service
+        provider_id: energx_audit
+        provider_name: energx_audit
+        provider_type: api
+        tool_name: sitemap_parse_sitemap_parse_post
+        tool_label: 'POST /sitemap/parse'
+        tool_configurations: {}
+        tool_parameters:
+          domain:
+            type: mixed
+            value: '{{#start.domein#}}'
+      position:
+        x: 360
+        y: 280
+
+    # ---------- LIMIT URLs ----------
+    - id: limit_urls
+      type: custom
+      data:
+        type: code
+        title: Beperk URLs
+        desc: Selecteer de eerste N URLs om audit-tijd te beperken
+        code_language: python3
+        code: |
+          def main(urls: list, max_urls: int) -> dict:
+              selected = urls[:max_urls] if urls else []
+              # Extract alleen de loc-waarden uit sitemap entries
+              loc_only = [u.get('loc') for u in selected if u.get('loc')]
+              return {
+                  'selected_urls': loc_only,
+                  'total_selected': len(loc_only),
+              }
+        variables:
+        - variable: urls
+          value_selector: ['sitemap', 'urls']
+        - variable: max_urls
+          value_selector: ['start', 'max_urls']
+        outputs:
+          selected_urls:
+            type: array[string]
+          total_selected:
+            type: number
+      position:
+        x: 640
+        y: 280
+
+    # ---------- ITERATE: technical/audit per URL ----------
+    - id: iterate_urls
+      type: custom
+      data:
+        type: iteration
+        title: Audit elke URL
+        desc: Roep /technical/audit aan voor elke URL (parallel waar mogelijk)
+        iterator_selector: ['limit_urls', 'selected_urls']
+        output_selector: ['url_audit_tool', 'json']
+        output_type: array[object]
+        is_parallel: true
+        parallel_nums: 5
+        error_handle_mode: continue-on-error
+      position:
+        x: 920
+        y: 280
+
+    # Iteration sub-graph: één tool-call per URL
+    - id: url_audit_tool
+      type: custom
+      parentId: iterate_urls
+      data:
+        type: tool
+        title: Tech Audit URL
+        desc: ''
+        provider_id: energx_audit
+        provider_name: energx_audit
+        provider_type: api
+        tool_name: technical_audit_technical_audit_post
+        tool_label: 'POST /technical/audit'
+        tool_configurations: {}
+        tool_parameters:
+          url:
+            type: mixed
+            value: '{{#iterate_urls.item#}}'
+      position:
+        x: 100
+        y: 100
+
+    # ---------- AGGREGATE ISSUES ----------
+    - id: aggregate_issues
+      type: custom
+      data:
+        type: code
+        title: Aggregeer issues
+        desc: Bundel issues per categorie + severity over alle URLs
+        code_language: python3
+        code: |
+          def main(audit_results: list) -> dict:
+              if not audit_results:
+                  return {'summary': {}, 'urls_audited': 0, 'flat_issues': []}
+
+              # Verzamel issues per categorie en severity
+              by_type = {}
+              by_severity = {'critical': 0, 'warning': 0, 'info': 0}
+              flat = []
+
+              for result in audit_results:
+                  url = result.get('url', 'unknown')
+                  status = result.get('status_code')
+                  for issue in result.get('issues', []):
+                      sev = issue.get('severity', 'info')
+                      typ = issue.get('type', 'unknown')
+                      detail = issue.get('detail', '')
+                      by_severity[sev] = by_severity.get(sev, 0) + 1
+                      by_type.setdefault(typ, []).append({
+                          'url': url,
+                          'severity': sev,
+                          'detail': detail,
+                      })
+                      flat.append({
+                          'url': url,
+                          'severity': sev,
+                          'type': typ,
+                          'detail': detail,
+                      })
+
+              return {
+                  'urls_audited': len(audit_results),
+                  'by_severity': by_severity,
+                  'by_type': by_type,
+                  'flat_issues': flat,
+              }
+        variables:
+        - variable: audit_results
+          value_selector: ['iterate_urls', 'output']
+        outputs:
+          urls_audited:
+            type: number
+          by_severity:
+            type: object
+          by_type:
+            type: object
+          flat_issues:
+            type: array[object]
+      position:
+        x: 1200
+        y: 280
+
+    # ---------- SYNTHESIS ----------
+    - id: synthesis
+      type: custom
+      data:
+        type: llm
+        title: Rapport-synthese
+        desc: Claude/Gemini synthese tot prioriteit-rapport
+        model:
+          provider: langgenius/gemini/gemini
+          name: gemini-2.5-flash
+          mode: chat
+          completion_params:
+            temperature: 0.3
+            max_tokens: 4096
+        prompt_template:
+        - role: system
+          text: |
+            Je bent een senior SEO-engineer die technische audit-rapporten schrijft voor Energx.
+            Energx is een NL-bemiddelaar voor thuisbatterijen, warmtepompen en laadpalen.
+
+            Je krijgt geaggregeerde audit-data uit een crawl van het Energx-domein.
+            Schrijf een actie-gericht technisch rapport in Nederlands.
+
+            STRUCTUUR (markdown):
+
+            # Technisch SEO-rapport: [domein]
+
+            ## Samenvatting
+            [3-4 zinnen: hoeveel URLs gechecked, hoeveel kritieke vs minder kritieke issues, algemene gezondheid]
+
+            ## Kritieke issues (severity: critical)
+            [Per type een sectie: wat is het probleem, op welke URLs, waarom belangrijk, hoe op te lossen]
+
+            ## Belangrijke verbeterpunten (severity: warning)
+            [Idem maar minder urgent]
+
+            ## Quick wins
+            [3-5 acties die snel grote impact hebben]
+
+            ## Volledige issue-lijst
+            [Tabel: URL | Severity | Type | Detail]
+
+            REGELS:
+            - Spreek de lezer aan met je-vorm
+            - Geen jargon zonder uitleg
+            - Concrete fix-instructies, geen "kan beter"
+            - Prioriteer op impact: critical voor seo-blokkers, warning voor verbeterpunten
+            - Energx is bemiddelaar (geen installateur), schrijfregels uit Energx KB
+        - role: user
+          text: |
+            Domein: {{#start.domein#}}
+            URLs geaudit: {{#aggregate_issues.urls_audited#}}
+            Issue-totalen per severity: {{#aggregate_issues.by_severity#}}
+
+            Issues per type:
+            {{#aggregate_issues.by_type#}}
+
+            Volledige issue-lijst:
+            {{#aggregate_issues.flat_issues#}}
+
+            Schrijf het rapport volgens bovenstaande structuur.
+        memory:
+          window:
+            enabled: false
+            size: 0
+        context:
+          enabled: false
+          variable_selector: []
+        vision:
+          enabled: false
+      position:
+        x: 1480
+        y: 280
+
+    # ---------- END ----------
+    - id: end
+      type: custom
+      data:
+        type: end
+        title: End
+        desc: Output van het rapport
+        outputs:
+        - variable: tech_audit_report
+          value_selector: ['synthesis', 'text']
+          value_type: string
+        - variable: urls_audited
+          value_selector: ['aggregate_issues', 'urls_audited']
+          value_type: number
+        - variable: severity_counts
+          value_selector: ['aggregate_issues', 'by_severity']
+          value_type: object
+      position:
+        x: 1760
+        y: 280
+
+    viewport:
+      x: 0
+      y: 0
+      zoom: 0.75
